@@ -7,162 +7,315 @@
   <title>Testovací prostředí – JUST Nahrin × Chatbotique</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --green-dark:  #3f8a2e;
-      --green:       #5aa33b;
-      --green-light: #92c83f;
-      --ink:         #1e2620;
-      --text:        #50574f;
-      --muted:       #8b9088;
-      --bg:          #f8faf0;
+      --beige:      #ece6dd;
+      --beige-dark: #e2d9cc;
+      --brown:      #4c2c14;
+      --brown-soft: #6b5240;
+      --gold:       #9c7c40;
+      --yellow:     #edcf6c;
+      --yellow-dk:  #e4c255;
+      --blue:       #1f4d99;
+      --green:      #2f6e46;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { height: 100%; }
     body {
-      font-family: 'Roboto', system-ui, -apple-system, 'Segoe UI', sans-serif;
-      color: var(--text);
-      background: var(--bg);
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      color: var(--brown);
+      background: var(--beige);
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
     }
 
-    .hero {
+    .page {
       position: relative;
       min-height: 100vh;
       min-height: 100svh;
-      display: flex;
-      flex-direction: column;
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
       align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 96px 24px 190px;
-      background:
-        radial-gradient(circle at 82% 8%, rgba(226, 238, 168, .75) 0, rgba(226, 238, 168, 0) 38%),
-        radial-gradient(circle at 10% 60%, rgba(236, 244, 214, .7) 0, rgba(236, 244, 214, 0) 45%),
-        linear-gradient(180deg, #f6f9ea 0%, #fbfcf6 55%, #f3f8e6 100%);
-      overflow: hidden;
+      gap: 40px;
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 64px 40px;
     }
 
+    /* ---------- Text ---------- */
+    .brand-row { display: flex; align-items: center; gap: 14px; margin-bottom: 30px; }
+    .dots { display: flex; }
+    .dots i { width: 26px; height: 26px; border-radius: 50%; display: block; }
+    .dots i:first-child { background: var(--blue); animation: dotLeft .7s cubic-bezier(.2,.8,.2,1) .1s both; }
+    .dots i:last-child  { background: var(--green); margin-left: -8px; animation: dotRight .7s cubic-bezier(.2,.8,.2,1) .1s both; }
     .eyebrow {
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: .28em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 26px;
+      font-size: 13px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase;
+      color: var(--gold);
+      animation: fadeUp .7s ease .2s both;
     }
-    .eyebrow .x { margin: 0 .35em; font-weight: 400; }
+    .eyebrow .x { margin: 0 .3em; font-weight: 400; }
 
     h1 {
-      font-size: clamp(46px, 9vw, 84px);
-      line-height: 1.02;
-      letter-spacing: -.025em;
-      color: var(--ink);
+      font-size: clamp(48px, 7.4vw, 92px);
+      line-height: 1;
+      letter-spacing: -.035em;
+      margin-bottom: 30px;
     }
-    h1 .thin { display: block; font-weight: 300; }
-    h1 .bold {
-      display: block;
-      font-weight: 900;
-      background: linear-gradient(90deg, var(--green-dark) 0%, var(--green) 45%, var(--green-light) 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      padding-bottom: .06em;
-    }
-
-    .divider {
-      width: min(280px, 70vw);
-      height: 3px;
-      margin: 26px auto 30px;
-      border-radius: 3px;
-      background: linear-gradient(90deg, rgba(90, 163, 59, 0) 0%, var(--green) 25%, var(--green-light) 75%, rgba(146, 200, 63, 0) 100%);
+    h1 .line { display: block; overflow: hidden; padding-bottom: .08em; }
+    h1 .line > span { display: inline-block; animation: lineUp .9s cubic-bezier(.2,.8,.2,1) both; }
+    h1 .thin > span { font-weight: 300; animation-delay: .3s; }
+    h1 .bold > span { font-weight: 800; animation-delay: .45s; position: relative; z-index: 0; }
+    h1 .bold > span::after {
+      content: '';
+      position: absolute; z-index: -1;
+      left: -.06em; right: -.06em; bottom: .06em;
+      height: .34em;
+      border-radius: 999px;
+      background: var(--yellow);
+      transform-origin: left center;
+      animation: marker .8s cubic-bezier(.6,0,.2,1) 1.15s both;
     }
 
     .lead {
-      max-width: 620px;
-      font-size: 17px;
-      line-height: 1.55;
-      color: var(--text);
+      max-width: 540px;
+      font-size: 18px;
+      line-height: 1.6;
+      color: var(--brown-soft);
+      margin-bottom: 34px;
+      animation: fadeUp .8s ease 1s both;
     }
-    .lead strong { color: var(--ink); font-weight: 700; }
+    .lead strong { color: var(--brown); font-weight: 800; }
 
-    .illustration {
-      position: relative;
-      z-index: 1;
-      margin-top: 44px;
-      width: 150px;
-      height: auto;
+    .cta {
+      display: inline-flex; align-items: center; gap: 12px;
+      padding: 19px 34px;
+      border: 0; border-radius: 999px;
+      background: var(--yellow);
+      color: var(--brown);
+      font: 800 16px/1 'Plus Jakarta Sans', system-ui, sans-serif;
+      letter-spacing: .04em; text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 8px 22px rgba(156, 124, 64, .25);
+      transition: background .2s, transform .2s, box-shadow .2s;
+      animation: pop .6s cubic-bezier(.3,1.5,.5,1) 1.3s both;
+    }
+    .cta:hover { background: var(--yellow-dk); transform: translateY(-2px); box-shadow: 0 12px 26px rgba(156, 124, 64, .3); }
+    .cta svg { transition: transform .2s; }
+    .cta:hover svg { transform: translateX(4px); }
+
+    /* ---------- Illustration ---------- */
+    .art { position: relative; display: flex; justify-content: center; }
+    .art svg { width: 100%; max-width: 500px; height: auto; overflow: visible; }
+
+    .dome   { transform-origin: 200px 345px; animation: domeIn .9s cubic-bezier(.2,.8,.2,1) .2s both; }
+    .sun    { animation: sunRise 1.4s cubic-bezier(.2,.8,.2,1) .7s both; }
+    .mtn-back  { animation: rise 1.1s cubic-bezier(.2,.8,.2,1) .55s both; }
+    .mtn-front { animation: rise 1.1s cubic-bezier(.2,.8,.2,1) .75s both; }
+    .ground { animation: fadeIn .6s ease .9s both; }
+    .bottle { transform-origin: 200px 332px; animation: bottlePop .8s cubic-bezier(.3,1.4,.5,1) 1.1s both; }
+    .shine  { animation: shine 4s ease-in-out 2.6s infinite; }
+
+    .stem { fill: none; stroke: #4f8a52; stroke-width: 4; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 0; animation: draw 1.1s ease-out both; }
+    .leaf { transform-origin: 0 0; animation: grow .55s cubic-bezier(.3,1.5,.5,1) both; }
+    .flower { transform-origin: 0 0; animation: bloom .6s cubic-bezier(.3,1.6,.5,1) both; }
+    .sway-l { transform-origin: 118px 334px; animation: sway 5s ease-in-out 3.2s infinite; }
+    .sway-r { transform-origin: 292px 334px; animation: sway 5.6s ease-in-out 3.4s infinite reverse; }
+
+    .pollen circle { opacity: 0; animation: float 6s ease-in-out infinite; }
+
+    /* ---------- Keyframes ---------- */
+    @keyframes fadeUp   { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+    @keyframes fadeIn   { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes lineUp   { from { transform: translateY(105%); } to { transform: none; } }
+    @keyframes marker   { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+    @keyframes pop      { from { opacity: 0; transform: scale(.85); } to { opacity: 1; transform: none; } }
+    @keyframes dotLeft  { from { opacity: 0; transform: translateX(-14px); } to { opacity: 1; transform: none; } }
+    @keyframes dotRight { from { opacity: 0; transform: translateX(14px); } to { opacity: 1; transform: none; } }
+    @keyframes domeIn   { from { opacity: 0; transform: scale(.82); } to { opacity: 1; transform: none; } }
+    @keyframes sunRise  { from { transform: translateY(90px); } to { transform: none; } }
+    @keyframes rise     { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: none; } }
+    @keyframes bottlePop { from { opacity: 0; transform: translateY(24px) scale(.7); } to { opacity: 1; transform: none; } }
+    @keyframes shine    { 0%, 70%, 100% { opacity: .18; } 85% { opacity: .5; } }
+    @keyframes draw     { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+    @keyframes grow     { from { transform: scale(0); } to { transform: scale(1); } }
+    @keyframes bloom    { from { transform: scale(0) rotate(-90deg); } to { transform: scale(1) rotate(0); } }
+    @keyframes sway     { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(2.5deg); } }
+    @keyframes float {
+      0%   { opacity: 0; transform: translate(0, 0); }
+      20%  { opacity: .9; }
+      80%  { opacity: .6; }
+      100% { opacity: 0; transform: translate(14px, -90px); }
     }
 
-    .hills {
-      position: absolute;
-      left: 0; right: 0; bottom: 0;
-      width: 100%;
-      height: 170px;
-      pointer-events: none;
+    /* ---------- Responsive ---------- */
+    @media (max-width: 880px) {
+      .page { grid-template-columns: 1fr; gap: 18px; padding: 24px 24px 150px; align-content: start; }
+      .art { order: -1; }
+      .art svg { max-width: 300px; }
+      .lead { font-size: 17px; }
+    }
+    @media (max-width: 420px) {
+      .page { padding: 20px 20px 150px; }
+      .art svg { max-width: 270px; }
+      .brand-row { margin-bottom: 18px; }
+      h1 { margin-bottom: 22px; }
+      .eyebrow { font-size: 11.5px; letter-spacing: .12em; }
+      .cta { width: 100%; justify-content: center; padding: 18px 24px; font-size: 15px; }
     }
 
-    @media (min-width: 768px) {
-      .hero { padding-top: 80px; }
-      .eyebrow { font-size: 14px; }
-      .lead { font-size: 19px; }
-      .illustration { width: 180px; }
-      .hills { height: 220px; }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
     }
   </style>
 </head>
 <body>
 
-  <main class="hero">
-    <p class="eyebrow">Chatbotique.eu<span class="x">×</span>JUST Nahrin</p>
+  <main class="page">
+    <section class="text">
+      <div class="brand-row">
+        <span class="dots" aria-hidden="true"><i></i><i></i></span>
+        <p class="eyebrow">Chatbotique.eu<span class="x">×</span>JUST Nahrin</p>
+      </div>
 
-    <h1>
-      <span class="thin">Testovací</span>
-      <span class="bold">prostředí</span>
-    </h1>
+      <h1>
+        <span class="line thin"><span>Testovací</span></span>
+        <span class="line bold"><span>prostředí</span></span>
+      </h1>
 
-    <div class="divider" role="presentation"></div>
+      <p class="lead">
+        AI asistent pro <strong>švýcarské produkty JUST a Nahrin</strong>. Zná celý sortiment
+        z justnahrin.cz – poradí s výběrem, použitím i dávkováním, řekne cenu a složení
+        a pošle odkaz na konkrétní produkt.
+      </p>
 
-    <p class="lead">
-      Nasazený chatbot pro <strong>švýcarskou bylinnou kosmetiku a doplňky stravy JUST Nahrin</strong>.
-      Pomůže vybrat produkt podle potřeby, poradí s použitím a dávkováním, řekne cenu i složení
-      a pošle odkaz na konkrétní produkt — vyzkoušejte ho v bublině vpravo dole.
-    </p>
+      <button type="button" class="cta" id="open-chat">
+        Vyzkoušet asistenta
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </button>
+    </section>
 
-    <!-- Leaf + herbal oil drop -->
-    <svg class="illustration" viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <defs>
-        <linearGradient id="leafGrad" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="#a6d04a"/>
-          <stop offset="1" stop-color="#4f9a35"/>
-        </linearGradient>
-        <linearGradient id="dropGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#e7c56a"/>
-          <stop offset="1" stop-color="#c39a3c"/>
-        </linearGradient>
-      </defs>
-      <path d="M150 128 C 170 100, 182 78, 196 62" stroke="#dfe9c4" stroke-width="5" fill="none" stroke-linecap="round"/>
-      <path d="M100 8 C 140 36, 158 74, 158 102 C 158 132, 132 148, 100 148 C 68 148, 42 132, 42 102 C 42 74, 60 36, 100 8 Z" fill="url(#leafGrad)"/>
-      <g stroke="#ffffff" stroke-width="5" stroke-linecap="round" fill="none" opacity=".92">
-        <path d="M100 46 V 148"/>
-        <path d="M100 74 L 80 58 M100 74 L 120 58"/>
-        <path d="M100 98 L 76 80 M100 98 L 124 80"/>
-        <path d="M100 122 L 72 102 M100 122 L 128 102"/>
-      </g>
-      <path d="M176 92 C 184 104, 188 111, 188 117 C 188 124, 182 129, 176 129 C 170 129, 164 124, 164 117 C 164 111, 168 104, 176 92 Z" fill="url(#dropGrad)"/>
-      <ellipse cx="171" cy="115" rx="2.5" ry="4" fill="#fff" opacity=".6"/>
-    </svg>
+    <div class="art" aria-hidden="true">
+      <svg viewBox="0 0 400 360" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="mint" cx="50%" cy="30%" r="75%">
+            <stop offset="0" stop-color="#f3f9f2"/>
+            <stop offset="1" stop-color="#d3e8d8"/>
+          </radialGradient>
+          <linearGradient id="glass" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#5a3216"/>
+            <stop offset=".5" stop-color="#8a5226"/>
+            <stop offset="1" stop-color="#4a2810"/>
+          </linearGradient>
+          <linearGradient id="cap" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#b99446"/>
+            <stop offset=".5" stop-color="#ead18a"/>
+            <stop offset="1" stop-color="#a8833a"/>
+          </linearGradient>
+          <clipPath id="domeClip"><path d="M108.5 345 A180 180 0 1 1 291.5 345 Z"/></clipPath>
+        </defs>
 
-    <!-- Hills -->
-    <svg class="hills" viewBox="0 0 1440 220" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <path d="M0 96 C 260 40, 520 40, 760 86 C 1000 132, 1220 116, 1440 70 V 220 H 0 Z" fill="#e8f0d4"/>
-      <path d="M0 138 C 240 104, 470 112, 720 140 C 980 168, 1220 150, 1440 118 V 220 H 0 Z" fill="#dbe8bf"/>
-      <path d="M0 176 C 300 150, 600 160, 860 178 C 1100 194, 1290 184, 1440 168 V 220 H 0 Z" fill="#cde09f"/>
-    </svg>
+        <!-- Dome with Swiss alpine scene -->
+        <g class="dome">
+          <g clip-path="url(#domeClip)">
+            <rect x="0" y="0" width="400" height="360" fill="url(#mint)"/>
+            <circle class="sun" cx="282" cy="118" r="30" fill="#edcf6c"/>
+            <g class="mtn-back">
+              <path d="M10 270 L96 168 L136 206 L196 132 L262 214 L300 184 L392 270 Z" fill="#b8d4c3"/>
+              <path d="M196 132 L176 157 L188 152 L198 162 L208 150 L218 158 Z" fill="#ffffff"/>
+              <path d="M96 168 L82 185 L94 181 L104 188 L110 180 Z" fill="#ffffff"/>
+            </g>
+            <g class="mtn-front">
+              <path d="M0 300 L70 222 L120 262 L170 214 L240 282 L300 232 L400 300 Z" fill="#8fbea2"/>
+              <path d="M170 214 L156 229 L166 226 L174 234 L182 225 Z" fill="#ffffff" opacity=".9"/>
+              <path d="M300 232 L288 245 L298 242 L306 248 L312 241 Z" fill="#ffffff" opacity=".9"/>
+            </g>
+            <g class="ground">
+              <path d="M0 312 C 90 296, 300 296, 400 312 V 360 H 0 Z" fill="#e3d6c1"/>
+              <ellipse cx="262" cy="336" rx="22" ry="7" fill="#cdbca2"/>
+              <ellipse cx="140" cy="340" rx="14" ry="5" fill="#d3c3a9"/>
+            </g>
+          </g>
+          <line x1="96" y1="345" x2="304" y2="345" stroke="#d8ccb9" stroke-width="2" stroke-linecap="round"/>
+        </g>
+
+        <!-- Left herb sprig -->
+        <g class="sway-l">
+          <path class="stem" pathLength="1" style="animation-delay:1.5s" d="M118 334 C 112 300, 100 268, 96 214"/>
+          <path class="stem" pathLength="1" style="animation-delay:1.8s" d="M112 300 C 128 288, 138 270, 142 248"/>
+          <g transform="translate(104 270) rotate(-55)"><path class="leaf" style="animation-delay:1.9s" d="M0 0 C 8 -10, 26 -10, 34 0 C 26 10, 8 10, 0 0 Z" fill="#6aa86b"/></g>
+          <g transform="translate(110 296) rotate(-150)"><path class="leaf" style="animation-delay:2.0s" d="M0 0 C 8 -10, 26 -10, 34 0 C 26 10, 8 10, 0 0 Z" fill="#5a9a5d"/></g>
+          <g transform="translate(99 240) rotate(-130)"><path class="leaf" style="animation-delay:2.15s" d="M0 0 C 7 -9, 22 -9, 29 0 C 22 9, 7 9, 0 0 Z" fill="#7bb878"/></g>
+          <g transform="translate(132 272) rotate(-25)"><path class="leaf" style="animation-delay:2.25s" d="M0 0 C 7 -9, 22 -9, 29 0 C 22 9, 7 9, 0 0 Z" fill="#6aa86b"/></g>
+          <g transform="translate(96 214)">
+            <g class="flower" style="animation-delay:2.5s">
+              <circle cx="0" cy="-8" r="6" fill="#edcf6c"/><circle cx="7.6" cy="-2.5" r="6" fill="#edcf6c"/>
+              <circle cx="4.7" cy="6.5" r="6" fill="#edcf6c"/><circle cx="-4.7" cy="6.5" r="6" fill="#edcf6c"/>
+              <circle cx="-7.6" cy="-2.5" r="6" fill="#edcf6c"/><circle cx="0" cy="0" r="4" fill="#c99a2e"/>
+            </g>
+          </g>
+          <g transform="translate(142 248)">
+            <g class="flower" style="animation-delay:2.65s">
+              <circle cx="0" cy="-6" r="4.5" fill="#f3dc8c"/><circle cx="5.7" cy="-1.9" r="4.5" fill="#f3dc8c"/>
+              <circle cx="3.5" cy="4.9" r="4.5" fill="#f3dc8c"/><circle cx="-3.5" cy="4.9" r="4.5" fill="#f3dc8c"/>
+              <circle cx="-5.7" cy="-1.9" r="4.5" fill="#f3dc8c"/><circle cx="0" cy="0" r="3" fill="#c99a2e"/>
+            </g>
+          </g>
+        </g>
+
+        <!-- Right herb sprig -->
+        <g class="sway-r">
+          <path class="stem" pathLength="1" style="animation-delay:1.65s" d="M292 334 C 298 304, 308 282, 314 238"/>
+          <g transform="translate(298 306) rotate(-25)"><path class="leaf" style="animation-delay:2.05s" d="M0 0 C 8 -10, 26 -10, 34 0 C 26 10, 8 10, 0 0 Z" fill="#5a9a5d"/></g>
+          <g transform="translate(304 282) rotate(-160)"><path class="leaf" style="animation-delay:2.2s" d="M0 0 C 7 -9, 22 -9, 29 0 C 22 9, 7 9, 0 0 Z" fill="#7bb878"/></g>
+          <g transform="translate(310 258) rotate(-40)"><path class="leaf" style="animation-delay:2.35s" d="M0 0 C 7 -9, 22 -9, 29 0 C 22 9, 7 9, 0 0 Z" fill="#6aa86b"/></g>
+          <g transform="translate(314 238)">
+            <g class="flower" style="animation-delay:2.75s">
+              <circle cx="0" cy="-7" r="5.2" fill="#edcf6c"/><circle cx="6.6" cy="-2.2" r="5.2" fill="#edcf6c"/>
+              <circle cx="4.1" cy="5.7" r="5.2" fill="#edcf6c"/><circle cx="-4.1" cy="5.7" r="5.2" fill="#edcf6c"/>
+              <circle cx="-6.6" cy="-2.2" r="5.2" fill="#edcf6c"/><circle cx="0" cy="0" r="3.5" fill="#c99a2e"/>
+            </g>
+          </g>
+        </g>
+
+        <!-- Herbal oil bottle -->
+        <g class="bottle">
+          <ellipse cx="200" cy="334" rx="40" ry="6" fill="#4c2c14" opacity=".12"/>
+          <rect x="186" y="204" width="28" height="22" rx="3" fill="#4a2810"/>
+          <rect x="180" y="174" width="40" height="34" rx="5" fill="url(#cap)"/>
+          <g stroke="#a8833a" stroke-width="1.4" opacity=".55">
+            <line x1="187" y1="179" x2="187" y2="203"/><line x1="194" y1="179" x2="194" y2="203"/>
+            <line x1="200" y1="179" x2="200" y2="203"/><line x1="206" y1="179" x2="206" y2="203"/>
+            <line x1="213" y1="179" x2="213" y2="203"/>
+          </g>
+          <path d="M168 238 Q168 224 182 224 H218 Q232 224 232 238 V320 Q232 332 220 332 H180 Q168 332 168 320 Z" fill="url(#glass)"/>
+          <rect class="shine" x="174" y="232" width="7" height="88" rx="3.5" fill="#ffffff" opacity=".18"/>
+          <rect x="176" y="252" width="48" height="58" rx="5" fill="#fbf8f2"/>
+          <path d="M200 262 C 208 268, 210 278, 200 290 C 190 278, 192 268, 200 262 Z" fill="#2f6e46"/>
+          <path d="M200 266 V 290" stroke="#fbf8f2" stroke-width="1.6" stroke-linecap="round"/>
+          <rect x="186" y="296" width="28" height="3" rx="1.5" fill="#9c7c40"/>
+          <rect x="190" y="302" width="20" height="2.4" rx="1.2" fill="#d8ccb9"/>
+        </g>
+
+        <!-- Floating pollen -->
+        <g class="pollen">
+          <circle cx="150" cy="300" r="2.6" fill="#edcf6c" style="animation-delay:3.2s"/>
+          <circle cx="250" cy="290" r="2"   fill="#edcf6c" style="animation-delay:4.4s"/>
+          <circle cx="120" cy="250" r="1.8" fill="#ffffff" style="animation-delay:5.1s"/>
+          <circle cx="300" cy="270" r="2.4" fill="#f3dc8c" style="animation-delay:3.8s"/>
+          <circle cx="210" cy="210" r="1.6" fill="#ffffff" style="animation-delay:6s"/>
+          <circle cx="90"  cy="210" r="2.2" fill="#f3dc8c" style="animation-delay:6.8s"/>
+        </g>
+      </svg>
+    </div>
   </main>
+
+  <script>
+    document.getElementById('open-chat').addEventListener('click', function () {
+      if (window.voiceflow && window.voiceflow.chat) window.voiceflow.chat.open();
+    });
+  </script>
 
   <!-- ============================================================
        Chatbotique – integrační kód JUST Nahrin (popup + chatbot)
@@ -180,26 +333,27 @@
       align-items: flex-start;
       gap: 14px;
       padding: 18px 44px 18px 16px;
-      background: #fff;
-      border: 1px solid #e2ebd3;
-      border-radius: 18px;
-      box-shadow: 0 12px 32px rgba(52, 84, 28, .14);
-      font-family: 'Roboto', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      background: #fffdf9;
+      border: 1px solid #e6dccd;
+      border-radius: 22px;
+      box-shadow: 0 14px 34px rgba(76, 44, 20, .16);
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
       cursor: pointer;
       opacity: 0;
-      transform: translateY(16px);
+      transform: translateY(16px) scale(.97);
+      transform-origin: bottom right;
       pointer-events: none;
-      transition: opacity .35s ease, transform .35s ease;
+      transition: opacity .4s ease, transform .4s cubic-bezier(.3,1.4,.5,1);
     }
     .cbq-popup::before {
       content: '';
       position: absolute;
-      top: -1px; left: 18px; right: 18px;
-      height: 3px;
-      border-radius: 0 0 3px 3px;
-      background: linear-gradient(90deg, #4f9a35, #92c83f);
+      top: -1px; left: 22px; right: 22px;
+      height: 4px;
+      border-radius: 0 0 4px 4px;
+      background: linear-gradient(90deg, #1f4d99 0%, #1f4d99 50%, #2f6e46 50%, #2f6e46 100%);
     }
-    .cbq-popup.cbq-visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+    .cbq-popup.cbq-visible { opacity: 1; transform: none; pointer-events: auto; }
     .cbq-popup [hidden] { display: none !important; }
 
     .cbq-avatar {
@@ -207,7 +361,7 @@
       flex: 0 0 56px;
       width: 56px; height: 56px;
       border-radius: 50%;
-      border: 3px solid #5aa33b;
+      border: 3px solid #1f4d99;
       padding: 2px;
       background: #fff;
     }
@@ -221,22 +375,22 @@
       right: -3px; bottom: -1px;
       width: 15px; height: 15px;
       border-radius: 50%;
-      background: #5cc34a;
+      background: #3aa55c;
       border: 2.5px solid #fff;
     }
 
     .cbq-body { min-width: 0; padding-top: 2px; }
-    .cbq-title { font-size: 16px; font-weight: 700; color: #3f8a2e; margin-bottom: 4px; }
-    .cbq-text { font-size: 15.5px; line-height: 1.45; color: #222; }
+    .cbq-title { font-size: 16px; font-weight: 800; color: #4c2c14; margin-bottom: 4px; }
+    .cbq-text { font-size: 15px; line-height: 1.5; color: #5b4130; }
 
     .cbq-typing { display: flex; gap: 6px; padding: 8px 0 4px; }
     .cbq-typing span {
       width: 8px; height: 8px; border-radius: 50%;
-      background: #b7d98f;
       animation: cbq-bounce 1.2s infinite ease-in-out;
     }
-    .cbq-typing span:nth-child(2) { animation-delay: .15s; background: #a2cd78; }
-    .cbq-typing span:nth-child(3) { animation-delay: .3s;  background: #8cc163; }
+    .cbq-typing span:nth-child(1) { background: #1f4d99; }
+    .cbq-typing span:nth-child(2) { background: #2f6e46; animation-delay: .15s; }
+    .cbq-typing span:nth-child(3) { background: #edcf6c; animation-delay: .3s; }
     @keyframes cbq-bounce {
       0%, 60%, 100% { transform: translateY(0); }
       30%           { transform: translateY(-5px); }
@@ -248,10 +402,10 @@
       width: 28px; height: 28px;
       display: flex; align-items: center; justify-content: center;
       border: 0; background: none; cursor: pointer;
-      color: #8e948c; font-size: 22px; line-height: 1;
+      color: #9c8a78; font-size: 22px; line-height: 1;
       border-radius: 50%;
     }
-    .cbq-close:hover { background: #f1f5ea; color: #444; }
+    .cbq-close:hover { background: #f3ede4; color: #4c2c14; }
 
     @media (max-width: 480px) {
       .cbq-popup { left: 16px; right: 16px; width: auto; max-width: none; }
@@ -267,14 +421,14 @@
     <div class="cbq-body">
       <div class="cbq-title">Poradna JUST Nahrin</div>
       <div class="cbq-typing" id="cbq-typing"><span></span><span></span><span></span></div>
-      <div class="cbq-text" id="cbq-text" hidden>Hledáte bylinný olej, péči o pleť nebo něco na imunitu? Poradím s výběrem – stačí napsat.</div>
+      <div class="cbq-text" id="cbq-text" hidden>Dobrý den 👋 Zajímá vás třeba Olej z 31 léčivých bylin nebo novinky Nahrin? Ráda vám poradím s výběrem i použitím.</div>
     </div>
     <button type="button" class="cbq-close" id="cbq-close" aria-label="Zavřít">&times;</button>
   </div>
 
   <script type="text/javascript">
     (function () {
-      var SHOW_AFTER_MS = 2500;   // kdy se popup objeví
+      var SHOW_AFTER_MS = 3200;   // kdy se popup objeví
       var TYPING_MS     = 1600;   // jak dlouho „píše“
       var KEY = 'cbq_popup_closed';
 
