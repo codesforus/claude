@@ -1,0 +1,132 @@
+# Obchodní nastavení AI obchodníka. Zkopírujte jako config.yaml a upravte.
+# Popisy (offer, ideal_customer, segmenty) čte AI, takže pište je lidsky a konkrétně.
+# Údaje o Freeheatingu jsou předvyplněné z veřejných zdrojů – nechte si je od nich potvrdit.
+
+timezone: Europe/Prague
+
+client:
+  name: Freeheating
+  website: https://freeheating.cz
+  offer: |
+    Free heating s.r.o. (Praha) prodává a pronajímá mobilní kotelny – teplovodní i parní – a zajišťuje
+    dočasné vytápění a ohřev teplé vody tam, kde vypadl nebo se mění hlavní zdroj tepla:
+    při havárii kotelny, plánované rekonstrukci či výměně kotle, odstávce teplárny, na stavbách
+    a při rekonstrukcích přes topnou sezónu. Servis a nonstop havarijní linka 24/7, dodání do pár hodin.
+  ideal_customer: |
+    Organizace, které provozují nebo spravují vlastní zdroj tepla (kotelnu) a nesmí zůstat bez tepla:
+    správci bytových domů a SVJ/družstva s domovní kotelnou, facility management komerčních budov,
+    teplárny a provozovatelé CZT, nemocnice, domovy pro seniory, školy, hotely, průmyslové provozy
+    s potřebou páry nebo technologického tepla. Dále firmy, které mění kotelny nebo stavějí v zimě
+    a potřebují zákazníkovi zajistit náhradní teplo (topenáři, montážní firmy, stavební firmy).
+  exclude: |
+    - konkurence: firmy, které samy pronajímají nebo prodávají mobilní kotelny
+    - malé rodinné domy a domácnosti
+    - firmy bez vlastního zdroje tepla a bez vazby na vytápění
+
+segments:
+  - id: spravci
+    name: Správci nemovitostí a facility management
+    description: |
+      Správcovské firmy bytových domů a SVJ, facility management kancelářských a komerčních budov.
+      Hledej firmy, které spravují desítky domů nebo velké objekty s vlastní kotelnou.
+    places_queries: ["správa nemovitostí", "správa bytových domů", "facility management"]
+
+  - id: svj_druzstva
+    name: Bytová družstva a velká SVJ
+    description: |
+      Bytová družstva a společenství vlastníků velkých domů nebo sídlišť s vlastní (domovní, blokovou)
+      kotelnou. Signál: plánovaná rekonstrukce nebo výměna kotelny, odpojení od CZT.
+    places_queries: ["bytové družstvo"]
+
+  - id: topenari
+    name: Topenářské a montážní firmy (partneři)
+    description: |
+      Firmy, které projektují, montují a servisují kotelny a zdroje tepla pro bytové domy, firmy a obce.
+      Při výměně kotle potřebují zákazníkovi zajistit náhradní teplo – Freeheating jim může být
+      subdodavatelem. Hledej firmy dělající větší kotelny (desítky kW a víc), ne jen domácnosti.
+    places_queries: ["montáž kotelen", "rekonstrukce kotelen", "servis plynových kotlů"]
+
+  - id: stavebni
+    name: Stavební firmy
+    description: |
+      Stavební a developerské firmy, které staví nebo rekonstruují objekty přes topnou sezónu
+      a potřebují temperování, vysoušení nebo provizorní vytápění stavby.
+    places_queries: ["stavební firma rekonstrukce budov"]
+
+  - id: teplarny
+    name: Teplárny a dodavatelé tepla
+    description: |
+      Teplárny, provozovatelé soustav zásobování teplem (CZT) a menších výtopen, energetické
+      služby (ESCO). Mobilní kotelna jako záloha při odstávce nebo havárii.
+    places_queries: ["teplárna", "dodavatel tepla"]
+
+  - id: prumysl
+    name: Průmyslové provozy s potřebou páry a tepla
+    description: |
+      Výrobní podniky, které potřebují páru nebo technologické teplo: potravinářství, mlékárny,
+      pivovary, průmyslové prádelny, chemie, dřevozpracování.
+    places_queries: ["průmyslová prádelna", "mlékárna", "pivovar výroba"]
+
+  - id: zdravotni_socialni
+    name: Nemocnice, domovy pro seniory, hotely
+    description: |
+      Objekty, kde výpadek tepla nebo teplé vody nepřichází v úvahu: nemocnice, domovy pro seniory
+      a sociální zařízení, větší hotely a lázně. Volat na technický úsek / správu budov.
+    places_queries: ["domov pro seniory", "nemocnice", "lázně hotel"]
+
+discovery:
+  enabled: true
+  # ai_search = Claude prohledává web; google_places = Google Maps (potřebuje GOOGLE_MAPS_API_KEY).
+  sources: [ai_search]
+  schedule: "0 6 * * 1-5"      # cron, místní čas: každý pracovní den v 6:00
+  tasks_per_run: 3             # kolik kombinací segment × kraj se při jednom běhu prohledá
+  companies_per_task: 12       # kolik firem má AI v jedné úloze najít
+  target_queue_size: 150       # když čeká ve frontě aspoň tolik firem, nehledá se
+  min_fit_score: 60            # firmy s nižším skóre se nevolají
+  effort: high                 # hloubka přemýšlení AI rešeršéra: low | medium | high
+  max_web_searches: 20         # strop vyhledávání na jednu úlohu (náklady)
+  regions:
+    - Hlavní město Praha
+    - Středočeský kraj
+    - Jihomoravský kraj
+    - Moravskoslezský kraj
+    - Olomoucký kraj
+    - Královéhradecký kraj
+    - Pardubický kraj
+    - Plzeňský kraj
+    - Ústecký kraj
+    - Liberecký kraj
+    - Jihočeský kraj
+    - Kraj Vysočina
+    - Zlínský kraj
+    - Karlovarský kraj
+  # Hledání podle aktuální potřeby po celé ČR – obnovuje se jednou týdně a má přednost.
+  intent_searches:
+    - id: zakazky_kotelny
+      description: |
+        Aktuálně vypsané nebo nedávno zadané veřejné zakázky a poptávky na rekonstrukci, výměnu
+        nebo modernizaci kotelny či zdroje tepla (NEN, Věstník veřejných zakázek, profily zadavatelů,
+        tenderové a poptávkové portály). Zajímá nás zadavatel (bude potřebovat náhradní teplo během
+        prací) i vítězný zhotovitel, je-li znám. Do fit_reason napiš název a termín zakázky.
+    - id: havarie_odstavky
+      description: |
+        Čerstvé zprávy (posledních 60 dní) o haváriích vytápění, plánovaných odstávkách tepla nebo
+        problémech s dodávkou tepla v bytových domech, nemocnicích, školách a firmách.
+        Ukládej organizace, kterých se to týká, nebo jejich správce.
+
+calling:
+  enabled: false               # zapněte až po otestování (python -m leadgen test-call ...)
+  windows: ["09:00-11:45", "13:00-16:30"]
+  weekdays: [1, 2, 3, 4, 5]    # 1 = pondělí
+  skip_public_holidays: true
+  max_concurrent_calls: 2
+  max_calls_per_day: 60
+  max_attempts: 3              # kolikrát zkusit nedovolanou firmu
+  retry_after_hours: [3, 24, 48]
+  stale_call_minutes: 60
+  # Volitelně přepíše úvodní větu asistenta ve Vapi. Musí říct, že volá AI a že se hovor nahrává.
+  # first_message: "Dobrý den, tady virtuální asistentka společnosti Freeheating, hovor je automatizovaný a nahrává se. Volám kvůli záložnímu vytápění pro {{company}} – můžete mi věnovat minutku?"
+
+reporting:
+  weekly_cron: "30 7 * * 1"    # týdenní report v pondělí 7:30
+  instant_outcomes: [hot]      # tyto výsledky se posílají hned (lze přidat warm)
