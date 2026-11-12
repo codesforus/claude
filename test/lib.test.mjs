@@ -135,3 +135,12 @@ test('topicRows and detailRows describe the latest run', () => {
   assert.deepEqual(details[0].sources, ['a.cz']);
   assert.equal(details[1].text, 'krátká');
 });
+
+test('buildDashboard drops no-search runs once a run with search exists', () => {
+  const answer = { query: 'A', engine: 'gemini', mentioned: false, position: null, cited: false, brands: [], sources: [] };
+  const plain = { date: '2026-11-12', noSearch: true, answers: [answer] };
+  assert.equal(buildDashboard([plain], brand).meta[0].noSearch, true);
+  const mixed = buildDashboard([plain, { date: '2026-11-19', answers: [answer] }], brand);
+  assert.equal(mixed.meta[0].runs, 1);
+  assert.equal(mixed.meta[0].noSearch, false);
+});

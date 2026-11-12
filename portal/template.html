@@ -165,6 +165,7 @@
     <span class="eyebrow"><span class="eyebrow-dot"></span><span id="who"></span></span>
     <h1>Viditelnost v AI</h1>
     <p class="lede" id="lede"></p>
+    <p class="sample" id="no-search" hidden>Měřeno bez hledání na webu: nástroj odpovídal jen z toho, co má naučené. V aplikaci si odpověď obvykle dohledává, takže skutečná viditelnost se může lišit. Odkazy na web proto chybí.</p>
     <p class="sample" id="sample" hidden>Tohle jsou ukázková data. Firma, konkurenti i čísla jsou vymyšlené, aby bylo vidět, jak portál vypadá. Skutečné měření je nahradí.</p>
   </div>
 </header>
@@ -277,6 +278,7 @@
   function renderHeader() {
     document.getElementById('who').textContent = [meta.brand, meta.domain].filter(Boolean).join(' · ');
     document.getElementById('sample').hidden = !meta.sample;
+    document.getElementById('no-search').hidden = !meta.noSearch;
     const lede = document.getElementById('lede');
     if (!last) {
       lede.textContent = 'Zatím neproběhlo žádné měření. Po prvním se tu objeví, jak často vás AI nástroje jmenují.';

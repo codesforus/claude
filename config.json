@@ -13,7 +13,8 @@
       "enabled": false
     },
     "gemini": {
-      "enabled": true
+      "enabled": true,
+      "search": false
     },
     "perplexity": {
       "enabled": false

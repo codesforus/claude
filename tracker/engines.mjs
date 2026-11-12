@@ -124,9 +124,10 @@ function gemini(cfg) {
   };
   return {
     id: 'gemini',
+    search: cfg.search !== false,
     model: resolve,
     async ask(query) {
-      const { text, chunks } = await call(query, [{ google_search: {} }]);
+      const { text, chunks } = await call(query, cfg.search === false ? null : [{ google_search: {} }]);
       // Odkazy od Googlu jsou přesměrování; skutečnou doménu nese titulek zdroje.
       return {
         text,

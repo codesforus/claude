@@ -263,7 +263,9 @@ export function detailRows(run, maxChars = 1200) {
 
 /** Jeden soubor pro dashboard: vývoj ze všech měření, detail z posledního. */
 export function buildDashboard(runs, brand) {
-  const sorted = [...runs].sort((a, b) => a.date.localeCompare(b.date));
+  // Měření bez hledání na webu se s ostatními nemíchají: jakmile existuje měření s hledáním, vypadnou.
+  const withSearch = runs.filter((r) => !r.noSearch);
+  const sorted = [...(withSearch.length ? withSearch : runs)].sort((a, b) => a.date.localeCompare(b.date));
   const latest = sorted.at(-1);
   return {
     meta: [
@@ -274,6 +276,7 @@ export function buildDashboard(runs, brand) {
         runs: sorted.length,
         queries: latest ? new Set(latest.answers.map((a) => a.query)).size : 0,
         sample: sorted.some((r) => r.sample === true),
+        noSearch: latest?.noSearch === true,
       },
     ],
     runs: sorted.flatMap(runRows),

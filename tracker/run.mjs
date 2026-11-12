@@ -33,6 +33,7 @@ const { values: args } = parseArgs({
     rebuild: { type: 'boolean', default: false },
     limit: { type: 'string' },
     concurrency: { type: 'string', default: '4' },
+    pause: { type: 'string', default: '0' },
   },
 });
 
@@ -76,6 +77,7 @@ async function measure(config, date, { mockRun }) {
   const answers = await pool(jobs, Number(args.concurrency), async ({ query, engine, sample }) => {
     const base = { query: query.text, topic: query.topic ?? '', engine: engine.id, sample };
     let answer;
+    if (Number(args.pause)) await new Promise((r) => setTimeout(r, Number(args.pause) * 1000));
     try {
       const { text, sources } = await engine.ask(query.text);
       if (!text.trim()) throw new Error('prázdná odpověď');
@@ -92,7 +94,8 @@ async function measure(config, date, { mockRun }) {
     return answer;
   });
 
-  return { date, brand: config.brand.name, sample: mockRun || undefined, models, answers };
+  const noSearch = engines.some((e) => e.search === false) || undefined;
+  return { date, brand: config.brand.name, sample: mockRun || undefined, noSearch, models, answers };
 }
 
 async function loadRuns(dir) {
