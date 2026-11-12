@@ -233,6 +233,34 @@ export function domainRows(run, brand, limit = 12) {
     }));
 }
 
+/** Viditelnost podle tématu dotazu v jednom měření. */
+export function topicRows(run) {
+  const ok = run.answers.filter((a) => !a.error && a.topic);
+  return [...new Set(ok.map((a) => a.topic))].map((topic) => {
+    const answers = ok.filter((a) => a.topic === topic);
+    const mentioned = answers.filter((a) => a.mentioned).length;
+    return { topic, answers: answers.length, mentioned, visibility: pct(mentioned, answers.length) };
+  });
+}
+
+/** Co která AI na který dotaz odpověděla: zkrácený text, jmenované firmy a zdroje. */
+export function detailRows(run, maxChars = 1200) {
+  return run.answers
+    .filter((a) => !a.error)
+    .map((a) => {
+      const text = String(a.text ?? '').trim();
+      return {
+        query: a.query,
+        engine: a.engine,
+        mentioned: Boolean(a.mentioned),
+        position: a.position ?? null,
+        text: text.length > maxChars ? `${text.slice(0, maxChars).trimEnd()}…` : text,
+        brands: uniqueBrands(a.brands).slice(0, 8),
+        sources: [...new Set((a.sources ?? []).map((s) => s.domain).filter(Boolean))].slice(0, 6),
+      };
+    });
+}
+
 /** Jeden soubor pro dashboard: vývoj ze všech měření, detail z posledního. */
 export function buildDashboard(runs, brand) {
   const sorted = [...runs].sort((a, b) => a.date.localeCompare(b.date));
@@ -252,5 +280,7 @@ export function buildDashboard(runs, brand) {
     queries: latest ? queryRows(latest, brand) : [],
     brands: latest ? brandRows(latest, brand) : [],
     domains: latest ? domainRows(latest, brand) : [],
+    topics: latest ? topicRows(latest) : [],
+    details: latest ? detailRows(latest) : [],
   };
 }

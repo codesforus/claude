@@ -6,12 +6,14 @@ import {
   analyzeAnswer,
   brandRows,
   buildDashboard,
+  detailRows,
   domainOf,
   isOwnBrand,
   normalizeName,
   parseBrandList,
   queryRows,
   runRows,
+  topicRows,
 } from '../tracker/lib.mjs';
 
 const brand = { name: 'Okna Novák', domain: 'https://www.oknanovak.cz/', aliases: ['Novák okna s.r.o.'] };
@@ -114,4 +116,22 @@ test('buildDashboard takes detail from the latest run', () => {
   assert.deepEqual(dash.runs.map((r) => r.date), ['2026-11-05', '2026-11-05', '2026-11-12', '2026-11-12', '2026-11-12']);
   assert.equal(dash.domains[0].domain, 'srovnavac.cz');
   assert.equal(dash.domains.find((d) => d.own).domain, 'oknanovak.cz');
+});
+
+test('topicRows and detailRows describe the latest run', () => {
+  const tagged = {
+    date: '2026-11-12',
+    answers: [
+      { query: 'A', topic: 'Okna', engine: 'chatgpt', mentioned: true, position: 1, text: 'x'.repeat(50), brands: ['Okna Novák', 'okna novák'], sources: [{ domain: 'a.cz' }, { domain: 'a.cz' }] },
+      { query: 'B', topic: 'Okna', engine: 'chatgpt', mentioned: false, position: null, text: 'krátká', brands: [], sources: [] },
+      { query: 'C', topic: 'Dveře', engine: 'chatgpt', error: 'timeout' },
+    ],
+  };
+  assert.deepEqual(topicRows(tagged), [{ topic: 'Okna', answers: 2, mentioned: 1, visibility: 50 }]);
+  const details = detailRows(tagged, 20);
+  assert.equal(details.length, 2);
+  assert.equal(details[0].text, `${'x'.repeat(20)}…`);
+  assert.deepEqual(details[0].brands, ['Okna Novák']);
+  assert.deepEqual(details[0].sources, ['a.cz']);
+  assert.equal(details[1].text, 'krátká');
 });

@@ -128,6 +128,30 @@
   .share { display: grid; grid-template-columns: minmax(3rem, 1fr) 3.4em; gap: 10px; align-items: center; min-width: 8rem; }
   .share .bar-track { height: 8px; }
 
+  .advice { display: grid; gap: 14px 28px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr)); margin: 0; padding: 0; list-style: none; }
+  .advice li { display: grid; gap: 4px; align-content: start; padding-left: 14px; border-left: 3px solid var(--accent); }
+  h3 { font-family: var(--font-head); font-weight: 600; font-size: 1rem; line-height: 1.3; margin: 0; }
+  .advice p { margin: 0; color: var(--fg-2); font-size: 0.95rem; }
+
+  .filters { display: flex; flex-wrap: wrap; gap: 8px; }
+  .filter { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 100px; border: 1px solid var(--line-strong); background: var(--surface); color: var(--fg); font: inherit; font-size: 0.9rem; font-weight: 500; cursor: pointer; }
+  .filter:hover { border-color: var(--accent); }
+  .filter.on { background: var(--grad-deep); border-color: transparent; color: #ffffff; }
+  .filter-val { font-variant-numeric: tabular-nums; opacity: 0.8; }
+  .filter:focus-visible, .toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .toggle { display: inline-flex; align-items: baseline; gap: 8px; padding: 0; border: 0; background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; }
+  .toggle:hover .toggle-text { text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 3px; }
+  .chev { color: var(--accent); font-size: 0.7em; transition: transform 0.15s; flex: none; }
+  .toggle[aria-expanded="true"] .chev { transform: rotate(90deg); }
+  @media (prefers-reduced-motion: reduce) { .chev { transition: none; } }
+  tr.detail td { padding: 0 0 14px; }
+  .answers { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); }
+  .answer { display: grid; gap: 8px; align-content: start; padding: 14px 16px; border-radius: 12px; background: var(--bg); border: 1px solid var(--line); min-width: 0; }
+  .answer-head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0; font-family: var(--font-head); font-weight: 600; font-size: 0.9rem; }
+  .answer-text { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; font-size: 0.9rem; color: var(--fg-2); max-height: 16rem; overflow-y: auto; }
+  .answer-meta { margin: 0; font-size: 0.82rem; color: var(--muted); overflow-wrap: anywhere; }
+  .answer-meta b { color: var(--fg-2); font-weight: 600; }
+
   details { color: var(--fg-2); }
   summary { cursor: pointer; color: var(--fg); font-weight: 500; }
   summary:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
@@ -159,6 +183,11 @@
     </details>
   </section>
 
+  <section class="card section" id="doporuceni">
+    <h2>Co s tím udělat</h2>
+    <ul class="advice" id="advice"></ul>
+  </section>
+
   <div class="two">
     <section class="card section" id="firmy">
       <h2>Koho AI jmenuje nejčastěji</h2>
@@ -175,6 +204,7 @@
   <section class="card section" id="dotazy">
     <h2>Dotazy, na které se AI ptáme</h2>
     <p class="sub" id="queries-sub"></p>
+    <div class="filters" id="topics" role="group" aria-label="Filtr podle tématu"></div>
     <div class="scroll"><table id="queries"></table></div>
   </section>
 
@@ -444,6 +474,66 @@
           h('td', { class: 'num' }, num(d.citations))))));
   }
 
+  function renderAdvice() {
+    const section = document.getElementById('doporuceni');
+    const items = [];
+    if (last) {
+      const missing = DATA.queries.filter((q) => q.hits === 0).length;
+      const weakest = [...(DATA.topics || [])].sort((a, b) => a.visibility - b.visibility)[0];
+      if (missing) {
+        items.push(['Doplňte obsah k dotazům bez zmínky',
+          `U ${num(missing)} z ${num(DATA.queries.length)} dotazů vás nejmenoval žádný nástroj${(DATA.topics || []).length > 1 ? `; nejslabší téma je ${weakest.topic} (${pct(weakest.visibility)})` : ''}. Stránka, která na takový dotaz přímo odpovídá, dává AI důvod vás zmínit.`]);
+      }
+      const cited = DATA.domains.filter((d) => !d.own).slice(0, 3).map((d) => d.domain);
+      if (cited.length) {
+        items.push(['Dostaňte se na weby, ze kterých AI čerpá',
+          `Nejčastěji cituje ${cited.join(', ')}. Zmínka, profil nebo recenze na těchto webech zvyšuje šanci na doporučení.`]);
+      }
+      if (last.citation_rate < last.visibility) {
+        items.push(['Dejte AI důvod odkazovat na váš web',
+          `Jmenuje vás u ${pct(last.visibility)} odpovědí, ale na váš web odkazuje jen u ${pct(last.citation_rate)}. Pomáhají konkrétní stránky s cenami, postupy a odpověďmi na časté otázky.`]);
+      }
+      const engines = series.filter((item) => item.id !== 'all')
+        .map((item) => ({ label: item.label, point: item.points[item.points.length - 1] }))
+        .filter((e) => e.point.date === last.date)
+        .sort((a, b) => a.point.visibility - b.point.visibility);
+      const low = engines[0];
+      const high = engines[engines.length - 1];
+      if (engines.length > 1 && low.point.visibility !== high.point.visibility) {
+        items.push(['Zaměřte se na nejslabší nástroj',
+          `Nejméně vás jmenuje ${low.label} (${pct(low.point.visibility)}), nejvíce ${high.label} (${pct(high.point.visibility)}). V tabulce dotazů je vidět, kde přesně se liší.`]);
+      }
+    }
+    section.hidden = !items.length;
+    document.getElementById('advice').replaceChildren(
+      ...items.map(([title, text]) => h('li', {}, h('h3', {}, title), h('p', {}, text))));
+  }
+
+  let activeTopic = '';
+  const openQueries = new Set();
+
+  function renderTopics() {
+    const box = document.getElementById('topics');
+    const topics = DATA.topics || [];
+    box.hidden = topics.length < 2;
+    if (box.hidden) return;
+    const chip = (label, value, topic) =>
+      h('button', { type: 'button', class: activeTopic === topic ? 'filter on' : 'filter', 'aria-pressed': String(activeTopic === topic), 'data-topic': topic },
+        label, h('span', { class: 'filter-val' }, pct(value)));
+    box.replaceChildren(chip('Vše', last.visibility, ''), ...topics.map((t) => chip(t.topic, t.visibility, t.topic)));
+  }
+
+  function answerCard(detail) {
+    const engine = ENGINES.find((e) => e.id === detail.engine);
+    const state = !detail.mentioned ? 'bez zmínky' : detail.position ? `jmenováni jako ${detail.position}.` : 'jmenováni';
+    return h('div', { class: 'answer' },
+      h('p', { class: 'answer-head' }, h('span', { class: 'swatch', style: `background:${engine ? engine.color : 'var(--muted)'}` }), engine ? engine.label : detail.engine,
+        h('span', { class: detail.mentioned ? 'pill yes' : 'pill' }, state)),
+      h('p', { class: 'answer-text' }, detail.text || 'Odpověď je prázdná.'),
+      detail.brands.length ? h('p', { class: 'answer-meta' }, h('b', {}, 'Jmenované firmy: '), detail.brands.join(', ')) : null,
+      detail.sources.length ? h('p', { class: 'answer-meta' }, h('b', {}, 'Zdroje: '), detail.sources.join(', ')) : null);
+  }
+
   function renderQueries() {
     const table = document.getElementById('queries');
     const sub = document.getElementById('queries-sub');
@@ -452,20 +542,50 @@
       return table.replaceChildren();
     }
     const missing = DATA.queries.filter((q) => q.hits === 0).length;
-    sub.replaceChildren('Číslo říká, kolikátou jmenovanou firmou jste v odpovědi byli. U ', h('b', {}, num(missing)), ' z ', h('b', {}, num(DATA.queries.length)), ' dotazů vás nejmenoval žádný nástroj; ty jsou nahoře.');
+    sub.replaceChildren('Číslo říká, kolikátou jmenovanou firmou jste v odpovědi byli. U ', h('b', {}, num(missing)), ' z ', h('b', {}, num(DATA.queries.length)), ' dotazů vás nejmenoval žádný nástroj; ty jsou nahoře. Kliknutím na dotaz zobrazíte, co AI odpověděla.');
     const measured = ENGINES.filter((e) => DATA.queries.some((q) => q[e.id] != null));
-    const rows = [...DATA.queries].sort((a, b) => a.hits - b.hits);
+    const rows = DATA.queries.filter((q) => !activeTopic || q.topic === activeTopic).sort((a, b) => a.hits - b.hits);
+    const body = [];
+    for (const q of rows) {
+      const details = (DATA.details || []).filter((d) => d.query === q.query);
+      const expanded = openQueries.has(q.query);
+      const label = h('span', {}, h('span', { class: 'toggle-text' }, q.query), q.topic ? h('span', { class: 'topic' }, q.topic) : null);
+      body.push(h('tr', {},
+        h('td', { class: 'col-query' }, details.length
+          ? h('button', { type: 'button', class: 'toggle', 'aria-expanded': String(expanded), 'data-query': q.query }, h('span', { class: 'chev', 'aria-hidden': 'true' }, '▶'), label)
+          : label),
+        ...measured.map((e) => {
+          const value = q[e.id];
+          return h('td', {}, h('span', { class: value != null && value !== 'ne' ? 'pill yes' : 'pill' }, value == null ? '—' : value));
+        }),
+        h('td', { class: 'col-rivals' }, q.rivals || '—')));
+      if (expanded) {
+        body.push(h('tr', { class: 'detail' }, h('td', { colspan: String(measured.length + 2) },
+          h('div', { class: 'answers' }, ...ENGINES.flatMap((e) => details.filter((d) => d.engine === e.id)).map(answerCard)))));
+      }
+    }
     table.replaceChildren(
       h('thead', {}, h('tr', {}, h('th', { class: 'col-query' }, 'Dotaz'), ...measured.map((e) => h('th', {}, e.label)), h('th', { class: 'col-rivals' }, 'Koho AI jmenuje'))),
-      h('tbody', {}, ...rows.map((q) =>
-        h('tr', {},
-          h('td', { class: 'col-query' }, q.query, q.topic ? h('span', { class: 'topic' }, q.topic) : null),
-          ...measured.map((e) => {
-            const value = q[e.id];
-            return h('td', {}, h('span', { class: value != null && value !== 'ne' ? 'pill yes' : 'pill' }, value == null ? '—' : value));
-          }),
-          h('td', { class: 'col-rivals' }, q.rivals || '—')))));
+      h('tbody', {}, ...body));
   }
+
+  document.getElementById('topics').addEventListener('click', (event) => {
+    const button = event.target.closest('button[data-topic]');
+    if (!button) return;
+    activeTopic = button.dataset.topic;
+    renderTopics();
+    renderQueries();
+  });
+  document.getElementById('queries').addEventListener('click', (event) => {
+    const button = event.target.closest('button[data-query]');
+    if (!button) return;
+    const query = button.dataset.query;
+    if (openQueries.has(query)) openQueries.delete(query);
+    else openQueries.add(query);
+    renderQueries();
+    const again = [...document.querySelectorAll('button[data-query]')].find((b) => b.dataset.query === query);
+    if (again) again.focus();
+  });
 
   renderHeader();
   renderTiles();
@@ -473,6 +593,9 @@
   drawTrend();
   renderBrands();
   renderDomains();
+  renderAdvice();
+  if (last) renderTopics();
+  else document.getElementById('topics').hidden = true;
   renderQueries();
   if ('ResizeObserver' in window) {
     let width = 0;

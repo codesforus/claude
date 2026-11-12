@@ -584,5 +584,686 @@
    "share": 17,
    "own": true
   }
+ ],
+ "topics": [
+  {
+   "topic": "Okna",
+   "answers": 15,
+   "mentioned": 8,
+   "visibility": 53
+  },
+  {
+   "topic": "Stínění",
+   "answers": 12,
+   "mentioned": 0,
+   "visibility": 0
+  },
+  {
+   "topic": "Fotovoltaika",
+   "answers": 9,
+   "mentioned": 6,
+   "visibility": 67
+  }
+ ],
+ "details": [
+  {
+   "query": "Kdo je nejlepší dodavatel plastových oken v Brně?",
+   "engine": "chatgpt",
+   "mentioned": false,
+   "position": null,
+   "text": "Ukázková odpověď na dotaz „Kdo je nejlepší dodavatel plastových oken v Brně?“:\n1. **Okna Alfa**\n2. **Beta Windows**\n3. **Stínění Gama**",
+   "brands": [
+    "Okna Alfa",
+    "Beta Windows",
+    "Stínění Gama"
+   ],
+   "sources": [
+    "srovnavac.example",
+    "recenze-firem.example"
+   ]
+  },
+  {
+   "query": "Kdo je nejlepší dodavatel plastových oken v Brně?",
+   "engine": "gemini",
+   "mentioned": true,
+   "position": 2,
+   "text": "Ukázková odpověď na dotaz „Kdo je nejlepší dodavatel plastových oken v Brně?“:\n1. **Stínění Gama**\n2. **Vzorová okna**\n3. **Delta Solar**\n4. **Zeta Žaluzie**\n5. **Epsilon Okna**",
+   "brands": [
+    "Stínění Gama",
+    "Vzorová okna",
+    "Delta Solar",
+    "Zeta Žaluzie",
+    "Epsilon Okna"
+   ],
+   "sources": [
+    "srovnavac.example"
+   ]
+  },
+  {
+   "query": "Kdo je nejlepší dodavatel plastových oken v Brně?",
+   "engine": "perplexity",
+   "mentioned": true,
+   "position": 2,
+   "text": "Ukázková odpověď na dotaz „Kdo je nejlepší dodavatel plastových oken v Brně?“:\n1. **Okna Alfa**\n2. **Vzorová okna**\n3. **Beta Windows**\n4. **Epsilon Okna**\n5. **Théta Montáže**\n6. **Zeta Žaluzie**",
+   "brands": [
+    "Okna Alfa",
+    "Vzorová okna",
+    "Beta Windows",
+    "Epsilon Okna",
+    "Théta Montáže",
+    "Zeta Žaluzie"
+   ],
+   "sources": [
+    "srovnavac.example",
+    "stavebni-magazin.example"
+   ]
+  },
+  {
+   "query": "Doporuč firmu na výměnu oken v rodinném domě",
+   "engine": "chatgpt",
+   "mentioned": false,
+   "position": null,
+   "text": "Ukázková odpověď na dotaz „Doporuč firmu na výměnu oken v rodinném domě“:\n1. **Okna Alfa**\n2. **Delta Solar**\n3. **Epsilon Okna**",
+   "brands": [
+    "Okna Alfa",
+    "Delta Solar",
+    "Epsilon Okna"
+   ],
+   "sources": [
+    "srovnavac.example",
+    "katalog-remesel.example"
+   ]
+  },
+  {
+   "query": "Doporuč firmu na výměnu oken v rodinném domě",
+   "engine": "gemini",
+   "mentioned": true,
+   "position": 1,
+   "text": "Ukázková odpověď na dotaz „Doporuč firmu na výměnu oken v rodinném domě“:\n1. **Vzorová okna**\n2. **Beta Windows**\n3. **Stínění Gama**\n4. **Epsilon Okna**",
+   "brands": [
+    "Vzorová okna",
+    "Beta Windows",
+    "Stínění Gama",
+    "Epsilon Okna"
+   ],
+   "sources": [
+    "srovnavac.example",
+    "katalog-remesel.example"
+   ]
+  },
+  {
+   "query": "Doporuč firmu na výměnu oken v rodinném domě",
+   "engine": "perplexity",
+   "mentioned": false,
+   "position": null,
+   "text": "Ukázková odpověď na dotaz „Doporuč firmu na výměnu oken v rodinném domě“:\n1. **Stínění Gama**\n2. **Delta Solar**\n3. **Beta Windows**\n4. **Epsilon Okna**\n5. **Zeta Žaluzie**",
+   "brands": [
+    "Stínění Gama",
+    "Delta Solar",
+    "Beta Windows",
+    "Epsilon Okna",
+    "Zeta Žaluzie"
+   ],
+   "sources": [
+    "srovnavac.example",
+    "recenze-firem.example"
+   ]
+  },
+  {
+   "query": "Kolik stojí výměna oken v bytě 3+1 a kdo ji udělá?",
+   "engine": "chatgpt",
+   "mentioned": true,
+   "position": 1,
+   "text": "Ukázková odpověď na dotaz „Kolik stojí výměna oken v bytě 3+1 a kdo ji udělá?“:\n1. **Vzorová okna**\n2. **Delta Solar**\n3. **Okna Alfa**\n4. **Stínění Gama**\n5. **Beta Windows**\n6. **Eta Energy**",
+   "brands": [
+    "Vzorová okna",
+    "Delta Solar",
+    "Okna Alfa",
+    "Stínění Gama",
+    "Beta Windows",
+    "Eta Energy"
+   ],
+   "sources": [
+    "srovnavac.example",
+    "forum-bydleni.example"
+   ]
+  },
+  {
+   "query": "Kolik stojí výměna oken v bytě 3+1 a kdo ji udělá?",
+   "engine": "gemini",
+   "mentioned": false,
+   "position": null,
+   "text": "Ukázková odpověď na dotaz „Kolik stojí výměna oken v bytě 3+1 a kdo ji udělá?“:\n1. **Delta Solar**\n2. **Beta Windows**\n3. **Epsilon Okna**\n4. **Okna Alfa**",
+   "brands": [
+    "Delta Solar",
+    "Beta Windows",
+    "Epsilon Okna",
+    "Okna Alfa"
+   ],
+   "sources": [
+    "srovnavac.example",
+    "recenze-firem.example",
+    "stavebni-magazin.example"
+   ]
+  },
+  {
+   "query": "Kolik stojí výměna oken v bytě 3+1 a kdo ji udělá?",
+   "engine": "perplexity",
+   "mentioned": false,
+   "position": null,
+   "text": "Ukázková odpověď na dotaz „Kolik stojí výměna oken v bytě 3+1 a kdo ji udělá?“:\n1. **Okna Alfa**\n2. **Eta Energy**\n3. **Zeta Žaluzie**\n4. **Beta Windows**\n5. **Stínění Gama**",
+   "brands": [
+    "Okna Alfa",
+    "Eta Energy",
+    "Zeta Žaluzie",
+    "Beta Windows",
+    "Stínění Gama"
+   ],
+   "sources": [
+    "srovnavac.example",
+    "recenze-firem.example",
+    "dotace-info.example",
+    "forum-bydleni.example"
+   ]
+  },
+  {
+   "query": "Kde koupit hliníková okna s montáží?",
+   "engine": "chatgpt",
+   "mentioned": true,
+   "position": 3,
+   "text": "Ukázková odpověď na dotaz „Kde koupit hliníková okna s montáží?“:\n1. **Okna Alfa**\n2. **Stínění Gama**\n3. **Vzorová okna**\n4. **Théta Montáže**",
+   "brands": [
+    "Okna Alfa",
+    "Stínění Gama",
+    "Vzorová okna",
+    "Théta Montáže"
+   ],
+   "sources": [
+    "srovnavac.example",
+    "recenze-firem.example"
+   ]
+  },
+  {
+   "query": "Kde koupit hliníková okna s montáží?",
+   "engine": "gemini",
+   "mentioned": true,
+   "position": 3,
+   "text": "Ukázková odpověď na dotaz „Kde koupit hliníková okna s montáží?“:\n1. **Okna Alfa**\n2. **Stínění Gama**\n3. **Vzorová okna**\n4. **Delta Solar**\n5. **Théta Montáže**",
+   "brands": [
+    "Okna Alfa",
+    "Stínění Gama",
+    "Vzorová okna",
+    "Delta Solar",
+    "Théta Montáže"
+   ],
+   "sources": [
+    "vzorova-okna.example",
+    "srovnavac.example",
+    "recenze-firem.example",
+    "katalog-remesel.example",
+    "forum-bydleni.example"
+   ]
+  },
+  {
+   "query": "Kde koupit hliníková okna s montáží?",
+   "engine": "perplexity",
+   "mentioned": true,
+   "position": 1,
+   "text": "Ukázková odpověď na dotaz „Kde koupit hliníková okna s montáží?“:\n1. **Vzorová okna**\n2. **Stínění Gama**\n3. **Okna Alfa**\n4. **Epsilon Okna**\n5. **Eta Energy**\n6. **Théta Montáže**",
+   "brands": [
+    "Vzorová okna",
+    "Stínění Gama",
+    "Okna Alfa",
+    "Epsilon Okna",
+    "Eta Energy",
+    "Théta Montáže"
+   ],
+   "sources": [
+    "vzorova-okna.example",
+    "recenze-firem.example",
+    "dotace-info.example"
+   ]
+  },
+  {
+   "query": "Jaká firma dělá dřevěná eurookna na míru?",
+   "engine": "chatgpt",
+   "mentioned": false,
+   "position": null,
+   "text": "Ukázková odpověď na dotaz „Jaká firma dělá dřevěná eurookna na míru?“:\n1. **Okna Alfa**\n2. **Beta Windows**\n3. **Delta Solar**\n4. **Epsilon Okna**\n5. **Stínění Gama**",
+   "brands": [
+    "Okna Alfa",
+    "Beta Windows",
+    "Delta Solar",
+    "Epsilon Okna",
+    "Stínění Gama"
+   ],
+   "sources": [
+    "srovnavac.example",
+    "recenze-firem.example",
+    "katalog-remesel.example",
+    "dotace-info.example",
+    "forum-bydleni.example"
+   ]
+  },
+  {
+   "query": "Jaká firma dělá dřevěná eurookna na míru?",
+   "engine": "gemini",
+   "mentioned": true,
+   "position": 1,
+   "text": "Ukázková odpověď na dotaz „Jaká firma dělá dřevěná eurookna na míru?“:\n1. **Vzorová okna**\n2. **Théta Montáže**\n3. **Delta Solar**\n4. **Zeta Žaluzie**\n5. **Stínění Gama**",
+   "brands": [
+    "Vzorová okna",
+    "Théta Montáže",
+    "Delta Solar",
+    "Zeta Žaluzie",
+    "Stínění Gama"
+   ],
+   "sources": [
+    "vzorova-okna.example",
+    "dotace-info.example"
+   ]
+  },
+  {
+   "query": "Jaká firma dělá dřevěná eurookna na míru?",
+   "engine": "perplexity",
+   "mentioned": false,
+   "position": null,
+   "text": "Ukázková odpověď na dotaz „Jaká firma dělá dřevěná eurookna na míru?“:\n1. **Beta Windows**\n2. **Okna Alfa**\n3. **Epsilon Okna**",
+   "brands": [
+    "Beta Windows",
+    "Okna Alfa",
+    "Epsilon Okna"
+   ],
+   "sources": [
+    "srovnavac.example",
+    "katalog-remesel.example",
+    "forum-bydleni.example"
+   ]
+  },
+  {
+   "query": "Nejlepší venkovní žaluzie a kdo je namontuje",
+   "engine": "chatgpt",
+   "mentioned": false,
+   "position": null,
+   "text": "Ukázková odpověď na dotaz „Nejlepší venkovní žaluzie a kdo je namontuje“:\n1. **Okna Alfa**\n2. **Beta Windows**\n3. **Eta Energy**\n4. **Théta Montáže**\n5. **Epsilon Okna**",
+   "brands": [
+    "Okna Alfa",
+    "Beta Windows",
+    "Eta Energy",
+    "Théta Montáže",
+    "Epsilon Okna"
+   ],
+   "sources": [
+    "srovnavac.example",
+    "recenze-firem.example",
+    "stavebni-magazin.example",
+    "forum-bydleni.example"
+   ]
+  },
+  {
+   "query": "Nejlepší venkovní žaluzie a kdo je namontuje",
+   "engine": "gemini",
+   "mentioned": false,
+   "position": null,
+   "text": "Ukázková odpověď na dotaz „Nejlepší venkovní žaluzie a kdo je namontuje“:\n1. **Okna Alfa**\n2. **Delta Solar**\n3. **Eta Energy**",
+   "brands": [
+    "Okna Alfa",
+    "Delta Solar",
+    "Eta Energy"
+   ],
+   "sources": [
+    "srovnavac.example",
+    "forum-bydleni.example"
+   ]
+  },
+  {
+   "query": "Nejlepší venkovní žaluzie a kdo je namontuje",
+   "engine": "perplexity",
+   "mentioned": false,
+   "position": null,
+   "text": "Ukázková odpověď na dotaz „Nejlepší venkovní žaluzie a kdo je namontuje“:\n1. **Stínění Gama**\n2. **Théta Montáže**\n3. **Eta Energy**\n4. **Epsilon Okna**\n5. **Delta Solar**",
+   "brands": [
+    "Stínění Gama",
+    "Théta Montáže",
+    "Eta Energy",
+    "Epsilon Okna",
+    "Delta Solar"
+   ],
+   "sources": [
+    "srovnavac.example",
+    "stavebni-magazin.example",
+    "katalog-remesel.example",
+    "dotace-info.example"
+   ]
+  },
+  {
+   "query": "Doporuč dodavatele předokenních rolet",
+   "engine": "chatgpt",
+   "mentioned": false,
+   "position": null,
+   "text": "Ukázková odpověď na dotaz „Doporuč dodavatele předokenních rolet“:\n1. **Okna Alfa**\n2. **Delta Solar**\n3. **Zeta Žaluzie**",
+   "brands": [
+    "Okna Alfa",
+    "Delta Solar",
+    "Zeta Žaluzie"
+   ],
+   "sources": [
+    "srovnavac.example",
+    "recenze-firem.example",
+    "stavebni-magazin.example",
+    "forum-bydleni.example"
+   ]
+  },
+  {
+   "query": "Doporuč dodavatele předokenních rolet",
+   "engine": "gemini",
+   "mentioned": false,
+   "position": null,
+   "text": "Ukázková odpověď na dotaz „Doporuč dodavatele předokenních rolet“:\n1. **Okna Alfa**\n2. **Delta Solar**\n3. **Beta Windows**\n4. **Epsilon Okna**\n5. **Eta Energy**",
+   "brands": [
+    "Okna Alfa",
+    "Delta Solar",
+    "Beta Windows",
+    "Epsilon Okna",
+    "Eta Energy"
+   ],
+   "sources": [
+    "srovnavac.example",
+    "dotace-info.example"
+   ]
+  },
+  {
+   "query": "Doporuč dodavatele předokenních rolet",
+   "engine": "perplexity",
+   "mentioned": false,
+   "position": null,
+   "text": "Ukázková odpověď na dotaz „Doporuč dodavatele předokenních rolet“:\n1. **Beta Windows**\n2. **Delta Solar**\n3. **Okna Alfa**\n4. **Stínění Gama**\n5. **Epsilon Okna**",
+   "brands": [
+    "Beta Windows",
+    "Delta Solar",
+    "Okna Alfa",
+    "Stínění Gama",
+    "Epsilon Okna"
+   ],
+   "sources": [
+    "srovnavac.example",
+    "stavebni-magazin.example",
+    "forum-bydleni.example"
+   ]
+  },
+  {
+   "query": "Kdo dodává screenové rolety na míru?",
+   "engine": "chatgpt",
+   "mentioned": false,
+   "position": null,
+   "text": "Ukázková odpověď na dotaz „Kdo dodává screenové rolety na míru?“:\n1. **Okna Alfa**\n2. **Beta Windows**\n3. **Epsilon Okna**\n4. **Delta Solar**\n5. **Théta Montáže**",
+   "brands": [
+    "Okna Alfa",
+    "Beta Windows",
+    "Epsilon Okna",
+    "Delta Solar",
+    "Théta Montáže"
+   ],
+   "sources": [
+    "srovnavac.example",
+    "stavebni-magazin.example",
+    "katalog-remesel.example"
+   ]
+  },
+  {
+   "query": "Kdo dodává screenové rolety na míru?",
+   "engine": "gemini",
+   "mentioned": false,
+   "position": null,
+   "text": "Ukázková odpověď na dotaz „Kdo dodává screenové rolety na míru?“:\n1. **Beta Windows**\n2. **Delta Solar**\n3. **Epsilon Okna**",
+   "brands": [
+    "Beta Windows",
+    "Delta Solar",
+    "Epsilon Okna"
+   ],
+   "sources": [
+    "srovnavac.example",
+    "stavebni-magazin.example"
+   ]
+  },
+  {
+   "query": "Kdo dodává screenové rolety na míru?",
+   "engine": "perplexity",
+   "mentioned": false,
+   "position": null,
+   "text": "Ukázková odpověď na dotaz „Kdo dodává screenové rolety na míru?“:\n1. **Stínění Gama**\n2. **Beta Windows**\n3. **Epsilon Okna**\n4. **Okna Alfa**\n5. **Théta Montáže**",
+   "brands": [
+    "Stínění Gama",
+    "Beta Windows",
+    "Epsilon Okna",
+    "Okna Alfa",
+    "Théta Montáže"
+   ],
+   "sources": [
+    "srovnavac.example",
+    "dotace-info.example"
+   ]
+  },
+  {
+   "query": "Kolik stojí venkovní žaluzie na rodinný dům?",
+   "engine": "chatgpt",
+   "mentioned": false,
+   "position": null,
+   "text": "Ukázková odpověď na dotaz „Kolik stojí venkovní žaluzie na rodinný dům?“:\n1. **Beta Windows**\n2. **Epsilon Okna**\n3. **Delta Solar**\n4. **Théta Montáže**",
+   "brands": [
+    "Beta Windows",
+    "Epsilon Okna",
+    "Delta Solar",
+    "Théta Montáže"
+   ],
+   "sources": [
+    "srovnavac.example"
+   ]
+  },
+  {
+   "query": "Kolik stojí venkovní žaluzie na rodinný dům?",
+   "engine": "gemini",
+   "mentioned": false,
+   "position": null,
+   "text": "Ukázková odpověď na dotaz „Kolik stojí venkovní žaluzie na rodinný dům?“:\n1. **Okna Alfa**\n2. **Delta Solar**\n3. **Epsilon Okna**\n4. **Beta Windows**",
+   "brands": [
+    "Okna Alfa",
+    "Delta Solar",
+    "Epsilon Okna",
+    "Beta Windows"
+   ],
+   "sources": [
+    "srovnavac.example",
+    "stavebni-magazin.example",
+    "forum-bydleni.example"
+   ]
+  },
+  {
+   "query": "Kolik stojí venkovní žaluzie na rodinný dům?",
+   "engine": "perplexity",
+   "mentioned": false,
+   "position": null,
+   "text": "Ukázková odpověď na dotaz „Kolik stojí venkovní žaluzie na rodinný dům?“:\n1. **Okna Alfa**\n2. **Delta Solar**\n3. **Stínění Gama**\n4. **Beta Windows**",
+   "brands": [
+    "Okna Alfa",
+    "Delta Solar",
+    "Stínění Gama",
+    "Beta Windows"
+   ],
+   "sources": [
+    "srovnavac.example",
+    "recenze-firem.example"
+   ]
+  },
+  {
+   "query": "Nejlepší firma na fotovoltaiku pro rodinný dům",
+   "engine": "chatgpt",
+   "mentioned": true,
+   "position": 1,
+   "text": "Ukázková odpověď na dotaz „Nejlepší firma na fotovoltaiku pro rodinný dům“:\n1. **Vzorová okna**\n2. **Eta Energy**\n3. **Okna Alfa**\n4. **Beta Windows**\n5. **Théta Montáže**\n6. **Epsilon Okna**",
+   "brands": [
+    "Vzorová okna",
+    "Eta Energy",
+    "Okna Alfa",
+    "Beta Windows",
+    "Théta Montáže",
+    "Epsilon Okna"
+   ],
+   "sources": [
+    "vzorova-okna.example",
+    "recenze-firem.example"
+   ]
+  },
+  {
+   "query": "Nejlepší firma na fotovoltaiku pro rodinný dům",
+   "engine": "gemini",
+   "mentioned": false,
+   "position": null,
+   "text": "Ukázková odpověď na dotaz „Nejlepší firma na fotovoltaiku pro rodinný dům“:\n1. **Okna Alfa**\n2. **Stínění Gama**\n3. **Théta Montáže**\n4. **Delta Solar**",
+   "brands": [
+    "Okna Alfa",
+    "Stínění Gama",
+    "Théta Montáže",
+    "Delta Solar"
+   ],
+   "sources": [
+    "srovnavac.example",
+    "recenze-firem.example",
+    "stavebni-magazin.example",
+    "katalog-remesel.example"
+   ]
+  },
+  {
+   "query": "Nejlepší firma na fotovoltaiku pro rodinný dům",
+   "engine": "perplexity",
+   "mentioned": false,
+   "position": null,
+   "text": "Ukázková odpověď na dotaz „Nejlepší firma na fotovoltaiku pro rodinný dům“:\n1. **Epsilon Okna**\n2. **Eta Energy**\n3. **Beta Windows**",
+   "brands": [
+    "Epsilon Okna",
+    "Eta Energy",
+    "Beta Windows"
+   ],
+   "sources": [
+    "srovnavac.example",
+    "recenze-firem.example",
+    "stavebni-magazin.example"
+   ]
+  },
+  {
+   "query": "Kdo vyřídí dotaci a nainstaluje fotovoltaiku na klíč?",
+   "engine": "chatgpt",
+   "mentioned": true,
+   "position": 1,
+   "text": "Ukázková odpověď na dotaz „Kdo vyřídí dotaci a nainstaluje fotovoltaiku na klíč?“:\n1. **Vzorová okna**\n2. **Okna Alfa**\n3. **Epsilon Okna**\n4. **Beta Windows**\n5. **Eta Energy**",
+   "brands": [
+    "Vzorová okna",
+    "Okna Alfa",
+    "Epsilon Okna",
+    "Beta Windows",
+    "Eta Energy"
+   ],
+   "sources": [
+    "vzorova-okna.example",
+    "recenze-firem.example"
+   ]
+  },
+  {
+   "query": "Kdo vyřídí dotaci a nainstaluje fotovoltaiku na klíč?",
+   "engine": "gemini",
+   "mentioned": true,
+   "position": 3,
+   "text": "Ukázková odpověď na dotaz „Kdo vyřídí dotaci a nainstaluje fotovoltaiku na klíč?“:\n1. **Delta Solar**\n2. **Zeta Žaluzie**\n3. **Vzorová okna**\n4. **Epsilon Okna**\n5. **Eta Energy**",
+   "brands": [
+    "Delta Solar",
+    "Zeta Žaluzie",
+    "Vzorová okna",
+    "Epsilon Okna",
+    "Eta Energy"
+   ],
+   "sources": [
+    "srovnavac.example",
+    "recenze-firem.example",
+    "stavebni-magazin.example",
+    "katalog-remesel.example",
+    "dotace-info.example"
+   ]
+  },
+  {
+   "query": "Kdo vyřídí dotaci a nainstaluje fotovoltaiku na klíč?",
+   "engine": "perplexity",
+   "mentioned": true,
+   "position": 1,
+   "text": "Ukázková odpověď na dotaz „Kdo vyřídí dotaci a nainstaluje fotovoltaiku na klíč?“:\n1. **Vzorová okna**\n2. **Stínění Gama**\n3. **Okna Alfa**\n4. **Zeta Žaluzie**\n5. **Epsilon Okna**",
+   "brands": [
+    "Vzorová okna",
+    "Stínění Gama",
+    "Okna Alfa",
+    "Zeta Žaluzie",
+    "Epsilon Okna"
+   ],
+   "sources": [
+    "srovnavac.example",
+    "recenze-firem.example",
+    "forum-bydleni.example"
+   ]
+  },
+  {
+   "query": "Doporuč instalační firmu na fotovoltaiku s baterií",
+   "engine": "chatgpt",
+   "mentioned": false,
+   "position": null,
+   "text": "Ukázková odpověď na dotaz „Doporuč instalační firmu na fotovoltaiku s baterií“:\n1. **Epsilon Okna**\n2. **Okna Alfa**\n3. **Stínění Gama**",
+   "brands": [
+    "Epsilon Okna",
+    "Okna Alfa",
+    "Stínění Gama"
+   ],
+   "sources": [
+    "srovnavac.example",
+    "stavebni-magazin.example",
+    "katalog-remesel.example"
+   ]
+  },
+  {
+   "query": "Doporuč instalační firmu na fotovoltaiku s baterií",
+   "engine": "gemini",
+   "mentioned": true,
+   "position": 2,
+   "text": "Ukázková odpověď na dotaz „Doporuč instalační firmu na fotovoltaiku s baterií“:\n1. **Okna Alfa**\n2. **Vzorová okna**\n3. **Beta Windows**\n4. **Delta Solar**\n5. **Stínění Gama**\n6. **Zeta Žaluzie**",
+   "brands": [
+    "Okna Alfa",
+    "Vzorová okna",
+    "Beta Windows",
+    "Delta Solar",
+    "Stínění Gama",
+    "Zeta Žaluzie"
+   ],
+   "sources": [
+    "srovnavac.example",
+    "recenze-firem.example",
+    "katalog-remesel.example"
+   ]
+  },
+  {
+   "query": "Doporuč instalační firmu na fotovoltaiku s baterií",
+   "engine": "perplexity",
+   "mentioned": true,
+   "position": 1,
+   "text": "Ukázková odpověď na dotaz „Doporuč instalační firmu na fotovoltaiku s baterií“:\n1. **Vzorová okna**\n2. **Beta Windows**\n3. **Okna Alfa**\n4. **Epsilon Okna**\n5. **Zeta Žaluzie**",
+   "brands": [
+    "Vzorová okna",
+    "Beta Windows",
+    "Okna Alfa",
+    "Epsilon Okna",
+    "Zeta Žaluzie"
+   ],
+   "sources": [
+    "vzorova-okna.example",
+    "stavebni-magazin.example",
+    "dotace-info.example",
+    "forum-bydleni.example"
+   ]
+  }
  ]
 }
