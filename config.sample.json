@@ -1,0 +1,51 @@
+{
+  "brand": {
+    "name": "Vzorová okna",
+    "domain": "vzorova-okna.example",
+    "aliases": ["Vzorová okna s.r.o."]
+  },
+  "country": "CZ",
+  "samples": 1,
+  "engines": {
+    "chatgpt": { "enabled": true },
+    "gemini": { "enabled": true },
+    "perplexity": { "enabled": true }
+  },
+  "queries": [
+    { "text": "Kdo je nejlepší dodavatel plastových oken v Brně?", "topic": "Okna" },
+    { "text": "Doporuč firmu na výměnu oken v rodinném domě", "topic": "Okna" },
+    { "text": "Kolik stojí výměna oken v bytě 3+1 a kdo ji udělá?", "topic": "Okna" },
+    { "text": "Kde koupit hliníková okna s montáží?", "topic": "Okna" },
+    { "text": "Jaká firma dělá dřevěná eurookna na míru?", "topic": "Okna" },
+    { "text": "Nejlepší venkovní žaluzie a kdo je namontuje", "topic": "Stínění" },
+    { "text": "Doporuč dodavatele předokenních rolet", "topic": "Stínění" },
+    { "text": "Kdo dodává screenové rolety na míru?", "topic": "Stínění" },
+    { "text": "Kolik stojí venkovní žaluzie na rodinný dům?", "topic": "Stínění" },
+    { "text": "Nejlepší firma na fotovoltaiku pro rodinný dům", "topic": "Fotovoltaika" },
+    { "text": "Kdo vyřídí dotaci a nainstaluje fotovoltaiku na klíč?", "topic": "Fotovoltaika" },
+    { "text": "Doporuč instalační firmu na fotovoltaiku s baterií", "topic": "Fotovoltaika" }
+  ],
+  "mock": {
+    "start": "2026-09-24",
+    "baseChance": 0.16,
+    "weeklyGain": 0.035,
+    "rivals": [
+      { "name": "Okna Alfa", "weight": 0.55 },
+      { "name": "Beta Windows", "weight": 0.4 },
+      { "name": "Stínění Gama", "weight": 0.35 },
+      { "name": "Delta Solar", "weight": 0.3 },
+      { "name": "Epsilon Okna", "weight": 0.2 },
+      { "name": "Zeta Žaluzie", "weight": 0.15 },
+      { "name": "Eta Energy", "weight": 0.1 },
+      { "name": "Théta Montáže", "weight": 0.05 }
+    ],
+    "sources": [
+      "srovnavac.example",
+      "recenze-firem.example",
+      "stavebni-magazin.example",
+      "katalog-remesel.example",
+      "dotace-info.example",
+      "forum-bydleni.example"
+    ]
+  }
+}

@@ -1,0 +1,488 @@
+<title>Viditelnost v AI</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap">
+<style>
+  /* Rozvržení: tmavý pruh se shrnutím, tři hlavní čísla, vývoj v čase, pak kdo je jmenován a kde chybíte. */
+  :root {
+    --bg: #f7f7fb; --surface: #ffffff; --band: #060B18; --band-fg: #ffffff; --band-muted: #a8bada;
+    --fg: #0a0a0f; --fg-2: #555566; --muted: #6f6f86;
+    --line: rgba(10,15,30,0.10); --line-strong: rgba(10,15,30,0.18);
+    --accent: #1A6EF5; --accent-2: #7C5CFC; --accent-soft: rgba(26,110,245,0.10);
+    --grad: linear-gradient(135deg, #1A6EF5 0%, #7C5CFC 100%);
+    --grad-deep: linear-gradient(135deg, #1258d0 0%, #6339e8 100%);
+    --ok: #067647; --ok-soft: rgba(18,183,106,0.16); --bad: #b42318; --bad-soft: rgba(240,68,56,0.12);
+    --s1: #1A6EF5; --s2: #eb6834; --s3: #1baf7a; --s4: #7C5CFC; --bar-muted: #c4c8d8;
+    --grid: rgba(10,15,30,0.08); --axis: rgba(10,15,30,0.24);
+    --shadow: 0 12px 32px rgba(10,15,30,0.08); --shadow-brand: 0 16px 40px rgba(26,110,245,0.22);
+    --radius: 18px;
+    --font-head: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --font-body: 'DM Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #060B18; --surface: #0A1226; --band: #0A1226; --band-fg: #ffffff; --band-muted: #a8bada;
+      --fg: #f2f5fb; --fg-2: #a8bada; --muted: #8f9dbd;
+      --line: rgba(255,255,255,0.10); --line-strong: rgba(255,255,255,0.20);
+      --accent: #4F92FF; --accent-2: #9085e9; --accent-soft: rgba(79,146,255,0.14);
+      --grad: linear-gradient(135deg, #4F92FF 0%, #9085e9 100%);
+      --grad-deep: linear-gradient(135deg, #1258d0 0%, #6339e8 100%);
+      --ok: #47cd89; --ok-soft: rgba(18,183,106,0.20); --bad: #f97066; --bad-soft: rgba(240,68,56,0.18);
+      --s1: #4F92FF; --s2: #d95926; --s3: #199e70; --s4: #9085e9; --bar-muted: #34415f;
+      --grid: rgba(255,255,255,0.08); --axis: rgba(255,255,255,0.28);
+      --shadow: 0 12px 32px rgba(0,0,0,0.35); --shadow-brand: 0 16px 40px rgba(26,110,245,0.28);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #060B18; --surface: #0A1226; --band: #0A1226; --band-fg: #ffffff; --band-muted: #a8bada;
+    --fg: #f2f5fb; --fg-2: #a8bada; --muted: #8f9dbd;
+    --line: rgba(255,255,255,0.10); --line-strong: rgba(255,255,255,0.20);
+    --accent: #4F92FF; --accent-2: #9085e9; --accent-soft: rgba(79,146,255,0.14);
+    --grad: linear-gradient(135deg, #4F92FF 0%, #9085e9 100%);
+    --grad-deep: linear-gradient(135deg, #1258d0 0%, #6339e8 100%);
+    --ok: #47cd89; --ok-soft: rgba(18,183,106,0.20); --bad: #f97066; --bad-soft: rgba(240,68,56,0.18);
+    --s1: #4F92FF; --s2: #d95926; --s3: #199e70; --s4: #9085e9; --bar-muted: #34415f;
+    --grid: rgba(255,255,255,0.08); --axis: rgba(255,255,255,0.28);
+    --shadow: 0 12px 32px rgba(0,0,0,0.35); --shadow-brand: 0 16px 40px rgba(26,110,245,0.28);
+    color-scheme: dark;
+  }
+
+  body { background: var(--bg); color: var(--fg); font-family: var(--font-body); font-size: 16px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+
+  .band { color: var(--band-fg); background:
+      radial-gradient(60rem 26rem at 88% -20%, rgba(124,92,252,0.42), transparent 60%),
+      radial-gradient(46rem 24rem at 4% 130%, rgba(26,110,245,0.40), transparent 60%),
+      linear-gradient(rgba(79,146,255,0.07) 1px, transparent 1px) 0 0 / 48px 48px,
+      linear-gradient(90deg, rgba(79,146,255,0.07) 1px, transparent 1px) 0 0 / 48px 48px,
+      var(--band); }
+  .band .wrap { padding-block: 40px 96px; display: grid; gap: 14px; }
+  .eyebrow { justify-self: start; display: inline-flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 100px; background: rgba(79,146,255,0.16); border: 1px solid rgba(79,146,255,0.35); font-size: 0.82rem; font-weight: 500; }
+  .eyebrow-dot { width: 8px; height: 8px; border-radius: 50%; background: linear-gradient(135deg, #4F92FF, #9b83ff); }
+  h1 { font-family: var(--font-head); font-weight: 800; font-size: clamp(2rem, 5vw, 3rem); line-height: 1.08; letter-spacing: -0.02em; margin: 0; text-wrap: balance; }
+  .lede { margin: 0; max-width: 62ch; color: var(--band-muted); font-size: 1.06rem; }
+  .lede b { color: var(--band-fg); font-weight: 600; }
+  .sample { margin: 4px 0 0; max-width: 62ch; padding: 10px 14px; border-radius: 12px; border: 1px dashed rgba(255,255,255,0.45); background: rgba(255,255,255,0.06); font-size: 0.92rem; }
+
+  main.wrap { display: grid; gap: 28px; padding-block: 0 56px; }
+  .tiles { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); margin-top: -64px; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); padding: 22px; min-width: 0; }
+  .tile { display: grid; gap: 8px; align-content: start; }
+  .tile-label { margin: 0; font-family: var(--font-head); font-weight: 600; font-size: 0.95rem; }
+  .big { margin: 0; font-family: var(--font-head); font-weight: 800; font-size: 3rem; line-height: 1; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+  .tile-def { margin: 0; color: var(--fg-2); font-size: 0.9rem; line-height: 1.4; }
+  .tile-main { background: var(--grad-deep); border-color: transparent; box-shadow: var(--shadow-brand); color: #ffffff; }
+  .tile-main .tile-def { color: rgba(255,255,255,0.88); }
+  .delta { margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 0.88rem; color: var(--fg-2); font-variant-numeric: tabular-nums; }
+  .tile-main .delta { color: rgba(255,255,255,0.88); }
+  .chip { display: inline-flex; align-items: center; gap: 5px; padding: 2px 9px; border-radius: 100px; font-weight: 600; background: var(--accent-soft); color: var(--fg); white-space: nowrap; }
+  .chip.good { background: var(--ok-soft); color: var(--ok); }
+  .chip.bad { background: var(--bad-soft); color: var(--bad); }
+  .tile-main .chip, .tile-main .chip.good, .tile-main .chip.bad { background: rgba(255,255,255,0.20); color: #ffffff; }
+
+  .section { display: grid; gap: 14px; min-width: 0; }
+  h2 { font-family: var(--font-head); font-weight: 700; font-size: 1.3rem; line-height: 1.2; letter-spacing: -0.01em; margin: 0; text-wrap: balance; }
+  .sub { margin: 0; color: var(--fg-2); max-width: 65ch; }
+  .sub b { color: var(--fg); font-weight: 600; }
+  .two { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); align-items: start; }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 6px 16px; margin: 0; padding: 0; list-style: none; font-size: 0.9rem; color: var(--fg-2); }
+  .legend li { display: inline-flex; align-items: center; gap: 7px; }
+  .swatch { width: 14px; height: 4px; border-radius: 2px; display: inline-block; }
+  .chart { position: relative; min-height: 300px; min-width: 0; }
+  .chart svg { display: block; overflow: visible; }
+  .tick { font-size: 12px; fill: var(--fg-2); font-family: var(--font-body); font-variant-numeric: tabular-nums; }
+  .end { font-size: 12.5px; fill: var(--fg); font-family: var(--font-body); font-variant-numeric: tabular-nums; }
+  .end-total { font-weight: 600; }
+  .gridline { stroke: var(--grid); stroke-width: 1; }
+  .axisline { stroke: var(--axis); stroke-width: 1; }
+  .rule { stroke: var(--axis); stroke-width: 1; }
+  .series-line { fill: none; stroke-linejoin: round; stroke-linecap: round; }
+  .series-dot { stroke: var(--surface); stroke-width: 2; }
+  .tip { position: absolute; z-index: 2; pointer-events: none; background: var(--surface); color: var(--fg); border: 1px solid var(--line-strong); box-shadow: var(--shadow); border-radius: 12px; padding: 8px 12px; font-size: 0.85rem; line-height: 1.55; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .tip-head { color: var(--fg-2); }
+  .tip-row { display: flex; gap: 16px; justify-content: space-between; }
+  .tip-key { display: inline-flex; align-items: center; gap: 7px; }
+
+  .bars { position: relative; display: grid; gap: 12px; }
+  .bar-row { display: grid; grid-template-columns: minmax(0, 36%) minmax(0, 1fr) 3.4em; gap: 10px; align-items: center; }
+  .bar-name { overflow-wrap: anywhere; line-height: 1.3; }
+  .bar-track { display: block; height: 14px; }
+  .bar-fill { display: block; height: 100%; min-width: 3px; border-radius: 0 4px 4px 0; background: var(--bar-muted); }
+  .bar-fill.own { background: var(--grad); }
+  .bar-val { text-align: right; font-variant-numeric: tabular-nums; }
+  .bar-row.own .bar-name, .bar-row.own .bar-val { font-weight: 600; }
+  .tag { display: inline-block; margin-left: 8px; padding: 0 8px; border-radius: 100px; background: var(--accent-soft); border: 1px solid var(--accent); font-size: 0.78rem; font-weight: 600; white-space: nowrap; }
+
+  .scroll { overflow-x: auto; min-width: 0; }
+  table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
+  th { text-align: left; font-family: var(--font-head); font-weight: 600; font-size: 0.8rem; color: var(--fg-2); padding: 8px 14px 8px 0; border-bottom: 1px solid var(--line-strong); white-space: nowrap; vertical-align: bottom; }
+  td { padding: 10px 14px 10px 0; border-bottom: 1px solid var(--line); vertical-align: top; line-height: 1.4; }
+  tr:last-child td { border-bottom: 0; }
+  th.num, td.num { text-align: right; padding-right: 0; }
+  .col-query { min-width: min(15rem, 46vw); }
+  .col-rivals { min-width: 12rem; color: var(--fg-2); }
+  .topic { display: block; color: var(--muted); font-size: 0.8rem; }
+  .pill { display: inline-block; min-width: 2.8em; text-align: center; padding: 1px 9px; border-radius: 100px; border: 1px solid var(--line-strong); color: var(--fg-2); }
+  .pill.yes { border-color: transparent; background: var(--ok-soft); color: var(--ok); font-weight: 600; }
+  .share { display: grid; grid-template-columns: minmax(3rem, 1fr) 3.4em; gap: 10px; align-items: center; min-width: 8rem; }
+  .share .bar-track { height: 8px; }
+
+  details { color: var(--fg-2); }
+  summary { cursor: pointer; color: var(--fg); font-weight: 500; }
+  summary:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+  details p { margin: 8px 0 0; max-width: 65ch; }
+  details .scroll { margin-top: 10px; }
+  .empty { margin: 0; padding: 28px 22px; text-align: center; color: var(--fg-2); }
+</style>
+
+<header class="band">
+  <div class="wrap">
+    <span class="eyebrow"><span class="eyebrow-dot"></span><span id="who"></span></span>
+    <h1>Viditelnost v AI</h1>
+    <p class="lede" id="lede"></p>
+    <p class="sample" id="sample" hidden>Tohle jsou ukázková data. Firma, konkurenti i čísla jsou vymyšlené, aby bylo vidět, jak portál vypadá. Skutečné měření je nahradí.</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="tiles" id="tiles" aria-label="Hlavní čísla"></section>
+
+  <section class="card section" id="vyvoj">
+    <h2>Vývoj viditelnosti</h2>
+    <p class="sub" id="trend-sub">Podíl odpovědí se zmínkou o firmě při každém měření, celkem a podle nástroje.</p>
+    <ul class="legend" id="trend-legend"></ul>
+    <div class="chart" id="trend"></div>
+    <details>
+      <summary>Zobrazit jako tabulku</summary>
+      <div class="scroll"><table id="trend-table"></table></div>
+    </details>
+  </section>
+
+  <div class="two">
+    <section class="card section" id="firmy">
+      <h2>Koho AI jmenuje nejčastěji</h2>
+      <p class="sub">Podíl odpovědí z posledního měření, ve kterých se firma objevila.</p>
+      <div class="bars" id="brands"></div>
+    </section>
+    <section class="card section" id="zdroje">
+      <h2>Odkud AI čerpá</h2>
+      <p class="sub">Weby, které AI uvádí jako zdroj. Zmínka na nich zvyšuje šanci, že vás AI doporučí.</p>
+      <div class="scroll"><table id="domains"></table></div>
+    </section>
+  </div>
+
+  <section class="card section" id="dotazy">
+    <h2>Dotazy, na které se AI ptáme</h2>
+    <p class="sub" id="queries-sub"></p>
+    <div class="scroll"><table id="queries"></table></div>
+  </section>
+
+  <details id="jak-se-meri">
+    <summary>Jak se měří</summary>
+    <p>Každý dotaz položíme každému nástroji přes jeho rozhraní pro vývojáře se zapnutým hledáním na webu a s nastavením na Česko. Z odpovědi vypíšeme jmenované firmy v pořadí, v jakém se objevily, a uvedené zdroje.</p>
+    <p>Odpovědi AI se mezi dvěma položeními stejného dotazu liší a odpověď v aplikaci se může lišit od odpovědi přes rozhraní. Jedno měření je proto orientační; vypovídající je vývoj přes několik týdnů.</p>
+  </details>
+</main>
+
+<script type="application/json" id="data">__DATA__</script>
+<script>
+  const DATA = JSON.parse(document.getElementById('data').textContent);
+  const SERIES = [
+    { id: 'all', label: 'Celkem', color: 'var(--s1)' },
+    { id: 'chatgpt', label: 'ChatGPT', color: 'var(--s2)' },
+    { id: 'gemini', label: 'Gemini', color: 'var(--s3)' },
+    { id: 'perplexity', label: 'Perplexity', color: 'var(--s4)' },
+  ];
+  const ENGINES = SERIES.slice(1);
+  const SVG = 'http://www.w3.org/2000/svg';
+
+  const time = (day) => Date.parse(`${day}T00:00:00Z`);
+  const fmtDate = (day, year = true) => {
+    const d = new Date(time(day));
+    return `${d.getUTCDate()}. ${d.getUTCMonth() + 1}.${year ? ` ${d.getUTCFullYear()}` : ''}`;
+  };
+  const num = (n, digits = 0) => n.toLocaleString('cs-CZ', { minimumFractionDigits: digits, maximumFractionDigits: digits });
+  const pct = (n) => `${num(n)} %`;
+  const signed = (n, digits = 0) => `${n > 0 ? '+' : n < 0 ? '−' : ''}${num(Math.abs(n), digits)}`;
+
+  function h(tag, props = {}, ...children) {
+    const el = document.createElement(tag);
+    for (const [key, value] of Object.entries(props)) {
+      if (value == null || value === false) continue;
+      if (key === 'class') el.className = value;
+      else if (key === 'style') el.style.cssText = value;
+      else el.setAttribute(key, value === true ? '' : value);
+    }
+    el.append(...children.filter((c) => c != null && c !== false));
+    return el;
+  }
+  function s(tag, attrs = {}, text) {
+    const el = document.createElementNS(SVG, tag);
+    for (const [key, value] of Object.entries(attrs)) {
+      if (key === 'style') el.style.cssText = value;
+      else el.setAttribute(key, value);
+    }
+    if (text != null) el.textContent = text;
+    return el;
+  }
+
+  const meta = DATA.meta[0] || {};
+  const totals = DATA.runs.filter((r) => r.engine === 'all').sort((a, b) => time(a.date) - time(b.date));
+  const last = totals[totals.length - 1] || null;
+  const prev = totals[totals.length - 2] || null;
+  const diff = (key) => (prev && last[key] != null && prev[key] != null ? Math.round((last[key] - prev[key]) * 10) / 10 : null);
+
+  function tipRow(label, value, color) {
+    return h('div', { class: 'tip-row' },
+      h('span', { class: 'tip-key' }, color ? h('span', { class: 'swatch', style: `background:${color}` }) : null, label),
+      h('span', {}, value));
+  }
+  function showTip(box, tip, x, y) {
+    tip.hidden = false;
+    tip.style.left = `${Math.max(0, Math.min(box.clientWidth - tip.offsetWidth, x + 14))}px`;
+    tip.style.top = `${Math.max(0, y - tip.offsetHeight - 12)}px`;
+  }
+
+  function renderHeader() {
+    document.getElementById('who').textContent = [meta.brand, meta.domain].filter(Boolean).join(' · ');
+    document.getElementById('sample').hidden = !meta.sample;
+    const lede = document.getElementById('lede');
+    if (!last) {
+      lede.textContent = 'Zatím neproběhlo žádné měření. Po prvním se tu objeví, jak často vás AI nástroje jmenují.';
+      return;
+    }
+    const change = diff('visibility');
+    const parts = ['AI nástroje při měření ', h('b', {}, fmtDate(last.date)), ' jmenovaly firmu ', h('b', {}, meta.brand || ''), ' u ', h('b', {}, pct(last.visibility)), ' odpovědí'];
+    if (change != null && change !== 0) parts.push(`, o ${num(Math.abs(change))} p. b. ${change > 0 ? 'více' : 'méně'} než při předchozím měření`);
+    if (change === 0) parts.push(', stejně jako při předchozím měření');
+    parts.push('.');
+    const leader = DATA.brands.filter((b) => !b.own).sort((a, b) => b.mentions - a.mentions)[0];
+    if (leader) parts.push(' Nejčastěji jmenovanou firmou je ', h('b', {}, leader.brand), `, objevuje se u ${pct(leader.share)} odpovědí.`);
+    lede.replaceChildren(...parts);
+  }
+
+  function deltaLine(value, { unit = '', digits = 0, lowerIsBetter = false } = {}) {
+    if (value == null) return null;
+    const good = value !== 0 && value > 0 !== lowerIsBetter;
+    const tone = value === 0 ? '' : good ? ' good' : ' bad';
+    const arrow = value === 0 ? '=' : value > 0 ? '▲' : '▼';
+    return h('p', { class: 'delta' },
+      h('span', { class: `chip${tone}` }, h('span', { 'aria-hidden': 'true' }, arrow), `${signed(value, digits)}${unit}`),
+      `oproti ${fmtDate(prev.date, false)}`);
+  }
+
+  function renderTiles() {
+    const box = document.getElementById('tiles');
+    if (!last) return box.replaceChildren();
+    box.replaceChildren(
+      h('div', { class: 'card tile tile-main', id: 'karta-viditelnost' },
+        h('p', { class: 'tile-label' }, 'Viditelnost'),
+        h('p', { class: 'big' }, pct(last.visibility)),
+        deltaLine(diff('visibility'), { unit: ' p. b.' }),
+        h('p', { class: 'tile-def' }, `Podíl odpovědí, ve kterých AI firmu jmenuje (${num(last.mentioned)} z ${num(last.answers)}).`)),
+      h('div', { class: 'card tile', id: 'karta-odkazy' },
+        h('p', { class: 'tile-label' }, 'Odkazy na váš web'),
+        h('p', { class: 'big' }, pct(last.citation_rate)),
+        deltaLine(diff('citation_rate'), { unit: ' p. b.' }),
+        h('p', { class: 'tile-def' }, 'Podíl odpovědí, které jako zdroj uvádějí váš web.')),
+      h('div', { class: 'card tile', id: 'karta-poradi' },
+        h('p', { class: 'tile-label' }, 'Průměrné pořadí'),
+        h('p', { class: 'big' }, last.avg_position == null ? '—' : num(last.avg_position, 1)),
+        deltaLine(diff('avg_position'), { digits: 1, lowerIsBetter: true }),
+        h('p', { class: 'tile-def' }, 'Kolikátá jste mezi jmenovanými firmami, když vás AI zmíní. Nižší číslo je lepší.')));
+  }
+
+  const dates = [...new Set(DATA.runs.map((r) => r.date))].sort();
+  const series = SERIES.map((def) => ({
+    ...def,
+    points: dates.map((date) => DATA.runs.find((r) => r.engine === def.id && r.date === date)).filter(Boolean),
+  })).filter((item) => item.points.length);
+
+  function renderTrendStatic() {
+    document.getElementById('trend-legend').replaceChildren(
+      ...series.map((item) => h('li', {}, h('span', { class: 'swatch', style: `background:${item.color}` }), item.label)));
+    if (dates.length === 1) {
+      document.getElementById('trend-sub').textContent = 'Zatím proběhlo jedno měření. Křivka se začne kreslit po druhém.';
+    }
+    const head = h('tr', {}, h('th', {}, 'Měření'), ...series.map((item) => h('th', { class: 'num' }, item.label)));
+    const rows = [...dates].reverse().map((date) =>
+      h('tr', {}, h('td', {}, fmtDate(date)), ...series.map((item) => {
+        const point = item.points.find((p) => p.date === date);
+        return h('td', { class: 'num' }, point ? pct(point.visibility) : '—');
+      })));
+    document.getElementById('trend-table').replaceChildren(h('thead', {}, head), h('tbody', {}, ...rows));
+  }
+
+  function drawTrend() {
+    const box = document.getElementById('trend');
+    if (!series.length) return box.replaceChildren(h('p', { class: 'empty' }, 'Graf se objeví po prvním měření.'));
+    const width = Math.max(280, box.clientWidth);
+    const height = 300;
+    const top = 14;
+    const bottom = 30;
+    const svg = s('svg', { viewBox: `0 0 ${width} ${height}`, width: '100%', height, role: 'img', 'aria-label': 'Vývoj podílu odpovědí se zmínkou o firmě v čase, celkem a podle AI nástroje' });
+    box.replaceChildren(svg);
+
+    const probe = svg.appendChild(s('text', { class: 'end end-total' }));
+    const measure = (text) => {
+      probe.textContent = text;
+      return probe.getComputedTextLength();
+    };
+    const peak = Math.max(...DATA.runs.map((r) => r.visibility));
+    const yMax = Math.min(100, Math.max(40, Math.ceil((peak + 5) / 20) * 20));
+    const yTicks = [0, 1, 2, 3, 4].map((i) => (yMax / 4) * i);
+    const ends = series.map((item) => {
+      const point = item.points[item.points.length - 1];
+      return { item, point, text: `${item.label} ${pct(point.visibility)}` };
+    });
+    const left = Math.ceil(Math.max(...yTicks.map((t) => measure(pct(t))))) + 12;
+    const right = Math.ceil(Math.max(...ends.map((e) => measure(e.text)))) + 20;
+    probe.remove();
+
+    const t0 = time(dates[0]);
+    const t1 = time(dates[dates.length - 1]);
+    const x = (day) => (t1 === t0 ? (left + width - right) / 2 : left + ((time(day) - t0) / (t1 - t0)) * (width - right - left));
+    const y = (value) => height - bottom - (value / yMax) * (height - bottom - top);
+
+    for (const tick of yTicks) {
+      svg.append(
+        s('line', { class: tick === 0 ? 'axisline' : 'gridline', x1: left, x2: width - right, y1: y(tick), y2: y(tick) }),
+        s('text', { class: 'tick', x: left - 8, y: y(tick), dy: '0.32em', 'text-anchor': 'end' }, pct(tick)));
+    }
+    const step = Math.ceil(dates.length / Math.max(2, Math.floor((width - left - right) / 64)));
+    dates.forEach((date, i) => {
+      if ((dates.length - 1 - i) % step !== 0) return;
+      svg.append(s('text', { class: 'tick', x: x(date), y: height - bottom + 20, 'text-anchor': 'middle' }, fmtDate(date, false)));
+    });
+
+    const rule = svg.appendChild(s('line', { class: 'rule', y1: top, y2: height - bottom, visibility: 'hidden' }));
+    for (const item of [...series].reverse()) {
+      const total = item.id === 'all';
+      const path = item.points.map((p, i) => `${i ? 'L' : 'M'}${x(p.date).toFixed(1)},${y(p.visibility).toFixed(1)}`).join('');
+      svg.append(s('path', { class: 'series-line', d: path, style: `stroke:${item.color};stroke-width:${total ? 3 : 2}` }));
+      const end = item.points[item.points.length - 1];
+      svg.append(s('circle', { class: 'series-dot', cx: x(end.date), cy: y(end.visibility), r: total ? 6 : 5, style: `fill:${item.color}` }));
+    }
+
+    // Popisky na konci čar; kde by se překrývaly, rozestoupí se.
+    const gap = 16;
+    const placed = ends.map((e) => ({ ...e, y: y(e.point.visibility) })).sort((a, b) => a.y - b.y);
+    for (let i = 1; i < placed.length; i += 1) placed[i].y = Math.max(placed[i].y, placed[i - 1].y + gap);
+    const over = placed[placed.length - 1].y - (height - bottom);
+    if (over > 0) placed.forEach((e) => { e.y -= over; });
+    for (let i = placed.length - 2; i >= 0; i -= 1) placed[i].y = Math.min(placed[i].y, placed[i + 1].y - gap);
+    for (const e of placed) {
+      svg.append(s('text', { class: e.item.id === 'all' ? 'end end-total' : 'end', x: x(dates[dates.length - 1]) + 12, y: e.y, dy: '0.32em' }, e.text));
+    }
+
+    const tip = box.appendChild(h('div', { class: 'tip', hidden: true }));
+    const move = (event) => {
+      const rect = svg.getBoundingClientRect();
+      const scale = rect.width / width || 1;
+      const px = (event.clientX - rect.left) / scale;
+      const date = dates.reduce((best, d) => (Math.abs(x(d) - px) < Math.abs(x(best) - px) ? d : best), dates[0]);
+      rule.setAttribute('x1', x(date));
+      rule.setAttribute('x2', x(date));
+      rule.setAttribute('visibility', 'visible');
+      tip.replaceChildren(
+        h('div', { class: 'tip-head' }, fmtDate(date)),
+        ...series.map((item) => ({ item, point: item.points.find((p) => p.date === date) }))
+          .filter((entry) => entry.point)
+          .map((entry) => tipRow(entry.item.label, pct(entry.point.visibility), entry.item.color)));
+      showTip(box, tip, x(date) * scale, event.clientY - rect.top);
+    };
+    const leave = () => {
+      tip.hidden = true;
+      rule.setAttribute('visibility', 'hidden');
+    };
+    const hit = svg.appendChild(s('rect', { x: left - 8, y: top, width: Math.max(0, width - left - right + 16), height: height - top - bottom, fill: 'transparent' }));
+    hit.addEventListener('pointermove', move);
+    hit.addEventListener('pointerdown', move);
+    hit.addEventListener('pointerleave', leave);
+  }
+
+  function barTrack(share, max, own) {
+    return h('span', { class: 'bar-track' }, h('span', { class: own ? 'bar-fill own' : 'bar-fill', style: `width:${max ? (share / max) * 100 : 0}%` }));
+  }
+
+  function renderBrands() {
+    const box = document.getElementById('brands');
+    if (!DATA.brands.length) return box.replaceChildren(h('p', { class: 'empty' }, 'Žebříček se objeví po prvním měření.'));
+    const max = Math.max(...DATA.brands.map((d) => d.share));
+    const tip = h('div', { class: 'tip', hidden: true });
+    const rows = DATA.brands.map((d) => {
+      const row = h('div', { class: d.own ? 'bar-row own' : 'bar-row' },
+        h('span', { class: 'bar-name' }, d.brand, d.own ? h('span', { class: 'tag' }, 'vy') : null),
+        barTrack(d.share, max, d.own),
+        h('span', { class: 'bar-val' }, pct(d.share)));
+      const show = (event) => {
+        const rect = box.getBoundingClientRect();
+        tip.replaceChildren(tipRow(d.brand, `${num(d.mentions)} odpovědí · ${pct(d.share)}`));
+        showTip(box, tip, event.clientX - rect.left, event.clientY - rect.top);
+      };
+      row.addEventListener('pointermove', show);
+      row.addEventListener('pointerdown', show);
+      row.addEventListener('pointerleave', () => { tip.hidden = true; });
+      return row;
+    });
+    box.replaceChildren(...rows, tip);
+  }
+
+  function renderDomains() {
+    const table = document.getElementById('domains');
+    if (!DATA.domains.length) {
+      return table.replaceChildren(h('tbody', {}, h('tr', {}, h('td', { class: 'empty' }, 'V posledním měření AI neuvedla žádné zdroje.'))));
+    }
+    const max = Math.max(...DATA.domains.map((d) => d.share));
+    table.replaceChildren(
+      h('thead', {}, h('tr', {}, h('th', {}, 'Web'), h('th', {}, 'Podíl odpovědí'), h('th', { class: 'num' }, 'Odpovědí'))),
+      h('tbody', {}, ...DATA.domains.map((d) =>
+        h('tr', {},
+          h('td', {}, d.domain, d.own ? h('span', { class: 'tag' }, 'váš web') : null),
+          h('td', {}, h('span', { class: 'share' }, barTrack(d.share, max, d.own), h('span', { class: 'bar-val' }, pct(d.share)))),
+          h('td', { class: 'num' }, num(d.citations))))));
+  }
+
+  function renderQueries() {
+    const table = document.getElementById('queries');
+    const sub = document.getElementById('queries-sub');
+    if (!DATA.queries.length) {
+      sub.textContent = 'Seznam dotazů se objeví po prvním měření.';
+      return table.replaceChildren();
+    }
+    const missing = DATA.queries.filter((q) => q.hits === 0).length;
+    sub.replaceChildren('Číslo říká, kolikátou jmenovanou firmou jste v odpovědi byli. U ', h('b', {}, num(missing)), ' z ', h('b', {}, num(DATA.queries.length)), ' dotazů vás nejmenoval žádný nástroj; ty jsou nahoře.');
+    const measured = ENGINES.filter((e) => DATA.queries.some((q) => q[e.id] != null));
+    const rows = [...DATA.queries].sort((a, b) => a.hits - b.hits);
+    table.replaceChildren(
+      h('thead', {}, h('tr', {}, h('th', { class: 'col-query' }, 'Dotaz'), ...measured.map((e) => h('th', {}, e.label)), h('th', { class: 'col-rivals' }, 'Koho AI jmenuje'))),
+      h('tbody', {}, ...rows.map((q) =>
+        h('tr', {},
+          h('td', { class: 'col-query' }, q.query, q.topic ? h('span', { class: 'topic' }, q.topic) : null),
+          ...measured.map((e) => {
+            const value = q[e.id];
+            return h('td', {}, h('span', { class: value != null && value !== 'ne' ? 'pill yes' : 'pill' }, value == null ? '—' : value));
+          }),
+          h('td', { class: 'col-rivals' }, q.rivals || '—')))));
+  }
+
+  renderHeader();
+  renderTiles();
+  renderTrendStatic();
+  drawTrend();
+  renderBrands();
+  renderDomains();
+  renderQueries();
+  if ('ResizeObserver' in window) {
+    let width = 0;
+    new ResizeObserver(([entry]) => {
+      const next = Math.round(entry.contentRect.width);
+      if (next !== width) {
+        width = next;
+        drawTrend();
+      }
+    }).observe(document.getElementById('trend'));
+  }
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(drawTrend);
+</script>

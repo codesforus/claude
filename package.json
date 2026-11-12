@@ -1,0 +1,11 @@
+{
+  "name": "viditelnost-v-ai",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22.21" },
+  "scripts": {
+    "measure": "node tracker/run.mjs",
+    "sample": "node tracker/run.mjs --mock --weeks 8 --config config.sample.json --out sample",
+    "test": "node --test test/*.test.mjs"
+  }
+}
