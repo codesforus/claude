@@ -2,33 +2,95 @@
   "brand": {
     "name": "Chatbotique",
     "domain": "chatbotique.eu",
-    "aliases": ["Chatbotique.eu"]
+    "aliases": [
+      "Chatbotique.eu"
+    ]
   },
   "country": "CZ",
   "samples": 1,
   "engines": {
-    "chatgpt": { "enabled": true },
-    "gemini": { "enabled": true },
-    "perplexity": { "enabled": true }
+    "chatgpt": {
+      "enabled": false
+    },
+    "gemini": {
+      "enabled": true
+    },
+    "perplexity": {
+      "enabled": false
+    }
   },
   "queries": [
-    { "text": "Jaký je nejlepší AI chatbot na firemní web v češtině?", "topic": "Chatbot na web" },
-    { "text": "Doporuč českou firmu, která nasadí AI chatbota na web", "topic": "Chatbot na web" },
-    { "text": "Kolik stojí AI chatbot na web a kdo ho v Česku umí rychle nasadit?", "topic": "Chatbot na web" },
-    { "text": "Kdo nasadí AI asistenta na firemní web do pár dnů?", "topic": "Chatbot na web" },
-    { "text": "AI chatbot napojený na firemní data a ceník, který si nevymýšlí – koho doporučíš?", "topic": "Chatbot na web" },
-    { "text": "AI asistent pro e-shop, který odpovídá zákazníkům 24/7 – koho oslovit?", "topic": "Chatbot na web" },
-    { "text": "Kdo v Česku dělá AI hlasového asistenta pro zákaznickou linku?", "topic": "Hlasový asistent" },
-    { "text": "Nejlepší voicebot pro malé a střední firmy v ČR", "topic": "Hlasový asistent" },
-    { "text": "AI, která zvedá zmeškané hovory a domlouvá termíny – jaké jsou české služby?", "topic": "Hlasový asistent" },
-    { "text": "AI obchodník, který kvalifikuje poptávky z webu a telefonu – jací jsou dodavatelé v ČR?", "topic": "Hlasový asistent" },
-    { "text": "Jak automatizovat odpovědi na zákaznické e-maily pomocí AI a kdo to v Česku nabízí?", "topic": "E-maily" },
-    { "text": "Nejlepší platforma pro automatizaci firemní komunikace se zákazníky", "topic": "E-maily" },
-    { "text": "Chatbot pro firmu, která prodává okna, dveře a vrata – jaké řešení zvolit?", "topic": "Obory" },
-    { "text": "AI asistent pro stavební a montážní firmy na sběr poptávek", "topic": "Obory" },
-    { "text": "AI asistent pro havarijní a servisní službu, který zvedne telefon vždy", "topic": "Obory" },
-    { "text": "Srovnání českých dodavatelů AI chatbotů a voicebotů", "topic": "Srovnání" },
-    { "text": "Alternativy ke Smartsupp a Tidio s AI v češtině", "topic": "Srovnání" },
-    { "text": "Které české firmy nabízejí AI agenty pro zákaznickou podporu?", "topic": "Srovnání" }
+    {
+      "text": "Jaký je nejlepší AI chatbot na firemní web v češtině?",
+      "topic": "Chatbot na web"
+    },
+    {
+      "text": "Doporuč českou firmu, která nasadí AI chatbota na web",
+      "topic": "Chatbot na web"
+    },
+    {
+      "text": "Kolik stojí AI chatbot na web a kdo ho v Česku umí rychle nasadit?",
+      "topic": "Chatbot na web"
+    },
+    {
+      "text": "Kdo nasadí AI asistenta na firemní web do pár dnů?",
+      "topic": "Chatbot na web"
+    },
+    {
+      "text": "AI chatbot napojený na firemní data a ceník, který si nevymýšlí – koho doporučíš?",
+      "topic": "Chatbot na web"
+    },
+    {
+      "text": "AI asistent pro e-shop, který odpovídá zákazníkům 24/7 – koho oslovit?",
+      "topic": "Chatbot na web"
+    },
+    {
+      "text": "Kdo v Česku dělá AI hlasového asistenta pro zákaznickou linku?",
+      "topic": "Hlasový asistent"
+    },
+    {
+      "text": "Nejlepší voicebot pro malé a střední firmy v ČR",
+      "topic": "Hlasový asistent"
+    },
+    {
+      "text": "AI, která zvedá zmeškané hovory a domlouvá termíny – jaké jsou české služby?",
+      "topic": "Hlasový asistent"
+    },
+    {
+      "text": "AI obchodník, který kvalifikuje poptávky z webu a telefonu – jací jsou dodavatelé v ČR?",
+      "topic": "Hlasový asistent"
+    },
+    {
+      "text": "Jak automatizovat odpovědi na zákaznické e-maily pomocí AI a kdo to v Česku nabízí?",
+      "topic": "E-maily"
+    },
+    {
+      "text": "Nejlepší platforma pro automatizaci firemní komunikace se zákazníky",
+      "topic": "E-maily"
+    },
+    {
+      "text": "Chatbot pro firmu, která prodává okna, dveře a vrata – jaké řešení zvolit?",
+      "topic": "Obory"
+    },
+    {
+      "text": "AI asistent pro stavební a montážní firmy na sběr poptávek",
+      "topic": "Obory"
+    },
+    {
+      "text": "AI asistent pro havarijní a servisní službu, který zvedne telefon vždy",
+      "topic": "Obory"
+    },
+    {
+      "text": "Srovnání českých dodavatelů AI chatbotů a voicebotů",
+      "topic": "Srovnání"
+    },
+    {
+      "text": "Alternativy ke Smartsupp a Tidio s AI v češtině",
+      "topic": "Srovnání"
+    },
+    {
+      "text": "Které české firmy nabízejí AI agenty pro zákaznickou podporu?",
+      "topic": "Srovnání"
+    }
   ]
 }
