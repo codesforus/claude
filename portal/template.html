@@ -480,11 +480,12 @@
     const section = document.getElementById('doporuceni');
     const items = [];
     if (last) {
-      const missing = DATA.queries.filter((q) => q.hits === 0).length;
+      const measuredQueries = DATA.queries.filter((q) => q.engines > 0);
+      const missing = measuredQueries.filter((q) => q.hits === 0).length;
       const weakest = [...(DATA.topics || [])].sort((a, b) => a.visibility - b.visibility)[0];
       if (missing) {
         items.push(['Doplňte obsah k dotazům bez zmínky',
-          `U ${num(missing)} z ${num(DATA.queries.length)} dotazů vás nejmenoval žádný nástroj${(DATA.topics || []).length > 1 ? `; nejslabší téma je ${weakest.topic} (${pct(weakest.visibility)})` : ''}. Stránka, která na takový dotaz přímo odpovídá, dává AI důvod vás zmínit.`]);
+          `U ${num(missing)} z ${num(measuredQueries.length)} změřených dotazů vás nejmenoval žádný nástroj${(DATA.topics || []).length > 1 ? `; nejslabší téma je ${weakest.topic} (${pct(weakest.visibility)})` : ''}. Stránka, která na takový dotaz přímo odpovídá, dává AI důvod vás zmínit.`]);
       }
       const cited = DATA.domains.filter((d) => !d.own).slice(0, 3).map((d) => d.domain);
       if (cited.length) {
@@ -543,10 +544,13 @@
       sub.textContent = 'Seznam dotazů se objeví po prvním měření.';
       return table.replaceChildren();
     }
-    const missing = DATA.queries.filter((q) => q.hits === 0).length;
-    sub.replaceChildren('Číslo říká, kolikátou jmenovanou firmou jste v odpovědi byli. U ', h('b', {}, num(missing)), ' z ', h('b', {}, num(DATA.queries.length)), ' dotazů vás nejmenoval žádný nástroj; ty jsou nahoře. Kliknutím na dotaz zobrazíte, co AI odpověděla.');
+    const measuredQueries = DATA.queries.filter((q) => q.engines > 0);
+    const missing = measuredQueries.filter((q) => q.hits === 0).length;
+    const skipped = DATA.queries.length - measuredQueries.length;
+    sub.replaceChildren('Číslo říká, kolikátou jmenovanou firmou jste v odpovědi byli. U ', h('b', {}, num(missing)), ' z ', h('b', {}, num(measuredQueries.length)), ' změřených dotazů vás nejmenoval žádný nástroj; ty jsou nahoře.',
+      skipped ? ` ${num(skipped)} dotazů se změřit nepodařilo (—).` : '', ' Kliknutím na dotaz zobrazíte, co AI odpověděla.');
     const measured = ENGINES.filter((e) => DATA.queries.some((q) => q[e.id] != null));
-    const rows = DATA.queries.filter((q) => !activeTopic || q.topic === activeTopic).sort((a, b) => a.hits - b.hits);
+    const rows = DATA.queries.filter((q) => !activeTopic || q.topic === activeTopic).sort((a, b) => (b.engines > 0) - (a.engines > 0) || a.hits - b.hits);
     const body = [];
     for (const q of rows) {
       const details = (DATA.details || []).filter((d) => d.query === q.query);

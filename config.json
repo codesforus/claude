@@ -14,7 +14,8 @@
     },
     "gemini": {
       "enabled": true,
-      "search": false
+      "search": false,
+      "model": "gemini-3.6-flash"
     },
     "perplexity": {
       "enabled": false

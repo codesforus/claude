@@ -1,0 +1,490 @@
+{
+ "meta": [
+  {
+   "brand": "Chatbotique",
+   "domain": "chatbotique.eu",
+   "updated": "2026-11-12",
+   "runs": 1,
+   "queries": 18,
+   "sample": false,
+   "noSearch": true
+  }
+ ],
+ "runs": [
+  {
+   "date": "2026-11-12",
+   "engine": "all",
+   "engine_label": "Celkem",
+   "answers": 10,
+   "mentioned": 0,
+   "visibility": 0,
+   "cited": 0,
+   "citation_rate": 0,
+   "avg_position": null
+  },
+  {
+   "date": "2026-11-12",
+   "engine": "gemini",
+   "engine_label": "Gemini",
+   "answers": 10,
+   "mentioned": 0,
+   "visibility": 0,
+   "cited": 0,
+   "citation_rate": 0,
+   "avg_position": null
+  }
+ ],
+ "queries": [
+  {
+   "query": "Jaký je nejlepší AI chatbot na firemní web v češtině?",
+   "topic": "Chatbot na web",
+   "chatgpt": null,
+   "gemini": "ne",
+   "perplexity": null,
+   "hits": 0,
+   "engines": 1,
+   "rivals": "GPT-4o, Smartsupp, Mira AI"
+  },
+  {
+   "query": "Doporuč českou firmu, která nasadí AI chatbota na web",
+   "topic": "Chatbot na web",
+   "chatgpt": null,
+   "gemini": "ne",
+   "perplexity": null,
+   "hits": 0,
+   "engines": 1,
+   "rivals": "Feedyou, Coworks, Lundegaard"
+  },
+  {
+   "query": "Kolik stojí AI chatbot na web a kdo ho v Česku umí rychle nasadit?",
+   "topic": "Chatbot na web",
+   "chatgpt": null,
+   "gemini": "ne",
+   "perplexity": null,
+   "hits": 0,
+   "engines": 1,
+   "rivals": "OpenAI, ChatGPT, Claude"
+  },
+  {
+   "query": "Kdo nasadí AI asistenta na firemní web do pár dnů?",
+   "topic": "Chatbot na web",
+   "chatgpt": null,
+   "gemini": "ne",
+   "perplexity": null,
+   "hits": 0,
+   "engines": 1,
+   "rivals": "LinkedIn, NaVolneNoze.cz, Make.com"
+  },
+  {
+   "query": "AI chatbot napojený na firemní data a ceník, který si nevymýšlí – koho doporučíš?",
+   "topic": "Chatbot na web",
+   "chatgpt": null,
+   "gemini": "ne",
+   "perplexity": null,
+   "hits": 0,
+   "engines": 1,
+   "rivals": "Feedyou, Coworkers.ai, Daktela"
+  },
+  {
+   "query": "AI asistent pro e-shop, který odpovídá zákazníkům 24/7 – koho oslovit?",
+   "topic": "Chatbot na web",
+   "chatgpt": null,
+   "gemini": "ne",
+   "perplexity": null,
+   "hits": 0,
+   "engines": 1,
+   "rivals": "Shoptet, WooCommerce, Shopify"
+  },
+  {
+   "query": "Kdo v Česku dělá AI hlasového asistenta pro zákaznickou linku?",
+   "topic": "Hlasový asistent",
+   "chatgpt": null,
+   "gemini": "ne",
+   "perplexity": null,
+   "hits": 0,
+   "engines": 1,
+   "rivals": "Born Digital, ČSOB, AXA"
+  },
+  {
+   "query": "Nejlepší voicebot pro malé a střední firmy v ČR",
+   "topic": "Hlasový asistent",
+   "chatgpt": null,
+   "gemini": "ne",
+   "perplexity": null,
+   "hits": 0,
+   "engines": 1,
+   "rivals": "Daktela AI Agent, Shoptet, Raynet"
+  },
+  {
+   "query": "AI, která zvedá zmeškané hovory a domlouvá termíny – jaké jsou české služby?",
+   "topic": "Hlasový asistent",
+   "chatgpt": null,
+   "gemini": "ne",
+   "perplexity": null,
+   "hits": 0,
+   "engines": 1,
+   "rivals": "Vocally.ai, Vocabee, Google Calendar"
+  },
+  {
+   "query": "AI obchodník, který kvalifikuje poptávky z webu a telefonu – jací jsou dodavatelé v ČR?",
+   "topic": "Hlasový asistent",
+   "chatgpt": null,
+   "gemini": null,
+   "perplexity": null,
+   "hits": 0,
+   "engines": 0,
+   "rivals": ""
+  },
+  {
+   "query": "Jak automatizovat odpovědi na zákaznické e-maily pomocí AI a kdo to v Česku nabízí?",
+   "topic": "E-maily",
+   "chatgpt": null,
+   "gemini": null,
+   "perplexity": null,
+   "hits": 0,
+   "engines": 0,
+   "rivals": ""
+  },
+  {
+   "query": "Nejlepší platforma pro automatizaci firemní komunikace se zákazníky",
+   "topic": "E-maily",
+   "chatgpt": null,
+   "gemini": null,
+   "perplexity": null,
+   "hits": 0,
+   "engines": 0,
+   "rivals": ""
+  },
+  {
+   "query": "Chatbot pro firmu, která prodává okna, dveře a vrata – jaké řešení zvolit?",
+   "topic": "Obory",
+   "chatgpt": null,
+   "gemini": null,
+   "perplexity": null,
+   "hits": 0,
+   "engines": 0,
+   "rivals": ""
+  },
+  {
+   "query": "AI asistent pro stavební a montážní firmy na sběr poptávek",
+   "topic": "Obory",
+   "chatgpt": null,
+   "gemini": null,
+   "perplexity": null,
+   "hits": 0,
+   "engines": 0,
+   "rivals": ""
+  },
+  {
+   "query": "AI asistent pro havarijní a servisní službu, který zvedne telefon vždy",
+   "topic": "Obory",
+   "chatgpt": null,
+   "gemini": "ne",
+   "perplexity": null,
+   "hits": 0,
+   "engines": 1,
+   "rivals": "WhatsApp, Google Maps, Raynet"
+  },
+  {
+   "query": "Srovnání českých dodavatelů AI chatbotů a voicebotů",
+   "topic": "Srovnání",
+   "chatgpt": null,
+   "gemini": null,
+   "perplexity": null,
+   "hits": 0,
+   "engines": 0,
+   "rivals": ""
+  },
+  {
+   "query": "Alternativy ke Smartsupp a Tidio s AI v češtině",
+   "topic": "Srovnání",
+   "chatgpt": null,
+   "gemini": null,
+   "perplexity": null,
+   "hits": 0,
+   "engines": 0,
+   "rivals": ""
+  },
+  {
+   "query": "Které české firmy nabízejí AI agenty pro zákaznickou podporu?",
+   "topic": "Srovnání",
+   "chatgpt": null,
+   "gemini": null,
+   "perplexity": null,
+   "hits": 0,
+   "engines": 0,
+   "rivals": ""
+  }
+ ],
+ "brands": [
+  {
+   "brand": "Feedyou",
+   "mentions": 9,
+   "share": 90,
+   "own": false
+  },
+  {
+   "brand": "OpenAI",
+   "mentions": 8,
+   "share": 80,
+   "own": false
+  },
+  {
+   "brand": "Shoptet",
+   "mentions": 6,
+   "share": 60,
+   "own": false
+  },
+  {
+   "brand": "Daktela",
+   "mentions": 5,
+   "share": 50,
+   "own": false
+  },
+  {
+   "brand": "Smartsupp",
+   "mentions": 5,
+   "share": 50,
+   "own": false
+  },
+  {
+   "brand": "Coworkers.ai",
+   "mentions": 4,
+   "share": 40,
+   "own": false
+  },
+  {
+   "brand": "Chatbase",
+   "mentions": 4,
+   "share": 40,
+   "own": false
+  },
+  {
+   "brand": "Intercom",
+   "mentions": 4,
+   "share": 40,
+   "own": false
+  },
+  {
+   "brand": "Make.com",
+   "mentions": 4,
+   "share": 40,
+   "own": false
+  },
+  {
+   "brand": "Voiceflow",
+   "mentions": 4,
+   "share": 40,
+   "own": false
+  },
+  {
+   "brand": "Chatbotique",
+   "mentions": 0,
+   "share": 0,
+   "own": true
+  }
+ ],
+ "domains": [],
+ "topics": [
+  {
+   "topic": "Chatbot na web",
+   "answers": 6,
+   "mentioned": 0,
+   "visibility": 0
+  },
+  {
+   "topic": "Hlasový asistent",
+   "answers": 3,
+   "mentioned": 0,
+   "visibility": 0
+  },
+  {
+   "topic": "Obory",
+   "answers": 1,
+   "mentioned": 0,
+   "visibility": 0
+  }
+ ],
+ "details": [
+  {
+   "query": "Jaký je nejlepší AI chatbot na firemní web v češtině?",
+   "engine": "gemini",
+   "mentioned": false,
+   "position": null,
+   "text": "Neexistuje jedna univerzální odpověď, protože „nejlepší“ chatbot závisí na velikosti Vaší firmy, rozpočtu a účelu (zda má prodávat, odbavovat zákaznickou podporu, nebo sbírat kontakty). \n\nDnes už moderní AI chatbot využívá velká jazyková data (LLM jako GPT-4o), takže **češtinu zvládají všechny špičkové nástroje skvěle**.\n\nZde je přehled nejlepších AI chatbotů na českém trhu rozdělený podle kategorií:\n\n---\n\n### 1. Nejlepší pro české e-shopy a SMB (Snadná integrace a česká podpora)\n\n*   **Smartsupp (Mira AI)**\n    *   **Proč vybrat:** Česká jednička. Zná prostředí českých e-shopů, má přímou integraci na **Shoptet**, WordPress i další platformy. Jejich AI asistentka Mira umí odpovídat na dotazy ohledně stavu objednávek a produktů.\n    *   **Čeština:** Rodilý mluvčí (český vývoj i podpora).\n    *   **Pro kogo:** Střední a malé e-shopy, české firmy hledající rychlé řešení v CZK.\n\n*   **SupportBox (s AI)**\n    *   **Proč vybrat:** Český helpdesk nástroj, který do své live chatovací aplikace integroval AI. Vhodný, pokud chcete kombinovat e-maily, telefony a chat na jednom místě.\n    *   **Čeština:** 100% česká platforma.\n\n---\n\n### 2. Nejlepší pro „chytré“ AI odpovědi na míru (Znalostní bá…",
+   "brands": [
+    "GPT-4o",
+    "Smartsupp",
+    "Mira AI",
+    "Shoptet",
+    "WordPress",
+    "SupportBox",
+    "Chatbase",
+    "CustomGPT.ai"
+   ],
+   "sources": []
+  },
+  {
+   "query": "Doporuč českou firmu, která nasadí AI chatbota na web",
+   "engine": "gemini",
+   "mentioned": false,
+   "position": null,
+   "text": "Výběr správné české firmy závisí na tom, **jaký typ chatbota potřebujete** (zda jednoduchého průvodce pro e-shop, nebo pokročilého AI asistenta napojeného na vaše interní systémy a data).\n\nZde jsou nejlepší české firmy a platformy rozdělené podle kategorií:\n\n---\n\n### 1. Pro střední a velké firmy (Custom AI & Kompletní vývoj)\n\nPokud chcete chatbota na míru, který bude trénovaný na vašich interních datech (PDF, znalostní báze, CRM), rozumí česky a zvládne složité procesy:\n\n*   **Feedyou** (Pardubice)\n    *   **O co jde:** Jedna z nejznámějších českých firem specializovaná čistě na chatboty a voiceboty.\n    *   **Proč je vybrat:** Mají obrovské zkušenosti (HR, zákaznický servis, prodej), staví řešení na míru pro velké i střední firmy a plně integrovali moderní LLM (Generativní AI).\n    *   **Vhodné pro:** Firmy, které chtějí řešení „na klíč“ s garantovaným servisem.\n\n*   **Coworks / Lundegaard / Adastra** (Praha)\n    *   **O co jde:** Velké vývojářské a konzultační domy s silnými AI divizemi.\n    *   **Proč je vybrat:** Pokud potřebujete AI chatbota jako součást většího IT systému (např. v bance, pojišťovně nebo v rozsáhlém B2B portálu) a řešíte vysokou bezpečnost a GDPR.\n    *   **Vh…",
+   "brands": [
+    "Feedyou",
+    "Coworks",
+    "Lundegaard",
+    "Adastra",
+    "Smartsupp",
+    "Shoptet",
+    "WooCommerce",
+    "Smartsupp AI"
+   ],
+   "sources": []
+  },
+  {
+   "query": "Kolik stojí AI chatbot na web a kdo ho v Česku umí rychle nasadit?",
+   "engine": "gemini",
+   "mentioned": false,
+   "position": null,
+   "text": "Cena AI chatbota a rychlost jeho nasazení závisí na tom, co od něj očekáváte. Dnes už nemusíte platit sta tisíce za vývoj od nuly – díky technologiím jako OpenAI (ChatGPT) nebo Claude lze funkčního AI bota napojeného na vaše data nasadit **během několika dnů či dokonce hodin**.\n\nZde je přehled cenových kategorií a konkrétních firem v Česku, které vám s tím pomohou.\n\n---\n\n### 1. Kolik AI chatbot stojí? (Cenové kategorie)\n\n#### A) Hotová \"SaaS\" řešení (Nejlevnější & nejrychlejší)\nVhodné pro: Menší e-shopy, běžné firemní weby, které chtějí odpovídat na dotazy z webu/PDF dokumentů.\n* **Jednorázová instalace:** 0 Kč až 10 000 Kč (zvládnete to sami nebo s pomocí freelancera).\n* **Měsíční poplatky:** cca **500 Kč – 3 000 Kč / měsíc** (platí se za platformu a spotřebovaná AI data/tokeny).\n* **Doba nasazení:** 1 až 3 dny.\n\n#### B) Pokročilý chatbot na míru (Střední cesta)\nVhodné pro: Střední firmy a e-shopy. Chatbot je napojený na váš e-shop (Shoptet, WooCommerce), vyhledává v produktech, kontroluje stav objednávek a učí se z vašich dat.\n* **Jednorázový vývoj/nastavení:** **20 000 Kč – 80 000 Kč**.\n* **Měsíční provoz:** **1 000 Kč – 5 000 Kč / měsíc** (API poplatky OpenAI/Anthropic + správa…",
+   "brands": [
+    "OpenAI",
+    "ChatGPT",
+    "Claude",
+    "Shoptet",
+    "WooCommerce",
+    "Anthropic",
+    "SAP",
+    "Salesforce"
+   ],
+   "sources": []
+  },
+  {
+   "query": "Kdo nasadí AI asistenta na firemní web do pár dnů?",
+   "engine": "gemini",
+   "mentioned": false,
+   "position": null,
+   "text": "Nasadit AI asistenta na firemní web **do 2 až 3 dnů** je dnes zcela reálné. Závisí to na tom, zda si to chcete udělat sami pomocí připravených nástrojů (zabere to pár hodin), nebo zda to chcete dodat „na klíč“ od někoho jiného.\n\nZde jsou vaše hlavní možnosti podle toho, jaký přístup preferujete:\n\n---\n\n### 1. Řešení „Na klíč“ (České agentury a experti)\nPokud nechcete nic nastavovat a chcete, aby vám to někdo kompletně připravil, otestoval a nasadil do pár dnů:\n\n*   **Poptávka na LinkedInu / NaVolneNoze.cz:** Zadejte poptávku po „AI integrátorovi“ nebo „no-code vývojáři“. Lidé specializovaní na nástroje jako Make.com, Voiceflow nebo Chatbase vám asistenta na míru postaví a nasadí za 2–4 dny.\n*   **Specializované české AI agentury:**\n    *   **Feedyou:** Česká jednička na chatboty a AI asistenty (vhodné spíše pro střední a větší firmy).\n    *   **Asistent.ai / další lokální integrátoři:** Menší digitální agentury dnes běžně nabízejí nasazení AI asistenta do týdne.\n\n---\n\n### 2. Řešení svépomocí za pár hodin (No-Code nástroje)\nPokud máte na webu správce (nebo sami umíte vložit skript do webu/Google Tag Manageru), zvládnete to **do 24 hodin** pomocí těchto globálních služeb, které umí pe…",
+   "brands": [
+    "LinkedIn",
+    "NaVolneNoze.cz",
+    "Make.com",
+    "Voiceflow",
+    "Chatbase",
+    "Feedyou",
+    "Asistent.ai",
+    "Google Tag Manager"
+   ],
+   "sources": []
+  },
+  {
+   "query": "AI chatbot napojený na firemní data a ceník, který si nevymýšlí – koho doporučíš?",
+   "engine": "gemini",
+   "mentioned": false,
+   "position": null,
+   "text": "Aby si chatbot **nevymýšlel (nehalucinoval)** a dával přesné odpovědi podle vašich dat a ceníku, musí fungovat na architektuře **RAG (Retrieval-Augmented Generation)** a mít nastavené přísné instrukce („odpovídej pouze z dodaných podkladů, jinak řekni, že nevíš“). Pokud jde o ceník, ideální je **přímé napojení přes API** na váš ERP/CRM systém, nikoliv jen nahrané PDF, které rychle zastarává.\n\nZde jsou nejlepší doporučené firmy a nástroje rozdělené podle velikosti vaší firmy a preferovaného přístupu:\n\n---\n\n### 1. Česká řešení na míru (Nejlepší pro CZ podpora, vývoj a integrace)\n\nPokud chcete hotové řešení v češtině, integraci na vaše systémy a garanci funkčnosti:\n\n*   **Feedyou** (Česká republika)\n    *   **Pro kogo:** Střední a velké firmy, e-shopy, B2B.\n    *   **Proč je doporučit:** Patří k lídrům na českém trhu. Staví chatboty přímo napojené na API (sklady, ceníky, CRM). Mají skvěle vyřešenou kontrolu halucinací a bezpečné nakládání s daty.\n*   **Coworkers.ai** (Česká republika)\n    *   **Pro koho:** Velké firmy, finanční sektor, e-commerce.\n    *   **Proč je doporučit:** Specializují se na konverzační AI v češtině (text i hlas). Jejich boti jsou navrženi přímo pro procesy jako…",
+   "brands": [
+    "Feedyou",
+    "Coworkers.ai",
+    "Daktela",
+    "Smartsupp",
+    "Intercom",
+    "Fin",
+    "CustomGPT.ai",
+    "Chatbase"
+   ],
+   "sources": []
+  },
+  {
+   "query": "AI asistent pro e-shop, který odpovídá zákazníkům 24/7 – koho oslovit?",
+   "engine": "gemini",
+   "mentioned": false,
+   "position": null,
+   "text": "Volba toho, koho oslovit pro implementaci 24/7 AI asistenta (chatbot/voicebot), závisí především na **velikosti vašeho e-shopu**, **rozpočtu** a **platformě, na které běžíte** (např. Shoptet, WooCommerce, Shopify, nebo řešení na míru).\n\nZde je přehled možností rozdělený podle typu dodavatele:\n\n---\n\n### 1. České specializované firmy a SaaS platformy (Nejlepší volba pro ČR/SK trh)\nTyto firmy mají skvělou podporu češtiny, rozumí lokálnímu e-commerce prostředí a často mají hotové integrace na české e-shopové platformy a ERP systémy.\n\n*   **Feedyou** – Jedna z nejznámějších českých firem na tvorbu chatbotů a voicebotů. Vhodné pro střední a velké e-shopy. Tvoří řešení na míru i pokročilé AI asistenty propojené s vaším systémem.\n*   **Smartsupp (s AI)** – Mimořádně populární nástroj v ČR. Nabízí live chat propojený s AI asistentem. Vhodné pro malé až střední e-shopy (velmi snadná integrace na Shoptet).\n*   **Cowley AI** – Český startup zaměřený přímo na AI asistenty pro e-shopy. Umí odpovídat na dotazy ohledně zboží, stavu objednávky i vratatek.\n*   **Daktela** – Robustní omnichannel řešení pro zákaznickou péči. Pokud máte větší zákaznickou linku a chcete AI asistenta napojit na telefonát…",
+   "brands": [
+    "Shoptet",
+    "WooCommerce",
+    "Shopify",
+    "Feedyou",
+    "Smartsupp",
+    "Cowley AI",
+    "Daktela",
+    "Luigi’s Box"
+   ],
+   "sources": []
+  },
+  {
+   "query": "Kdo v Česku dělá AI hlasového asistenta pro zákaznickou linku?",
+   "engine": "gemini",
+   "mentioned": false,
+   "position": null,
+   "text": "V České republice je trh s AI hlasovými asistenty (voiceboty) pro zákaznické linky a kontaktní centra poměrně rozvinutý. Existuje zde několik špičkových českých firem, které vyvíjejí vlastní řešení, a také integrátoři, kteří propojují globální AI technologie s českým prostředím.\n\nZde je přehled hlavních hráčů na českém trhu rozdělený do několika kategorií:\n\n---\n\n### 1. České vývojářské firmy (Specialisté na AI a Voiceboty)\nTyto firmy vyvíjejí vlastní konverzační AI a voiceboty na míru pro velké i střední firmy:\n\n*   **Born Digital**\n    *   Jedna z nejznámějších českých firem v tomto oboru.\n    *   Vyvíjí pokročilé voiceboty a chatboty schopné řešit složité požadavky, rozpoznat emoce a analyzovat hovory.\n    *   *Zákazníci:* ČSOB, AXA, Mall.cz, Electroworld a další.\n*   **Coworkers.ai**\n    *   Specializuje se na konverzační AI (hlasové i textové asistenty) s důrazem na přirozenost češtiny.\n    *   Nabízí řešení pro automatizaci zákaznické podpory i interních procesů.\n    *   *Zákazníci:* Komerční banka, Kooperativa, Zásilkovna.\n*   **Feedyou**\n    *   Původně chatbotová firma, která dnes nabízí komplexní voiceboty napojené na firemní CRM a ERP systémy.\n    *   Funguje mezinárodně…",
+   "brands": [
+    "Born Digital",
+    "ČSOB",
+    "AXA",
+    "Mall.cz",
+    "Electroworld",
+    "Coworkers.ai",
+    "Komerční banka",
+    "Kooperativa"
+   ],
+   "sources": []
+  },
+  {
+   "query": "Nejlepší voicebot pro malé a střední firmy v ČR",
+   "engine": "gemini",
+   "mentioned": false,
+   "position": null,
+   "text": "Vybrat „nejlepšího“ voicebota pro malou nebo střední firmu (MSP) v ČR závisí na tom, zda hledáte **řešení na klíč s českou podporou**, nebo máte vlastní vývojáře a chcete **nejmodernější AI za zlomkovou cenu**.\n\nČeština je pro voiceboty specifická (skloňování, časování, přízvuk), proto mají v ČR velkou výhodu lokální firmy, ale globální AI nástroje je rychle dohánějí.\n\nZde je přehled nejlepších možností na českém trhu rozdělený podle typu firmy:\n\n---\n\n### 1. Kompletní česká řešení na klíč (Nejsnadnější implementace)\n\nTato řešení jsou ideální, pokud nemáte vlastní IT oddělení a chcete hotový produkt s českou podporou a garancí funkčnosti.\n\n*   **Daktela AI Agent (Voicebot)**\n    *   **Pro koho:** Firmy, které už používají nebo plánují používat zákaznické centrum (CCaaS) od Daktely.\n    *   **Výhody:** Perfektní integrace do českého prostředí, snadné napojení na CRM, Shoptet, Raynet atd. Zvládá příchozí i odchozí hovory, přepis do textu a předání živému operátorovi.\n    *   **Nevýhody:** Vyšší cena než u čistě samoobsluhovacích nástrojů.\n*   **Born Digital**\n    *   **Pro koho:** Střední firmy, které potřebují velmi kvalitní porozumění češtině a komplexnější scénáře (např. domlouvání…",
+   "brands": [
+    "Daktela AI Agent",
+    "Shoptet",
+    "Raynet",
+    "Born Digital",
+    "Feedyou",
+    "WhatsApp",
+    "Vapi.ai",
+    "Retell AI"
+   ],
+   "sources": []
+  },
+  {
+   "query": "AI, která zvedá zmeškané hovory a domlouvá termíny – jaké jsou české služby?",
+   "engine": "gemini",
+   "mentioned": false,
+   "position": null,
+   "text": "V České republice se trh s AI hlasovými asistentky (voiceboty), které zvedají telefon, vyřizují zmeškané hovory a plánují schůzky do kalendáře, v posledním roce extrémně rozrostl.\n\nZde je přehled nejznámějších českých služeb, řešení a přístupů, které můžete využít:\n\n---\n\n### 1. Hotové české produkty (SaaS pro firmy i živnostníky)\n\nTato řešení jsou připravena k rychlému nasazení, mají českou podporu a rozumí česky.\n\n*   **Vocally.ai (dříve Vocabee)**\n    *   **O co jde:** Jeden z nejznámějších českých startupů zaměřený přesně na tento problém.\n    *   **Co umí:** Zvedne telefon, když nezvedáte (nebo nepřetržitě 24/7), promluví s klientem přirozenou češtinou, zjistí, co potřebuje, a domluví termín.\n    *   **Integrace:** Propojuje se s kalendáři (Google Calendar, Outlook) i rezervačními systémy (např. Reservio).\n    *   **Pro koho:** Salóny, lékaři, řemeslníci, autoservisy, fin. poradci.\n*   **Coworkers.ai (dříve Born Digital)**\n    *   **O co jde:** Lídři na českém trhu v oblasti konverzační AI pro větší firmy a enterprise klienty.\n    *   **Co umí:** Špičkový hlasový asistent pro náročnější scénáře. Umí pracovat s databázemi, ověřovat identitu zákazníka a sjednávat schůzky.\n    *…",
+   "brands": [
+    "Vocally.ai",
+    "Vocabee",
+    "Google Calendar",
+    "Outlook",
+    "Reservio",
+    "Coworkers.ai",
+    "Born Digital",
+    "Feedyou"
+   ],
+   "sources": []
+  },
+  {
+   "query": "AI asistent pro havarijní a servisní službu, který zvedne telefon vždy",
+   "engine": "gemini",
+   "mentioned": false,
+   "position": null,
+   "text": "AI hlasový asistent (Voicebot) pro havarijní a servisní služby je absolutní „game-changer“. V tomto oboru znamená zmeškaný hovor buď ztracenou zakázku, nebo obrovské materiální škody (např. prasklá voda v noci).\n\nAI asistent **nikdy nemá obsazeno, nespí, nejeví známky únavy a zvládne odbavit i desítky hovorů současně** (např. při vichřici nebo krupobití).\n\nZde je přehled toho, jak takový AI asistent funguje, co všechno dokáže a jak by vypadala jeho konfigurace pro váš byznys:\n\n---\n\n### Jak AI asistent v praxi funguje (Scénář hovoru)\n\n1. **Okamžité zvednutí (do 1 vteřiny):**\n   * *AI:* „Dobrý den, tady AI asistent Havarijní služby [Název]. Jaký máte problém a jak vám mohu pomoci?“\n2. **Kategorizace a triáž (Zjištění problému):**\n   * Zákazník: „Praskla mi stupačka a teče mi voda do obýváku!“\n   * *AI:* „Rozumím, jedná se o akutní havárii vody. Jste v bezprostředním ohrožení zdraví nebo hrozí velké škody?“\n3. **Sběr klíčových informací:**\n   * AI se zeptá na: **Adresu** (ulice, číslo popisné, město), **jméno**, **kontaktní telefon** a zda už zákazník **zavřel hlavní uzávěr vody**.\n4. **Akce a Notifikace (Vteřiny po zavěšení):**\n   * AI vyhodnotí situaci jako **PRIORITA 1 (Kritická)**…",
+   "brands": [
+    "WhatsApp",
+    "Google Maps",
+    "Raynet",
+    "Salesforce",
+    "Freelo",
+    "OpenAI",
+    "ElevenLabs",
+    "Vapi"
+   ],
+   "sources": []
+  }
+ ]
+}
