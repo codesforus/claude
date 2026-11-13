@@ -1,0 +1,8 @@
+# Netlify zveřejní jen složku site (hotový portál), nic se při nasazení nesestavuje.
+[build]
+  publish = "site"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"

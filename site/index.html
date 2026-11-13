@@ -1,0 +1,626 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Viditelnost v AI</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap">
+<style>
+  /* Rozvržení: tmavý pruh se shrnutím, tři hlavní čísla, vývoj v čase, pak kdo je jmenován a kde chybíte. */
+  :root {
+    --bg: #f7f7fb; --surface: #ffffff; --band: #060B18; --band-fg: #ffffff; --band-muted: #a8bada;
+    --fg: #0a0a0f; --fg-2: #555566; --muted: #6f6f86;
+    --line: rgba(10,15,30,0.10); --line-strong: rgba(10,15,30,0.18);
+    --accent: #1A6EF5; --accent-2: #7C5CFC; --accent-soft: rgba(26,110,245,0.10);
+    --grad: linear-gradient(135deg, #1A6EF5 0%, #7C5CFC 100%);
+    --grad-deep: linear-gradient(135deg, #1258d0 0%, #6339e8 100%);
+    --ok: #067647; --ok-soft: rgba(18,183,106,0.16); --bad: #b42318; --bad-soft: rgba(240,68,56,0.12);
+    --s1: #1A6EF5; --s2: #eb6834; --s3: #1baf7a; --s4: #7C5CFC; --bar-muted: #c4c8d8;
+    --grid: rgba(10,15,30,0.08); --axis: rgba(10,15,30,0.24);
+    --shadow: 0 12px 32px rgba(10,15,30,0.08); --shadow-brand: 0 16px 40px rgba(26,110,245,0.22);
+    --radius: 18px;
+    --font-head: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --font-body: 'DM Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #060B18; --surface: #0A1226; --band: #0A1226; --band-fg: #ffffff; --band-muted: #a8bada;
+      --fg: #f2f5fb; --fg-2: #a8bada; --muted: #8f9dbd;
+      --line: rgba(255,255,255,0.10); --line-strong: rgba(255,255,255,0.20);
+      --accent: #4F92FF; --accent-2: #9085e9; --accent-soft: rgba(79,146,255,0.14);
+      --grad: linear-gradient(135deg, #4F92FF 0%, #9085e9 100%);
+      --grad-deep: linear-gradient(135deg, #1258d0 0%, #6339e8 100%);
+      --ok: #47cd89; --ok-soft: rgba(18,183,106,0.20); --bad: #f97066; --bad-soft: rgba(240,68,56,0.18);
+      --s1: #4F92FF; --s2: #d95926; --s3: #199e70; --s4: #9085e9; --bar-muted: #34415f;
+      --grid: rgba(255,255,255,0.08); --axis: rgba(255,255,255,0.28);
+      --shadow: 0 12px 32px rgba(0,0,0,0.35); --shadow-brand: 0 16px 40px rgba(26,110,245,0.28);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #060B18; --surface: #0A1226; --band: #0A1226; --band-fg: #ffffff; --band-muted: #a8bada;
+    --fg: #f2f5fb; --fg-2: #a8bada; --muted: #8f9dbd;
+    --line: rgba(255,255,255,0.10); --line-strong: rgba(255,255,255,0.20);
+    --accent: #4F92FF; --accent-2: #9085e9; --accent-soft: rgba(79,146,255,0.14);
+    --grad: linear-gradient(135deg, #4F92FF 0%, #9085e9 100%);
+    --grad-deep: linear-gradient(135deg, #1258d0 0%, #6339e8 100%);
+    --ok: #47cd89; --ok-soft: rgba(18,183,106,0.20); --bad: #f97066; --bad-soft: rgba(240,68,56,0.18);
+    --s1: #4F92FF; --s2: #d95926; --s3: #199e70; --s4: #9085e9; --bar-muted: #34415f;
+    --grid: rgba(255,255,255,0.08); --axis: rgba(255,255,255,0.28);
+    --shadow: 0 12px 32px rgba(0,0,0,0.35); --shadow-brand: 0 16px 40px rgba(26,110,245,0.28);
+    color-scheme: dark;
+  }
+
+  body { background: var(--bg); color: var(--fg); font-family: var(--font-body); font-size: 16px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+
+  .band { color: var(--band-fg); background:
+      radial-gradient(60rem 26rem at 88% -20%, rgba(124,92,252,0.42), transparent 60%),
+      radial-gradient(46rem 24rem at 4% 130%, rgba(26,110,245,0.40), transparent 60%),
+      linear-gradient(rgba(79,146,255,0.07) 1px, transparent 1px) 0 0 / 48px 48px,
+      linear-gradient(90deg, rgba(79,146,255,0.07) 1px, transparent 1px) 0 0 / 48px 48px,
+      var(--band); }
+  .band .wrap { padding-block: 40px 96px; display: grid; gap: 14px; }
+  .eyebrow { justify-self: start; display: inline-flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 100px; background: rgba(79,146,255,0.16); border: 1px solid rgba(79,146,255,0.35); font-size: 0.82rem; font-weight: 500; }
+  .eyebrow-dot { width: 8px; height: 8px; border-radius: 50%; background: linear-gradient(135deg, #4F92FF, #9b83ff); }
+  h1 { font-family: var(--font-head); font-weight: 800; font-size: clamp(2rem, 5vw, 3rem); line-height: 1.08; letter-spacing: -0.02em; margin: 0; text-wrap: balance; }
+  .lede { margin: 0; max-width: 62ch; color: var(--band-muted); font-size: 1.06rem; }
+  .lede b { color: var(--band-fg); font-weight: 600; }
+  .sample { margin: 4px 0 0; max-width: 62ch; padding: 10px 14px; border-radius: 12px; border: 1px dashed rgba(255,255,255,0.45); background: rgba(255,255,255,0.06); font-size: 0.92rem; }
+
+  main.wrap { display: grid; gap: 28px; padding-block: 0 56px; }
+  .tiles { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); margin-top: -64px; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); padding: 22px; min-width: 0; }
+  .tile { display: grid; gap: 8px; align-content: start; }
+  .tile-label { margin: 0; font-family: var(--font-head); font-weight: 600; font-size: 0.95rem; }
+  .big { margin: 0; font-family: var(--font-head); font-weight: 800; font-size: 3rem; line-height: 1; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+  .tile-def { margin: 0; color: var(--fg-2); font-size: 0.9rem; line-height: 1.4; }
+  .tile-main { background: var(--grad-deep); border-color: transparent; box-shadow: var(--shadow-brand); color: #ffffff; }
+  .tile-main .tile-def { color: rgba(255,255,255,0.88); }
+  .delta { margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 0.88rem; color: var(--fg-2); font-variant-numeric: tabular-nums; }
+  .tile-main .delta { color: rgba(255,255,255,0.88); }
+  .chip { display: inline-flex; align-items: center; gap: 5px; padding: 2px 9px; border-radius: 100px; font-weight: 600; background: var(--accent-soft); color: var(--fg); white-space: nowrap; }
+  .chip.good { background: var(--ok-soft); color: var(--ok); }
+  .chip.bad { background: var(--bad-soft); color: var(--bad); }
+  .tile-main .chip, .tile-main .chip.good, .tile-main .chip.bad { background: rgba(255,255,255,0.20); color: #ffffff; }
+
+  .section { display: grid; gap: 14px; min-width: 0; }
+  h2 { font-family: var(--font-head); font-weight: 700; font-size: 1.3rem; line-height: 1.2; letter-spacing: -0.01em; margin: 0; text-wrap: balance; }
+  .sub { margin: 0; color: var(--fg-2); max-width: 65ch; }
+  .sub b { color: var(--fg); font-weight: 600; }
+  .two { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); align-items: start; }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 6px 16px; margin: 0; padding: 0; list-style: none; font-size: 0.9rem; color: var(--fg-2); }
+  .legend li { display: inline-flex; align-items: center; gap: 7px; }
+  .swatch { width: 14px; height: 4px; border-radius: 2px; display: inline-block; }
+  .chart { position: relative; min-height: 300px; min-width: 0; }
+  .chart svg { display: block; overflow: visible; }
+  .tick { font-size: 12px; fill: var(--fg-2); font-family: var(--font-body); font-variant-numeric: tabular-nums; }
+  .end { font-size: 12.5px; fill: var(--fg); font-family: var(--font-body); font-variant-numeric: tabular-nums; }
+  .end-total { font-weight: 600; }
+  .gridline { stroke: var(--grid); stroke-width: 1; }
+  .axisline { stroke: var(--axis); stroke-width: 1; }
+  .rule { stroke: var(--axis); stroke-width: 1; }
+  .series-line { fill: none; stroke-linejoin: round; stroke-linecap: round; }
+  .series-dot { stroke: var(--surface); stroke-width: 2; }
+  .tip { position: absolute; z-index: 2; pointer-events: none; background: var(--surface); color: var(--fg); border: 1px solid var(--line-strong); box-shadow: var(--shadow); border-radius: 12px; padding: 8px 12px; font-size: 0.85rem; line-height: 1.55; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .tip-head { color: var(--fg-2); }
+  .tip-row { display: flex; gap: 16px; justify-content: space-between; }
+  .tip-key { display: inline-flex; align-items: center; gap: 7px; }
+
+  .bars { position: relative; display: grid; gap: 12px; }
+  .bar-row { display: grid; grid-template-columns: minmax(0, 36%) minmax(0, 1fr) 3.4em; gap: 10px; align-items: center; }
+  .bar-name { overflow-wrap: anywhere; line-height: 1.3; }
+  .bar-track { display: block; height: 14px; }
+  .bar-fill { display: block; height: 100%; min-width: 3px; border-radius: 0 4px 4px 0; background: var(--bar-muted); }
+  .bar-fill.own { background: var(--grad); }
+  .bar-val { text-align: right; font-variant-numeric: tabular-nums; }
+  .bar-row.own .bar-name, .bar-row.own .bar-val { font-weight: 600; }
+  .tag { display: inline-block; margin-left: 8px; padding: 0 8px; border-radius: 100px; background: var(--accent-soft); border: 1px solid var(--accent); font-size: 0.78rem; font-weight: 600; white-space: nowrap; }
+
+  .scroll { overflow-x: auto; min-width: 0; }
+  table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
+  th { text-align: left; font-family: var(--font-head); font-weight: 600; font-size: 0.8rem; color: var(--fg-2); padding: 8px 14px 8px 0; border-bottom: 1px solid var(--line-strong); white-space: nowrap; vertical-align: bottom; }
+  td { padding: 10px 14px 10px 0; border-bottom: 1px solid var(--line); vertical-align: top; line-height: 1.4; }
+  tr:last-child td { border-bottom: 0; }
+  th.num, td.num { text-align: right; padding-right: 0; }
+  .col-query { min-width: min(15rem, 46vw); }
+  .col-rivals { min-width: 12rem; color: var(--fg-2); }
+  .topic { display: block; color: var(--muted); font-size: 0.8rem; }
+  .pill { display: inline-block; min-width: 2.8em; text-align: center; padding: 1px 9px; border-radius: 100px; border: 1px solid var(--line-strong); color: var(--fg-2); }
+  .pill.yes { border-color: transparent; background: var(--ok-soft); color: var(--ok); font-weight: 600; }
+  .share { display: grid; grid-template-columns: minmax(3rem, 1fr) 3.4em; gap: 10px; align-items: center; min-width: 8rem; }
+  .share .bar-track { height: 8px; }
+
+  .advice { display: grid; gap: 14px 28px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr)); margin: 0; padding: 0; list-style: none; }
+  .advice li { display: grid; gap: 4px; align-content: start; padding-left: 14px; border-left: 3px solid var(--accent); }
+  h3 { font-family: var(--font-head); font-weight: 600; font-size: 1rem; line-height: 1.3; margin: 0; }
+  .advice p { margin: 0; color: var(--fg-2); font-size: 0.95rem; }
+
+  .filters { display: flex; flex-wrap: wrap; gap: 8px; }
+  .filter { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 100px; border: 1px solid var(--line-strong); background: var(--surface); color: var(--fg); font: inherit; font-size: 0.9rem; font-weight: 500; cursor: pointer; }
+  .filter:hover { border-color: var(--accent); }
+  .filter.on { background: var(--grad-deep); border-color: transparent; color: #ffffff; }
+  .filter-val { font-variant-numeric: tabular-nums; opacity: 0.8; }
+  .filter:focus-visible, .toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .toggle { display: inline-flex; align-items: baseline; gap: 8px; padding: 0; border: 0; background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; }
+  .toggle:hover .toggle-text { text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 3px; }
+  .chev { color: var(--accent); font-size: 0.7em; transition: transform 0.15s; flex: none; }
+  .toggle[aria-expanded="true"] .chev { transform: rotate(90deg); }
+  @media (prefers-reduced-motion: reduce) { .chev { transition: none; } }
+  tr.detail td { padding: 0 0 14px; }
+  .answers { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); }
+  .answer { display: grid; gap: 8px; align-content: start; padding: 14px 16px; border-radius: 12px; background: var(--bg); border: 1px solid var(--line); min-width: 0; }
+  .answer-head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0; font-family: var(--font-head); font-weight: 600; font-size: 0.9rem; }
+  .answer-text { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; font-size: 0.9rem; color: var(--fg-2); max-height: 16rem; overflow-y: auto; }
+  .answer-meta { margin: 0; font-size: 0.82rem; color: var(--muted); overflow-wrap: anywhere; }
+  .answer-meta b { color: var(--fg-2); font-weight: 600; }
+
+  details { color: var(--fg-2); }
+  summary { cursor: pointer; color: var(--fg); font-weight: 500; }
+  summary:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+  details p { margin: 8px 0 0; max-width: 65ch; }
+  details .scroll { margin-top: 10px; }
+  .empty { margin: 0; padding: 28px 22px; text-align: center; color: var(--fg-2); }
+</style>
+
+<header class="band">
+  <div class="wrap">
+    <span class="eyebrow"><span class="eyebrow-dot"></span><span id="who"></span></span>
+    <h1>Viditelnost v AI</h1>
+    <p class="lede" id="lede"></p>
+    <p class="sample" id="no-search" hidden>Měřeno bez hledání na webu: nástroj odpovídal jen z toho, co má naučené. V aplikaci si odpověď obvykle dohledává, takže skutečná viditelnost se může lišit. Odkazy na web proto chybí.</p>
+    <p class="sample" id="sample" hidden>Tohle jsou ukázková data. Firma, konkurenti i čísla jsou vymyšlené, aby bylo vidět, jak portál vypadá. Skutečné měření je nahradí.</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="tiles" id="tiles" aria-label="Hlavní čísla"></section>
+
+  <section class="card section" id="vyvoj">
+    <h2>Vývoj viditelnosti</h2>
+    <p class="sub" id="trend-sub">Podíl odpovědí se zmínkou o firmě při každém měření, celkem a podle nástroje.</p>
+    <ul class="legend" id="trend-legend"></ul>
+    <div class="chart" id="trend"></div>
+    <details>
+      <summary>Zobrazit jako tabulku</summary>
+      <div class="scroll"><table id="trend-table"></table></div>
+    </details>
+  </section>
+
+  <section class="card section" id="doporuceni">
+    <h2>Co s tím udělat</h2>
+    <ul class="advice" id="advice"></ul>
+  </section>
+
+  <div class="two">
+    <section class="card section" id="firmy">
+      <h2>Koho AI jmenuje nejčastěji</h2>
+      <p class="sub">Podíl odpovědí z posledního měření, ve kterých se firma objevila.</p>
+      <div class="bars" id="brands"></div>
+    </section>
+    <section class="card section" id="zdroje">
+      <h2>Odkud AI čerpá</h2>
+      <p class="sub">Weby, které AI uvádí jako zdroj. Zmínka na nich zvyšuje šanci, že vás AI doporučí.</p>
+      <div class="scroll"><table id="domains"></table></div>
+    </section>
+  </div>
+
+  <section class="card section" id="dotazy">
+    <h2>Dotazy, na které se AI ptáme</h2>
+    <p class="sub" id="queries-sub"></p>
+    <div class="filters" id="topics" role="group" aria-label="Filtr podle tématu"></div>
+    <div class="scroll"><table id="queries"></table></div>
+  </section>
+
+  <details id="jak-se-meri">
+    <summary>Jak se měří</summary>
+    <p>Každý dotaz položíme každému nástroji přes jeho rozhraní pro vývojáře se zapnutým hledáním na webu a s nastavením na Česko. Z odpovědi vypíšeme jmenované firmy v pořadí, v jakém se objevily, a uvedené zdroje.</p>
+    <p>Odpovědi AI se mezi dvěma položeními stejného dotazu liší a odpověď v aplikaci se může lišit od odpovědi přes rozhraní. Jedno měření je proto orientační; vypovídající je vývoj přes několik týdnů.</p>
+  </details>
+</main>
+
+<script type="application/json" id="data">{"meta":[{"brand":"Chatbotique","domain":"chatbotique.eu","updated":"2026-11-12","runs":1,"queries":18,"sample":false,"noSearch":true}],"runs":[{"date":"2026-11-12","engine":"all","engine_label":"Celkem","answers":10,"mentioned":0,"visibility":0,"cited":0,"citation_rate":0,"avg_position":null},{"date":"2026-11-12","engine":"gemini","engine_label":"Gemini","answers":10,"mentioned":0,"visibility":0,"cited":0,"citation_rate":0,"avg_position":null}],"queries":[{"query":"Jaký je nejlepší AI chatbot na firemní web v češtině?","topic":"Chatbot na web","chatgpt":null,"gemini":"ne","perplexity":null,"hits":0,"engines":1,"rivals":"GPT-4o, Smartsupp, Mira AI"},{"query":"Doporuč českou firmu, která nasadí AI chatbota na web","topic":"Chatbot na web","chatgpt":null,"gemini":"ne","perplexity":null,"hits":0,"engines":1,"rivals":"Feedyou, Coworks, Lundegaard"},{"query":"Kolik stojí AI chatbot na web a kdo ho v Česku umí rychle nasadit?","topic":"Chatbot na web","chatgpt":null,"gemini":"ne","perplexity":null,"hits":0,"engines":1,"rivals":"OpenAI, ChatGPT, Claude"},{"query":"Kdo nasadí AI asistenta na firemní web do pár dnů?","topic":"Chatbot na web","chatgpt":null,"gemini":"ne","perplexity":null,"hits":0,"engines":1,"rivals":"LinkedIn, NaVolneNoze.cz, Make.com"},{"query":"AI chatbot napojený na firemní data a ceník, který si nevymýšlí – koho doporučíš?","topic":"Chatbot na web","chatgpt":null,"gemini":"ne","perplexity":null,"hits":0,"engines":1,"rivals":"Feedyou, Coworkers.ai, Daktela"},{"query":"AI asistent pro e-shop, který odpovídá zákazníkům 24/7 – koho oslovit?","topic":"Chatbot na web","chatgpt":null,"gemini":"ne","perplexity":null,"hits":0,"engines":1,"rivals":"Shoptet, WooCommerce, Shopify"},{"query":"Kdo v Česku dělá AI hlasového asistenta pro zákaznickou linku?","topic":"Hlasový asistent","chatgpt":null,"gemini":"ne","perplexity":null,"hits":0,"engines":1,"rivals":"Born Digital, ČSOB, AXA"},{"query":"Nejlepší voicebot pro malé a střední firmy v ČR","topic":"Hlasový asistent","chatgpt":null,"gemini":"ne","perplexity":null,"hits":0,"engines":1,"rivals":"Daktela AI Agent, Shoptet, Raynet"},{"query":"AI, která zvedá zmeškané hovory a domlouvá termíny – jaké jsou české služby?","topic":"Hlasový asistent","chatgpt":null,"gemini":"ne","perplexity":null,"hits":0,"engines":1,"rivals":"Vocally.ai, Vocabee, Google Calendar"},{"query":"AI obchodník, který kvalifikuje poptávky z webu a telefonu – jací jsou dodavatelé v ČR?","topic":"Hlasový asistent","chatgpt":null,"gemini":null,"perplexity":null,"hits":0,"engines":0,"rivals":""},{"query":"Jak automatizovat odpovědi na zákaznické e-maily pomocí AI a kdo to v Česku nabízí?","topic":"E-maily","chatgpt":null,"gemini":null,"perplexity":null,"hits":0,"engines":0,"rivals":""},{"query":"Nejlepší platforma pro automatizaci firemní komunikace se zákazníky","topic":"E-maily","chatgpt":null,"gemini":null,"perplexity":null,"hits":0,"engines":0,"rivals":""},{"query":"Chatbot pro firmu, která prodává okna, dveře a vrata – jaké řešení zvolit?","topic":"Obory","chatgpt":null,"gemini":null,"perplexity":null,"hits":0,"engines":0,"rivals":""},{"query":"AI asistent pro stavební a montážní firmy na sběr poptávek","topic":"Obory","chatgpt":null,"gemini":null,"perplexity":null,"hits":0,"engines":0,"rivals":""},{"query":"AI asistent pro havarijní a servisní službu, který zvedne telefon vždy","topic":"Obory","chatgpt":null,"gemini":"ne","perplexity":null,"hits":0,"engines":1,"rivals":"WhatsApp, Google Maps, Raynet"},{"query":"Srovnání českých dodavatelů AI chatbotů a voicebotů","topic":"Srovnání","chatgpt":null,"gemini":null,"perplexity":null,"hits":0,"engines":0,"rivals":""},{"query":"Alternativy ke Smartsupp a Tidio s AI v češtině","topic":"Srovnání","chatgpt":null,"gemini":null,"perplexity":null,"hits":0,"engines":0,"rivals":""},{"query":"Které české firmy nabízejí AI agenty pro zákaznickou podporu?","topic":"Srovnání","chatgpt":null,"gemini":null,"perplexity":null,"hits":0,"engines":0,"rivals":""}],"brands":[{"brand":"Feedyou","mentions":9,"share":90,"own":false},{"brand":"OpenAI","mentions":8,"share":80,"own":false},{"brand":"Shoptet","mentions":6,"share":60,"own":false},{"brand":"Daktela","mentions":5,"share":50,"own":false},{"brand":"Smartsupp","mentions":5,"share":50,"own":false},{"brand":"Coworkers.ai","mentions":4,"share":40,"own":false},{"brand":"Chatbase","mentions":4,"share":40,"own":false},{"brand":"Intercom","mentions":4,"share":40,"own":false},{"brand":"Make.com","mentions":4,"share":40,"own":false},{"brand":"Voiceflow","mentions":4,"share":40,"own":false},{"brand":"Chatbotique","mentions":0,"share":0,"own":true}],"domains":[],"topics":[{"topic":"Chatbot na web","answers":6,"mentioned":0,"visibility":0},{"topic":"Hlasový asistent","answers":3,"mentioned":0,"visibility":0},{"topic":"Obory","answers":1,"mentioned":0,"visibility":0}],"details":[{"query":"Jaký je nejlepší AI chatbot na firemní web v češtině?","engine":"gemini","mentioned":false,"position":null,"text":"Neexistuje jedna univerzální odpověď, protože „nejlepší“ chatbot závisí na velikosti Vaší firmy, rozpočtu a účelu (zda má prodávat, odbavovat zákaznickou podporu, nebo sbírat kontakty). \n\nDnes už moderní AI chatbot využívá velká jazyková data (LLM jako GPT-4o), takže **češtinu zvládají všechny špičkové nástroje skvěle**.\n\nZde je přehled nejlepších AI chatbotů na českém trhu rozdělený podle kategorií:\n\n---\n\n### 1. Nejlepší pro české e-shopy a SMB (Snadná integrace a česká podpora)\n\n*   **Smartsupp (Mira AI)**\n    *   **Proč vybrat:** Česká jednička. Zná prostředí českých e-shopů, má přímou integraci na **Shoptet**, WordPress i další platformy. Jejich AI asistentka Mira umí odpovídat na dotazy ohledně stavu objednávek a produktů.\n    *   **Čeština:** Rodilý mluvčí (český vývoj i podpora).\n    *   **Pro kogo:** Střední a malé e-shopy, české firmy hledající rychlé řešení v CZK.\n\n*   **SupportBox (s AI)**\n    *   **Proč vybrat:** Český helpdesk nástroj, který do své live chatovací aplikace integroval AI. Vhodný, pokud chcete kombinovat e-maily, telefony a chat na jednom místě.\n    *   **Čeština:** 100% česká platforma.\n\n---\n\n### 2. Nejlepší pro „chytré“ AI odpovědi na míru (Znalostní bá…","brands":["GPT-4o","Smartsupp","Mira AI","Shoptet","WordPress","SupportBox","Chatbase","CustomGPT.ai"],"sources":[]},{"query":"Doporuč českou firmu, která nasadí AI chatbota na web","engine":"gemini","mentioned":false,"position":null,"text":"Výběr správné české firmy závisí na tom, **jaký typ chatbota potřebujete** (zda jednoduchého průvodce pro e-shop, nebo pokročilého AI asistenta napojeného na vaše interní systémy a data).\n\nZde jsou nejlepší české firmy a platformy rozdělené podle kategorií:\n\n---\n\n### 1. Pro střední a velké firmy (Custom AI & Kompletní vývoj)\n\nPokud chcete chatbota na míru, který bude trénovaný na vašich interních datech (PDF, znalostní báze, CRM), rozumí česky a zvládne složité procesy:\n\n*   **Feedyou** (Pardubice)\n    *   **O co jde:** Jedna z nejznámějších českých firem specializovaná čistě na chatboty a voiceboty.\n    *   **Proč je vybrat:** Mají obrovské zkušenosti (HR, zákaznický servis, prodej), staví řešení na míru pro velké i střední firmy a plně integrovali moderní LLM (Generativní AI).\n    *   **Vhodné pro:** Firmy, které chtějí řešení „na klíč“ s garantovaným servisem.\n\n*   **Coworks / Lundegaard / Adastra** (Praha)\n    *   **O co jde:** Velké vývojářské a konzultační domy s silnými AI divizemi.\n    *   **Proč je vybrat:** Pokud potřebujete AI chatbota jako součást většího IT systému (např. v bance, pojišťovně nebo v rozsáhlém B2B portálu) a řešíte vysokou bezpečnost a GDPR.\n    *   **Vh…","brands":["Feedyou","Coworks","Lundegaard","Adastra","Smartsupp","Shoptet","WooCommerce","Smartsupp AI"],"sources":[]},{"query":"Kolik stojí AI chatbot na web a kdo ho v Česku umí rychle nasadit?","engine":"gemini","mentioned":false,"position":null,"text":"Cena AI chatbota a rychlost jeho nasazení závisí na tom, co od něj očekáváte. Dnes už nemusíte platit sta tisíce za vývoj od nuly – díky technologiím jako OpenAI (ChatGPT) nebo Claude lze funkčního AI bota napojeného na vaše data nasadit **během několika dnů či dokonce hodin**.\n\nZde je přehled cenových kategorií a konkrétních firem v Česku, které vám s tím pomohou.\n\n---\n\n### 1. Kolik AI chatbot stojí? (Cenové kategorie)\n\n#### A) Hotová \"SaaS\" řešení (Nejlevnější & nejrychlejší)\nVhodné pro: Menší e-shopy, běžné firemní weby, které chtějí odpovídat na dotazy z webu/PDF dokumentů.\n* **Jednorázová instalace:** 0 Kč až 10 000 Kč (zvládnete to sami nebo s pomocí freelancera).\n* **Měsíční poplatky:** cca **500 Kč – 3 000 Kč / měsíc** (platí se za platformu a spotřebovaná AI data/tokeny).\n* **Doba nasazení:** 1 až 3 dny.\n\n#### B) Pokročilý chatbot na míru (Střední cesta)\nVhodné pro: Střední firmy a e-shopy. Chatbot je napojený na váš e-shop (Shoptet, WooCommerce), vyhledává v produktech, kontroluje stav objednávek a učí se z vašich dat.\n* **Jednorázový vývoj/nastavení:** **20 000 Kč – 80 000 Kč**.\n* **Měsíční provoz:** **1 000 Kč – 5 000 Kč / měsíc** (API poplatky OpenAI/Anthropic + správa…","brands":["OpenAI","ChatGPT","Claude","Shoptet","WooCommerce","Anthropic","SAP","Salesforce"],"sources":[]},{"query":"Kdo nasadí AI asistenta na firemní web do pár dnů?","engine":"gemini","mentioned":false,"position":null,"text":"Nasadit AI asistenta na firemní web **do 2 až 3 dnů** je dnes zcela reálné. Závisí to na tom, zda si to chcete udělat sami pomocí připravených nástrojů (zabere to pár hodin), nebo zda to chcete dodat „na klíč“ od někoho jiného.\n\nZde jsou vaše hlavní možnosti podle toho, jaký přístup preferujete:\n\n---\n\n### 1. Řešení „Na klíč“ (České agentury a experti)\nPokud nechcete nic nastavovat a chcete, aby vám to někdo kompletně připravil, otestoval a nasadil do pár dnů:\n\n*   **Poptávka na LinkedInu / NaVolneNoze.cz:** Zadejte poptávku po „AI integrátorovi“ nebo „no-code vývojáři“. Lidé specializovaní na nástroje jako Make.com, Voiceflow nebo Chatbase vám asistenta na míru postaví a nasadí za 2–4 dny.\n*   **Specializované české AI agentury:**\n    *   **Feedyou:** Česká jednička na chatboty a AI asistenty (vhodné spíše pro střední a větší firmy).\n    *   **Asistent.ai / další lokální integrátoři:** Menší digitální agentury dnes běžně nabízejí nasazení AI asistenta do týdne.\n\n---\n\n### 2. Řešení svépomocí za pár hodin (No-Code nástroje)\nPokud máte na webu správce (nebo sami umíte vložit skript do webu/Google Tag Manageru), zvládnete to **do 24 hodin** pomocí těchto globálních služeb, které umí pe…","brands":["LinkedIn","NaVolneNoze.cz","Make.com","Voiceflow","Chatbase","Feedyou","Asistent.ai","Google Tag Manager"],"sources":[]},{"query":"AI chatbot napojený na firemní data a ceník, který si nevymýšlí – koho doporučíš?","engine":"gemini","mentioned":false,"position":null,"text":"Aby si chatbot **nevymýšlel (nehalucinoval)** a dával přesné odpovědi podle vašich dat a ceníku, musí fungovat na architektuře **RAG (Retrieval-Augmented Generation)** a mít nastavené přísné instrukce („odpovídej pouze z dodaných podkladů, jinak řekni, že nevíš“). Pokud jde o ceník, ideální je **přímé napojení přes API** na váš ERP/CRM systém, nikoliv jen nahrané PDF, které rychle zastarává.\n\nZde jsou nejlepší doporučené firmy a nástroje rozdělené podle velikosti vaší firmy a preferovaného přístupu:\n\n---\n\n### 1. Česká řešení na míru (Nejlepší pro CZ podpora, vývoj a integrace)\n\nPokud chcete hotové řešení v češtině, integraci na vaše systémy a garanci funkčnosti:\n\n*   **Feedyou** (Česká republika)\n    *   **Pro kogo:** Střední a velké firmy, e-shopy, B2B.\n    *   **Proč je doporučit:** Patří k lídrům na českém trhu. Staví chatboty přímo napojené na API (sklady, ceníky, CRM). Mají skvěle vyřešenou kontrolu halucinací a bezpečné nakládání s daty.\n*   **Coworkers.ai** (Česká republika)\n    *   **Pro koho:** Velké firmy, finanční sektor, e-commerce.\n    *   **Proč je doporučit:** Specializují se na konverzační AI v češtině (text i hlas). Jejich boti jsou navrženi přímo pro procesy jako…","brands":["Feedyou","Coworkers.ai","Daktela","Smartsupp","Intercom","Fin","CustomGPT.ai","Chatbase"],"sources":[]},{"query":"AI asistent pro e-shop, který odpovídá zákazníkům 24/7 – koho oslovit?","engine":"gemini","mentioned":false,"position":null,"text":"Volba toho, koho oslovit pro implementaci 24/7 AI asistenta (chatbot/voicebot), závisí především na **velikosti vašeho e-shopu**, **rozpočtu** a **platformě, na které běžíte** (např. Shoptet, WooCommerce, Shopify, nebo řešení na míru).\n\nZde je přehled možností rozdělený podle typu dodavatele:\n\n---\n\n### 1. České specializované firmy a SaaS platformy (Nejlepší volba pro ČR/SK trh)\nTyto firmy mají skvělou podporu češtiny, rozumí lokálnímu e-commerce prostředí a často mají hotové integrace na české e-shopové platformy a ERP systémy.\n\n*   **Feedyou** – Jedna z nejznámějších českých firem na tvorbu chatbotů a voicebotů. Vhodné pro střední a velké e-shopy. Tvoří řešení na míru i pokročilé AI asistenty propojené s vaším systémem.\n*   **Smartsupp (s AI)** – Mimořádně populární nástroj v ČR. Nabízí live chat propojený s AI asistentem. Vhodné pro malé až střední e-shopy (velmi snadná integrace na Shoptet).\n*   **Cowley AI** – Český startup zaměřený přímo na AI asistenty pro e-shopy. Umí odpovídat na dotazy ohledně zboží, stavu objednávky i vratatek.\n*   **Daktela** – Robustní omnichannel řešení pro zákaznickou péči. Pokud máte větší zákaznickou linku a chcete AI asistenta napojit na telefonát…","brands":["Shoptet","WooCommerce","Shopify","Feedyou","Smartsupp","Cowley AI","Daktela","Luigi’s Box"],"sources":[]},{"query":"Kdo v Česku dělá AI hlasového asistenta pro zákaznickou linku?","engine":"gemini","mentioned":false,"position":null,"text":"V České republice je trh s AI hlasovými asistenty (voiceboty) pro zákaznické linky a kontaktní centra poměrně rozvinutý. Existuje zde několik špičkových českých firem, které vyvíjejí vlastní řešení, a také integrátoři, kteří propojují globální AI technologie s českým prostředím.\n\nZde je přehled hlavních hráčů na českém trhu rozdělený do několika kategorií:\n\n---\n\n### 1. České vývojářské firmy (Specialisté na AI a Voiceboty)\nTyto firmy vyvíjejí vlastní konverzační AI a voiceboty na míru pro velké i střední firmy:\n\n*   **Born Digital**\n    *   Jedna z nejznámějších českých firem v tomto oboru.\n    *   Vyvíjí pokročilé voiceboty a chatboty schopné řešit složité požadavky, rozpoznat emoce a analyzovat hovory.\n    *   *Zákazníci:* ČSOB, AXA, Mall.cz, Electroworld a další.\n*   **Coworkers.ai**\n    *   Specializuje se na konverzační AI (hlasové i textové asistenty) s důrazem na přirozenost češtiny.\n    *   Nabízí řešení pro automatizaci zákaznické podpory i interních procesů.\n    *   *Zákazníci:* Komerční banka, Kooperativa, Zásilkovna.\n*   **Feedyou**\n    *   Původně chatbotová firma, která dnes nabízí komplexní voiceboty napojené na firemní CRM a ERP systémy.\n    *   Funguje mezinárodně…","brands":["Born Digital","ČSOB","AXA","Mall.cz","Electroworld","Coworkers.ai","Komerční banka","Kooperativa"],"sources":[]},{"query":"Nejlepší voicebot pro malé a střední firmy v ČR","engine":"gemini","mentioned":false,"position":null,"text":"Vybrat „nejlepšího“ voicebota pro malou nebo střední firmu (MSP) v ČR závisí na tom, zda hledáte **řešení na klíč s českou podporou**, nebo máte vlastní vývojáře a chcete **nejmodernější AI za zlomkovou cenu**.\n\nČeština je pro voiceboty specifická (skloňování, časování, přízvuk), proto mají v ČR velkou výhodu lokální firmy, ale globální AI nástroje je rychle dohánějí.\n\nZde je přehled nejlepších možností na českém trhu rozdělený podle typu firmy:\n\n---\n\n### 1. Kompletní česká řešení na klíč (Nejsnadnější implementace)\n\nTato řešení jsou ideální, pokud nemáte vlastní IT oddělení a chcete hotový produkt s českou podporou a garancí funkčnosti.\n\n*   **Daktela AI Agent (Voicebot)**\n    *   **Pro koho:** Firmy, které už používají nebo plánují používat zákaznické centrum (CCaaS) od Daktely.\n    *   **Výhody:** Perfektní integrace do českého prostředí, snadné napojení na CRM, Shoptet, Raynet atd. Zvládá příchozí i odchozí hovory, přepis do textu a předání živému operátorovi.\n    *   **Nevýhody:** Vyšší cena než u čistě samoobsluhovacích nástrojů.\n*   **Born Digital**\n    *   **Pro koho:** Střední firmy, které potřebují velmi kvalitní porozumění češtině a komplexnější scénáře (např. domlouvání…","brands":["Daktela AI Agent","Shoptet","Raynet","Born Digital","Feedyou","WhatsApp","Vapi.ai","Retell AI"],"sources":[]},{"query":"AI, která zvedá zmeškané hovory a domlouvá termíny – jaké jsou české služby?","engine":"gemini","mentioned":false,"position":null,"text":"V České republice se trh s AI hlasovými asistentky (voiceboty), které zvedají telefon, vyřizují zmeškané hovory a plánují schůzky do kalendáře, v posledním roce extrémně rozrostl.\n\nZde je přehled nejznámějších českých služeb, řešení a přístupů, které můžete využít:\n\n---\n\n### 1. Hotové české produkty (SaaS pro firmy i živnostníky)\n\nTato řešení jsou připravena k rychlému nasazení, mají českou podporu a rozumí česky.\n\n*   **Vocally.ai (dříve Vocabee)**\n    *   **O co jde:** Jeden z nejznámějších českých startupů zaměřený přesně na tento problém.\n    *   **Co umí:** Zvedne telefon, když nezvedáte (nebo nepřetržitě 24/7), promluví s klientem přirozenou češtinou, zjistí, co potřebuje, a domluví termín.\n    *   **Integrace:** Propojuje se s kalendáři (Google Calendar, Outlook) i rezervačními systémy (např. Reservio).\n    *   **Pro koho:** Salóny, lékaři, řemeslníci, autoservisy, fin. poradci.\n*   **Coworkers.ai (dříve Born Digital)**\n    *   **O co jde:** Lídři na českém trhu v oblasti konverzační AI pro větší firmy a enterprise klienty.\n    *   **Co umí:** Špičkový hlasový asistent pro náročnější scénáře. Umí pracovat s databázemi, ověřovat identitu zákazníka a sjednávat schůzky.\n    *…","brands":["Vocally.ai","Vocabee","Google Calendar","Outlook","Reservio","Coworkers.ai","Born Digital","Feedyou"],"sources":[]},{"query":"AI asistent pro havarijní a servisní službu, který zvedne telefon vždy","engine":"gemini","mentioned":false,"position":null,"text":"AI hlasový asistent (Voicebot) pro havarijní a servisní služby je absolutní „game-changer“. V tomto oboru znamená zmeškaný hovor buď ztracenou zakázku, nebo obrovské materiální škody (např. prasklá voda v noci).\n\nAI asistent **nikdy nemá obsazeno, nespí, nejeví známky únavy a zvládne odbavit i desítky hovorů současně** (např. při vichřici nebo krupobití).\n\nZde je přehled toho, jak takový AI asistent funguje, co všechno dokáže a jak by vypadala jeho konfigurace pro váš byznys:\n\n---\n\n### Jak AI asistent v praxi funguje (Scénář hovoru)\n\n1. **Okamžité zvednutí (do 1 vteřiny):**\n   * *AI:* „Dobrý den, tady AI asistent Havarijní služby [Název]. Jaký máte problém a jak vám mohu pomoci?“\n2. **Kategorizace a triáž (Zjištění problému):**\n   * Zákazník: „Praskla mi stupačka a teče mi voda do obýváku!“\n   * *AI:* „Rozumím, jedná se o akutní havárii vody. Jste v bezprostředním ohrožení zdraví nebo hrozí velké škody?“\n3. **Sběr klíčových informací:**\n   * AI se zeptá na: **Adresu** (ulice, číslo popisné, město), **jméno**, **kontaktní telefon** a zda už zákazník **zavřel hlavní uzávěr vody**.\n4. **Akce a Notifikace (Vteřiny po zavěšení):**\n   * AI vyhodnotí situaci jako **PRIORITA 1 (Kritická)**…","brands":["WhatsApp","Google Maps","Raynet","Salesforce","Freelo","OpenAI","ElevenLabs","Vapi"],"sources":[]}]}</script>
+<script>
+  const DATA = JSON.parse(document.getElementById('data').textContent);
+  const SERIES = [
+    { id: 'all', label: 'Celkem', color: 'var(--s1)' },
+    { id: 'chatgpt', label: 'ChatGPT', color: 'var(--s2)' },
+    { id: 'gemini', label: 'Gemini', color: 'var(--s3)' },
+    { id: 'perplexity', label: 'Perplexity', color: 'var(--s4)' },
+  ];
+  const ENGINES = SERIES.slice(1);
+  const SVG = 'http://www.w3.org/2000/svg';
+
+  const time = (day) => Date.parse(`${day}T00:00:00Z`);
+  const fmtDate = (day, year = true) => {
+    const d = new Date(time(day));
+    return `${d.getUTCDate()}. ${d.getUTCMonth() + 1}.${year ? ` ${d.getUTCFullYear()}` : ''}`;
+  };
+  const num = (n, digits = 0) => n.toLocaleString('cs-CZ', { minimumFractionDigits: digits, maximumFractionDigits: digits });
+  const pct = (n) => `${num(n)} %`;
+  const signed = (n, digits = 0) => `${n > 0 ? '+' : n < 0 ? '−' : ''}${num(Math.abs(n), digits)}`;
+
+  function h(tag, props = {}, ...children) {
+    const el = document.createElement(tag);
+    for (const [key, value] of Object.entries(props)) {
+      if (value == null || value === false) continue;
+      if (key === 'class') el.className = value;
+      else if (key === 'style') el.style.cssText = value;
+      else el.setAttribute(key, value === true ? '' : value);
+    }
+    el.append(...children.filter((c) => c != null && c !== false));
+    return el;
+  }
+  function s(tag, attrs = {}, text) {
+    const el = document.createElementNS(SVG, tag);
+    for (const [key, value] of Object.entries(attrs)) {
+      if (key === 'style') el.style.cssText = value;
+      else el.setAttribute(key, value);
+    }
+    if (text != null) el.textContent = text;
+    return el;
+  }
+
+  const meta = DATA.meta[0] || {};
+  const totals = DATA.runs.filter((r) => r.engine === 'all').sort((a, b) => time(a.date) - time(b.date));
+  const last = totals[totals.length - 1] || null;
+  const prev = totals[totals.length - 2] || null;
+  const diff = (key) => (prev && last[key] != null && prev[key] != null ? Math.round((last[key] - prev[key]) * 10) / 10 : null);
+
+  function tipRow(label, value, color) {
+    return h('div', { class: 'tip-row' },
+      h('span', { class: 'tip-key' }, color ? h('span', { class: 'swatch', style: `background:${color}` }) : null, label),
+      h('span', {}, value));
+  }
+  function showTip(box, tip, x, y) {
+    tip.hidden = false;
+    tip.style.left = `${Math.max(0, Math.min(box.clientWidth - tip.offsetWidth, x + 14))}px`;
+    tip.style.top = `${Math.max(0, y - tip.offsetHeight - 12)}px`;
+  }
+
+  function renderHeader() {
+    document.getElementById('who').textContent = [meta.brand, meta.domain].filter(Boolean).join(' · ');
+    document.getElementById('sample').hidden = !meta.sample;
+    document.getElementById('no-search').hidden = !meta.noSearch;
+    const lede = document.getElementById('lede');
+    if (!last) {
+      lede.textContent = 'Zatím neproběhlo žádné měření. Po prvním se tu objeví, jak často vás AI nástroje jmenují.';
+      return;
+    }
+    const change = diff('visibility');
+    const parts = ['AI nástroje při měření ', h('b', {}, fmtDate(last.date)), ' jmenovaly firmu ', h('b', {}, meta.brand || ''), ' u ', h('b', {}, pct(last.visibility)), ' odpovědí'];
+    if (change != null && change !== 0) parts.push(`, o ${num(Math.abs(change))} p. b. ${change > 0 ? 'více' : 'méně'} než při předchozím měření`);
+    if (change === 0) parts.push(', stejně jako při předchozím měření');
+    parts.push('.');
+    const leader = DATA.brands.filter((b) => !b.own).sort((a, b) => b.mentions - a.mentions)[0];
+    if (leader) parts.push(' Nejčastěji jmenovanou firmou je ', h('b', {}, leader.brand), `, objevuje se u ${pct(leader.share)} odpovědí.`);
+    lede.replaceChildren(...parts);
+  }
+
+  function deltaLine(value, { unit = '', digits = 0, lowerIsBetter = false } = {}) {
+    if (value == null) return null;
+    const good = value !== 0 && value > 0 !== lowerIsBetter;
+    const tone = value === 0 ? '' : good ? ' good' : ' bad';
+    const arrow = value === 0 ? '=' : value > 0 ? '▲' : '▼';
+    return h('p', { class: 'delta' },
+      h('span', { class: `chip${tone}` }, h('span', { 'aria-hidden': 'true' }, arrow), `${signed(value, digits)}${unit}`),
+      `oproti ${fmtDate(prev.date, false)}`);
+  }
+
+  function renderTiles() {
+    const box = document.getElementById('tiles');
+    if (!last) return box.replaceChildren();
+    box.replaceChildren(
+      h('div', { class: 'card tile tile-main', id: 'karta-viditelnost' },
+        h('p', { class: 'tile-label' }, 'Viditelnost'),
+        h('p', { class: 'big' }, pct(last.visibility)),
+        deltaLine(diff('visibility'), { unit: ' p. b.' }),
+        h('p', { class: 'tile-def' }, `Podíl odpovědí, ve kterých AI firmu jmenuje (${num(last.mentioned)} z ${num(last.answers)}).`)),
+      h('div', { class: 'card tile', id: 'karta-odkazy' },
+        h('p', { class: 'tile-label' }, 'Odkazy na váš web'),
+        h('p', { class: 'big' }, pct(last.citation_rate)),
+        deltaLine(diff('citation_rate'), { unit: ' p. b.' }),
+        h('p', { class: 'tile-def' }, 'Podíl odpovědí, které jako zdroj uvádějí váš web.')),
+      h('div', { class: 'card tile', id: 'karta-poradi' },
+        h('p', { class: 'tile-label' }, 'Průměrné pořadí'),
+        h('p', { class: 'big' }, last.avg_position == null ? '—' : num(last.avg_position, 1)),
+        deltaLine(diff('avg_position'), { digits: 1, lowerIsBetter: true }),
+        h('p', { class: 'tile-def' }, 'Kolikátá jste mezi jmenovanými firmami, když vás AI zmíní. Nižší číslo je lepší.')));
+  }
+
+  const dates = [...new Set(DATA.runs.map((r) => r.date))].sort();
+  const series = SERIES.map((def) => ({
+    ...def,
+    points: dates.map((date) => DATA.runs.find((r) => r.engine === def.id && r.date === date)).filter(Boolean),
+  })).filter((item) => item.points.length);
+
+  function renderTrendStatic() {
+    document.getElementById('trend-legend').replaceChildren(
+      ...series.map((item) => h('li', {}, h('span', { class: 'swatch', style: `background:${item.color}` }), item.label)));
+    if (dates.length === 1) {
+      document.getElementById('trend-sub').textContent = 'Zatím proběhlo jedno měření. Křivka se začne kreslit po druhém.';
+    }
+    const head = h('tr', {}, h('th', {}, 'Měření'), ...series.map((item) => h('th', { class: 'num' }, item.label)));
+    const rows = [...dates].reverse().map((date) =>
+      h('tr', {}, h('td', {}, fmtDate(date)), ...series.map((item) => {
+        const point = item.points.find((p) => p.date === date);
+        return h('td', { class: 'num' }, point ? pct(point.visibility) : '—');
+      })));
+    document.getElementById('trend-table').replaceChildren(h('thead', {}, head), h('tbody', {}, ...rows));
+  }
+
+  function drawTrend() {
+    const box = document.getElementById('trend');
+    if (!series.length) return box.replaceChildren(h('p', { class: 'empty' }, 'Graf se objeví po prvním měření.'));
+    const width = Math.max(280, box.clientWidth);
+    const height = 300;
+    const top = 14;
+    const bottom = 30;
+    const svg = s('svg', { viewBox: `0 0 ${width} ${height}`, width: '100%', height, role: 'img', 'aria-label': 'Vývoj podílu odpovědí se zmínkou o firmě v čase, celkem a podle AI nástroje' });
+    box.replaceChildren(svg);
+
+    const probe = svg.appendChild(s('text', { class: 'end end-total' }));
+    const measure = (text) => {
+      probe.textContent = text;
+      return probe.getComputedTextLength();
+    };
+    const peak = Math.max(...DATA.runs.map((r) => r.visibility));
+    const yMax = Math.min(100, Math.max(40, Math.ceil((peak + 5) / 20) * 20));
+    const yTicks = [0, 1, 2, 3, 4].map((i) => (yMax / 4) * i);
+    const ends = series.map((item) => {
+      const point = item.points[item.points.length - 1];
+      return { item, point, text: `${item.label} ${pct(point.visibility)}` };
+    });
+    const left = Math.ceil(Math.max(...yTicks.map((t) => measure(pct(t))))) + 12;
+    const right = Math.ceil(Math.max(...ends.map((e) => measure(e.text)))) + 20;
+    probe.remove();
+
+    const t0 = time(dates[0]);
+    const t1 = time(dates[dates.length - 1]);
+    const x = (day) => (t1 === t0 ? (left + width - right) / 2 : left + ((time(day) - t0) / (t1 - t0)) * (width - right - left));
+    const y = (value) => height - bottom - (value / yMax) * (height - bottom - top);
+
+    for (const tick of yTicks) {
+      svg.append(
+        s('line', { class: tick === 0 ? 'axisline' : 'gridline', x1: left, x2: width - right, y1: y(tick), y2: y(tick) }),
+        s('text', { class: 'tick', x: left - 8, y: y(tick), dy: '0.32em', 'text-anchor': 'end' }, pct(tick)));
+    }
+    const step = Math.ceil(dates.length / Math.max(2, Math.floor((width - left - right) / 64)));
+    dates.forEach((date, i) => {
+      if ((dates.length - 1 - i) % step !== 0) return;
+      svg.append(s('text', { class: 'tick', x: x(date), y: height - bottom + 20, 'text-anchor': 'middle' }, fmtDate(date, false)));
+    });
+
+    const rule = svg.appendChild(s('line', { class: 'rule', y1: top, y2: height - bottom, visibility: 'hidden' }));
+    for (const item of [...series].reverse()) {
+      const total = item.id === 'all';
+      const path = item.points.map((p, i) => `${i ? 'L' : 'M'}${x(p.date).toFixed(1)},${y(p.visibility).toFixed(1)}`).join('');
+      svg.append(s('path', { class: 'series-line', d: path, style: `stroke:${item.color};stroke-width:${total ? 3 : 2}` }));
+      const end = item.points[item.points.length - 1];
+      svg.append(s('circle', { class: 'series-dot', cx: x(end.date), cy: y(end.visibility), r: total ? 6 : 5, style: `fill:${item.color}` }));
+    }
+
+    // Popisky na konci čar; kde by se překrývaly, rozestoupí se.
+    const gap = 16;
+    const placed = ends.map((e) => ({ ...e, y: y(e.point.visibility) })).sort((a, b) => a.y - b.y);
+    for (let i = 1; i < placed.length; i += 1) placed[i].y = Math.max(placed[i].y, placed[i - 1].y + gap);
+    const over = placed[placed.length - 1].y - (height - bottom);
+    if (over > 0) placed.forEach((e) => { e.y -= over; });
+    for (let i = placed.length - 2; i >= 0; i -= 1) placed[i].y = Math.min(placed[i].y, placed[i + 1].y - gap);
+    for (const e of placed) {
+      svg.append(s('text', { class: e.item.id === 'all' ? 'end end-total' : 'end', x: x(dates[dates.length - 1]) + 12, y: e.y, dy: '0.32em' }, e.text));
+    }
+
+    const tip = box.appendChild(h('div', { class: 'tip', hidden: true }));
+    const move = (event) => {
+      const rect = svg.getBoundingClientRect();
+      const scale = rect.width / width || 1;
+      const px = (event.clientX - rect.left) / scale;
+      const date = dates.reduce((best, d) => (Math.abs(x(d) - px) < Math.abs(x(best) - px) ? d : best), dates[0]);
+      rule.setAttribute('x1', x(date));
+      rule.setAttribute('x2', x(date));
+      rule.setAttribute('visibility', 'visible');
+      tip.replaceChildren(
+        h('div', { class: 'tip-head' }, fmtDate(date)),
+        ...series.map((item) => ({ item, point: item.points.find((p) => p.date === date) }))
+          .filter((entry) => entry.point)
+          .map((entry) => tipRow(entry.item.label, pct(entry.point.visibility), entry.item.color)));
+      showTip(box, tip, x(date) * scale, event.clientY - rect.top);
+    };
+    const leave = () => {
+      tip.hidden = true;
+      rule.setAttribute('visibility', 'hidden');
+    };
+    const hit = svg.appendChild(s('rect', { x: left - 8, y: top, width: Math.max(0, width - left - right + 16), height: height - top - bottom, fill: 'transparent' }));
+    hit.addEventListener('pointermove', move);
+    hit.addEventListener('pointerdown', move);
+    hit.addEventListener('pointerleave', leave);
+  }
+
+  function barTrack(share, max, own) {
+    return h('span', { class: 'bar-track' }, h('span', { class: own ? 'bar-fill own' : 'bar-fill', style: `width:${max ? (share / max) * 100 : 0}%` }));
+  }
+
+  function renderBrands() {
+    const box = document.getElementById('brands');
+    if (!DATA.brands.length) return box.replaceChildren(h('p', { class: 'empty' }, 'Žebříček se objeví po prvním měření.'));
+    const max = Math.max(...DATA.brands.map((d) => d.share));
+    const tip = h('div', { class: 'tip', hidden: true });
+    const rows = DATA.brands.map((d) => {
+      const row = h('div', { class: d.own ? 'bar-row own' : 'bar-row' },
+        h('span', { class: 'bar-name' }, d.brand, d.own ? h('span', { class: 'tag' }, 'vy') : null),
+        barTrack(d.share, max, d.own),
+        h('span', { class: 'bar-val' }, pct(d.share)));
+      const show = (event) => {
+        const rect = box.getBoundingClientRect();
+        tip.replaceChildren(tipRow(d.brand, `${num(d.mentions)} odpovědí · ${pct(d.share)}`));
+        showTip(box, tip, event.clientX - rect.left, event.clientY - rect.top);
+      };
+      row.addEventListener('pointermove', show);
+      row.addEventListener('pointerdown', show);
+      row.addEventListener('pointerleave', () => { tip.hidden = true; });
+      return row;
+    });
+    box.replaceChildren(...rows, tip);
+  }
+
+  function renderDomains() {
+    const table = document.getElementById('domains');
+    if (!DATA.domains.length) {
+      return table.replaceChildren(h('tbody', {}, h('tr', {}, h('td', { class: 'empty' }, 'V posledním měření AI neuvedla žádné zdroje.'))));
+    }
+    const max = Math.max(...DATA.domains.map((d) => d.share));
+    table.replaceChildren(
+      h('thead', {}, h('tr', {}, h('th', {}, 'Web'), h('th', {}, 'Podíl odpovědí'), h('th', { class: 'num' }, 'Odpovědí'))),
+      h('tbody', {}, ...DATA.domains.map((d) =>
+        h('tr', {},
+          h('td', {}, d.domain, d.own ? h('span', { class: 'tag' }, 'váš web') : null),
+          h('td', {}, h('span', { class: 'share' }, barTrack(d.share, max, d.own), h('span', { class: 'bar-val' }, pct(d.share)))),
+          h('td', { class: 'num' }, num(d.citations))))));
+  }
+
+  function renderAdvice() {
+    const section = document.getElementById('doporuceni');
+    const items = [];
+    if (last) {
+      const measuredQueries = DATA.queries.filter((q) => q.engines > 0);
+      const missing = measuredQueries.filter((q) => q.hits === 0).length;
+      const weakest = [...(DATA.topics || [])].sort((a, b) => a.visibility - b.visibility)[0];
+      if (missing) {
+        items.push(['Doplňte obsah k dotazům bez zmínky',
+          `U ${num(missing)} z ${num(measuredQueries.length)} změřených dotazů vás nejmenoval žádný nástroj${(DATA.topics || []).length > 1 ? `; nejslabší téma je ${weakest.topic} (${pct(weakest.visibility)})` : ''}. Stránka, která na takový dotaz přímo odpovídá, dává AI důvod vás zmínit.`]);
+      }
+      const cited = DATA.domains.filter((d) => !d.own).slice(0, 3).map((d) => d.domain);
+      if (cited.length) {
+        items.push(['Dostaňte se na weby, ze kterých AI čerpá',
+          `Nejčastěji cituje ${cited.join(', ')}. Zmínka, profil nebo recenze na těchto webech zvyšuje šanci na doporučení.`]);
+      }
+      if (last.citation_rate < last.visibility) {
+        items.push(['Dejte AI důvod odkazovat na váš web',
+          `Jmenuje vás u ${pct(last.visibility)} odpovědí, ale na váš web odkazuje jen u ${pct(last.citation_rate)}. Pomáhají konkrétní stránky s cenami, postupy a odpověďmi na časté otázky.`]);
+      }
+      const engines = series.filter((item) => item.id !== 'all')
+        .map((item) => ({ label: item.label, point: item.points[item.points.length - 1] }))
+        .filter((e) => e.point.date === last.date)
+        .sort((a, b) => a.point.visibility - b.point.visibility);
+      const low = engines[0];
+      const high = engines[engines.length - 1];
+      if (engines.length > 1 && low.point.visibility !== high.point.visibility) {
+        items.push(['Zaměřte se na nejslabší nástroj',
+          `Nejméně vás jmenuje ${low.label} (${pct(low.point.visibility)}), nejvíce ${high.label} (${pct(high.point.visibility)}). V tabulce dotazů je vidět, kde přesně se liší.`]);
+      }
+    }
+    section.hidden = !items.length;
+    document.getElementById('advice').replaceChildren(
+      ...items.map(([title, text]) => h('li', {}, h('h3', {}, title), h('p', {}, text))));
+  }
+
+  let activeTopic = '';
+  const openQueries = new Set();
+
+  function renderTopics() {
+    const box = document.getElementById('topics');
+    const topics = DATA.topics || [];
+    box.hidden = topics.length < 2;
+    if (box.hidden) return;
+    const chip = (label, value, topic) =>
+      h('button', { type: 'button', class: activeTopic === topic ? 'filter on' : 'filter', 'aria-pressed': String(activeTopic === topic), 'data-topic': topic },
+        label, h('span', { class: 'filter-val' }, pct(value)));
+    box.replaceChildren(chip('Vše', last.visibility, ''), ...topics.map((t) => chip(t.topic, t.visibility, t.topic)));
+  }
+
+  function answerCard(detail) {
+    const engine = ENGINES.find((e) => e.id === detail.engine);
+    const state = !detail.mentioned ? 'bez zmínky' : detail.position ? `jmenováni jako ${detail.position}.` : 'jmenováni';
+    return h('div', { class: 'answer' },
+      h('p', { class: 'answer-head' }, h('span', { class: 'swatch', style: `background:${engine ? engine.color : 'var(--muted)'}` }), engine ? engine.label : detail.engine,
+        h('span', { class: detail.mentioned ? 'pill yes' : 'pill' }, state)),
+      h('p', { class: 'answer-text' }, detail.text || 'Odpověď je prázdná.'),
+      detail.brands.length ? h('p', { class: 'answer-meta' }, h('b', {}, 'Jmenované firmy: '), detail.brands.join(', ')) : null,
+      detail.sources.length ? h('p', { class: 'answer-meta' }, h('b', {}, 'Zdroje: '), detail.sources.join(', ')) : null);
+  }
+
+  function renderQueries() {
+    const table = document.getElementById('queries');
+    const sub = document.getElementById('queries-sub');
+    if (!DATA.queries.length) {
+      sub.textContent = 'Seznam dotazů se objeví po prvním měření.';
+      return table.replaceChildren();
+    }
+    const measuredQueries = DATA.queries.filter((q) => q.engines > 0);
+    const missing = measuredQueries.filter((q) => q.hits === 0).length;
+    const skipped = DATA.queries.length - measuredQueries.length;
+    sub.replaceChildren('Číslo říká, kolikátou jmenovanou firmou jste v odpovědi byli. U ', h('b', {}, num(missing)), ' z ', h('b', {}, num(measuredQueries.length)), ' změřených dotazů vás nejmenoval žádný nástroj; ty jsou nahoře.',
+      skipped ? ` ${num(skipped)} dotazů se změřit nepodařilo (—).` : '', ' Kliknutím na dotaz zobrazíte, co AI odpověděla.');
+    const measured = ENGINES.filter((e) => DATA.queries.some((q) => q[e.id] != null));
+    const rows = DATA.queries.filter((q) => !activeTopic || q.topic === activeTopic).sort((a, b) => (b.engines > 0) - (a.engines > 0) || a.hits - b.hits);
+    const body = [];
+    for (const q of rows) {
+      const details = (DATA.details || []).filter((d) => d.query === q.query);
+      const expanded = openQueries.has(q.query);
+      const label = h('span', {}, h('span', { class: 'toggle-text' }, q.query), q.topic ? h('span', { class: 'topic' }, q.topic) : null);
+      body.push(h('tr', {},
+        h('td', { class: 'col-query' }, details.length
+          ? h('button', { type: 'button', class: 'toggle', 'aria-expanded': String(expanded), 'data-query': q.query }, h('span', { class: 'chev', 'aria-hidden': 'true' }, '▶'), label)
+          : label),
+        ...measured.map((e) => {
+          const value = q[e.id];
+          return h('td', {}, h('span', { class: value != null && value !== 'ne' ? 'pill yes' : 'pill' }, value == null ? '—' : value));
+        }),
+        h('td', { class: 'col-rivals' }, q.rivals || '—')));
+      if (expanded) {
+        body.push(h('tr', { class: 'detail' }, h('td', { colspan: String(measured.length + 2) },
+          h('div', { class: 'answers' }, ...ENGINES.flatMap((e) => details.filter((d) => d.engine === e.id)).map(answerCard)))));
+      }
+    }
+    table.replaceChildren(
+      h('thead', {}, h('tr', {}, h('th', { class: 'col-query' }, 'Dotaz'), ...measured.map((e) => h('th', {}, e.label)), h('th', { class: 'col-rivals' }, 'Koho AI jmenuje'))),
+      h('tbody', {}, ...body));
+  }
+
+  document.getElementById('topics').addEventListener('click', (event) => {
+    const button = event.target.closest('button[data-topic]');
+    if (!button) return;
+    activeTopic = button.dataset.topic;
+    renderTopics();
+    renderQueries();
+  });
+  document.getElementById('queries').addEventListener('click', (event) => {
+    const button = event.target.closest('button[data-query]');
+    if (!button) return;
+    const query = button.dataset.query;
+    if (openQueries.has(query)) openQueries.delete(query);
+    else openQueries.add(query);
+    renderQueries();
+    const again = [...document.querySelectorAll('button[data-query]')].find((b) => b.dataset.query === query);
+    if (again) again.focus();
+  });
+
+  renderHeader();
+  renderTiles();
+  renderTrendStatic();
+  drawTrend();
+  renderBrands();
+  renderDomains();
+  renderAdvice();
+  if (last) renderTopics();
+  else document.getElementById('topics').hidden = true;
+  renderQueries();
+  if ('ResizeObserver' in window) {
+    let width = 0;
+    new ResizeObserver(([entry]) => {
+      const next = Math.round(entry.contentRect.width);
+      if (next !== width) {
+        width = next;
+        drawTrend();
+      }
+    }).observe(document.getElementById('trend'));
+  }
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(drawTrend);
+</script>
+
+</html>
